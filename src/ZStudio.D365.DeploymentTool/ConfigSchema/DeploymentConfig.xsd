@@ -1,0 +1,1098 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="deploymentConfiguration">
+    <xs:annotation>
+      <xs:documentation>The global configuration of the CRM deployment.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="1" name="deploymentOrganizations">
+          <xs:annotation>
+            <xs:documentation>The deployment configurations for multiple CRM organization.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="1" maxOccurs="unbounded" name="deploymentOrganization">
+                <xs:annotation>
+                  <xs:documentation>The deployment configuration for a CRM organization.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:choice maxOccurs="unbounded">
+                      <xs:element minOccurs="1" maxOccurs="1" name="crm">
+                        <xs:annotation>
+                          <xs:documentation>The CRM organization connection settings.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:attribute name="crmconnectionstring" type="xs:string" use="required">
+                            <xs:annotation>
+                              <xs:documentation>The simplified CRM connection string. Accept tokens from Execution Context. Value: ServiceUri=http://localhost/CRM; Username=domain/admin; Password=pwd123;</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="organization" type="xs:string" use="required">
+                            <xs:annotation>
+                              <xs:documentation>The name of the CRM organization. Accept tokens from Execution Context. Value: CRM</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="enforceTls12" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>Indicate if the CRM organization enforces TLS 1.2 when CRM is installed on HTTPS. Accept tokens from Execution Context. Value: true/false.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="authentication" use="required">
+                            <xs:annotation>
+                              <xs:documentation>The authentication mode for the CRM server. Accept tokens from Execution Context. Valid values are: AD, IFD, OAuth, Certificate, ClientSecret</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="crmdeployment">
+                        <xs:complexType>
+                          <xs:attribute name="serviceurl" type="xs:string" use="required" />
+                          <xs:attribute name="username" type="xs:string" use="required" />
+                          <xs:attribute name="password" type="xs:string" use="required" />
+                          <xs:attribute name="domain" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="organizations">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="organization">
+                              <xs:complexType>
+                                <xs:simpleContent>
+                                  <xs:extension base="xs:string">
+                                    <xs:attribute name="action" type="xs:string" use="required" />
+                                    <xs:attribute name="uniquename" type="xs:string" use="required" />
+                                    <xs:attribute name="friendlyname" type="xs:string" use="required" />
+                                    <xs:attribute name="sqlservername" type="xs:string" use="required" />
+                                    <xs:attribute name="srsurl" type="xs:string" use="required" />
+                                    <xs:attribute name="basecurrencycode" type="xs:string" use="required" />
+                                    <xs:attribute name="basecurrencyname" type="xs:string" use="required" />
+                                    <xs:attribute name="basecurrencysymbol" type="xs:string" use="required" />
+                                    <xs:attribute name="basecurrencyprecision" type="xs:unsignedByte" use="required" />
+                                  </xs:extension>
+                                </xs:simpleContent>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" maxOccurs="unbounded" name="customizations">
+                        <xs:annotation>
+                          <xs:documentation>Grouping of CRM solution customization to process.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element minOccurs="0" maxOccurs="unbounded" name="customization">
+                              <xs:complexType>
+                                <xs:attribute name="file" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The solution zip file, the output file name if the action is an export, the input file name if the action is an import/upgrade. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="solutionName" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="action" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The action on the solution.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="export"/>
+                                      <xs:enumeration value="import"/>
+                                      <xs:enumeration value="upgrade"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:attribute>
+                                <xs:attribute name="ismanaged" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>Determine if the CRM solution being import/export is a managed solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="deactivateworkflow" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Determine if the workflows will be deactivated prior to the CRM solution being imported/upgraded, the tool will use the the workflow list to determine which workflow to deactivate.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="publishBeforeExport" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Determine if the CRM solution needs to be publish before being exported, by default the solution will be publish.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="backupBeforeImport" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Determine if the CRM solution needs to be backup before being imported/upgraded, by default the solution will be backup.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="waitTimeout" type="xs:int" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set the timeout in seconds for the CRM import/export request to wait for, by default it will be set to 1800 seconds.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="exportRetryTimeout" type="xs:int" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set the export retry timeout in seconds for the CRM export request to wait for before it does one retry, by default it will be set to 600 seconds.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="customizationconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the customizations XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/customizations), if provided the tool will use the custmization configuration in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="publishWorkflows" type="xs:string" use="required" />
+                          <xs:attribute name="publishType" use="required">
+                            <xs:annotation>
+                              <xs:documentation>Determine if all the customizations are publish in a batch or seperately or not publish at all before and after the action.</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:enumeration value="Separately"/>
+                                <xs:enumeration value="Batch"/>
+                                <xs:enumeration value="None"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:attribute>
+                          <xs:attribute name="workflowlist" type="xs:string" use="optional" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="delete" minOccurs="0" maxOccurs="1">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="element" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="type" type="xs:string" use="required" />
+                                <xs:attribute name="target" type="xs:string" use="required" />
+                                <xs:attribute name="targettype" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="getpluginxml">
+                        <xs:complexType>
+                          <xs:attribute name="solution" type="xs:string" use="required" />
+                          <xs:attribute name="filename" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="plugins">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="plugin" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="definitionFileName" type="xs:string" use="required" />
+                                <xs:attribute name="solution" type="xs:string" use="required" />
+                                <xs:attribute name="uploadonly" type="xs:string" use="required" />
+                                <xs:attribute name="unregister" type="xs:string" use="required" />
+                                <xs:attribute name="unregisteronly" type="xs:string" use="optional" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="sourceDirectory" type="xs:string" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="assemblyModes">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="assemblyMode" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the plugin/workflow assembly.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="sandboxed" type="xs:boolean" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>Indicate if the plugin/workflow assembly is marked as isolation mode = true/false.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="workflowassemblies">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="workflowassembly">
+                              <xs:complexType>
+                                <xs:attribute name="source" type="xs:string" use="required" />
+                                <xs:attribute name="solution" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="duplicateDetectionRules">
+                        <xs:annotation>
+                          <xs:documentation>The collection of duplicate detection rules XML files to be imported/deleted/exported.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="duplicateDetection" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The name of the duplication detection rules.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="sourceFile" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The duplication detection rules XML file. If the action is Export, this will be the XML file that the export will be saved to. For Import/Delete, the rules in this file will be used to create rules or delete rules. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="action" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>Action to be performed for Duplicate Detection.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="import" />
+                                      <xs:enumeration value="export" />
+                                      <xs:enumeration value="delete" />
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="crmthemes">
+                        <xs:annotation>
+                          <xs:documentation>The collection of CRM theme to be created/updated. Only one of the theme should be published. Applicable only for CRM2016 and above.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="theme">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the theme.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="themeSettingFile" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>Stores the XML full file path, this XML file (http://schemas.zerostudioinc.com/crmdeployment/2016/themes) will be use to create/update the theme record in CRM based on the Theme Name in the file. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="publishTheme" type="xs:boolean" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>Indicate if the tool should publish the theme.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="defaultpublishers">
+                        <xs:annotation>
+                          <xs:documentation>Update the default publishers. Use this to update the default publisher. Tested for D365 CE (v9) and above.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="publisher" minOccurs="0" maxOccurs="1">
+                              <xs:complexType>
+                                <xs:attribute name="displayname" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The display name of the publisher. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="description" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher description.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="prefix" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The customization prefix for the publisher. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="optionvalueprefix" type="xs:int" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The customization option value prefix for the publisher.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="website" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher support website.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="email" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher support e-mail address.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="phone" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher support telephone.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="addressline1" type="xs:string" use="optional" />
+                                <xs:attribute name="addressline2" type="xs:string" use="optional" />
+                                <xs:attribute name="addresscity" type="xs:string" use="optional" />
+                                <xs:attribute name="addressstate" type="xs:string" use="optional" />
+                                <xs:attribute name="addresspostalcode" type="xs:string" use="optional" />
+                                <xs:attribute name="addresscountry" type="xs:string" use="optional" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="publisherconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the publisher XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/publishers), if provided the tool will use the publishers in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="publishers">
+                        <xs:annotation>
+                          <xs:documentation>The collection of CRM publishers. Use this to create publisher to start customization. Tested for CRM2016 and above.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="publisher" minOccurs="0" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the publisher. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="displayname" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The display name of the publisher. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="description" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher description.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="prefix" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The customization prefix for the publisher. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="optionvalueprefix" type="xs:int" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The customization option value prefix for the publisher.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="website" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher support website.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="email" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher support e-mail address.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="phone" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher support telephone.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="addressline1" type="xs:string" use="optional" />
+                                <xs:attribute name="addressline2" type="xs:string" use="optional" />
+                                <xs:attribute name="addresscity" type="xs:string" use="optional" />
+                                <xs:attribute name="addressstate" type="xs:string" use="optional" />
+                                <xs:attribute name="addresspostalcode" type="xs:string" use="optional" />
+                                <xs:attribute name="addresscountry" type="xs:string" use="optional" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="publisherconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the publisher XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/publishers), if provided the tool will use the publishers in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="solutions">
+                        <xs:annotation>
+                          <xs:documentation>The collection of CRM solutions. Use this to create empty solutions to initialize a CRM organization. Tested for CRM2016.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="solution" minOccurs="0" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="displayname" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The display name of the solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="description" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The publisher description.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="version" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The version of the solution to be created, this will only be used on creation of a new solution, by default it will be set to 1.0.0.0.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="publisheruniquename" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the publisher to use for the solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="solutionconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the solution XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/solutions), if provided the tool will use the solutions in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="entitymetadatas">
+                        <xs:annotation>
+                          <xs:documentation>The collection of entity definitions to be created/updated. Use this to generate entities based on a XML definition file, you will be able to define the entity settings, attributes and global option sets. Tested for CRM2016.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="metadata" minOccurs="0" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="metadatafile" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The XML file path of the entities definition to be created/updated. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="customizationprefix" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The customization prefix to be used when creating the entities and attributes. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="solutionname" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the solution to add the entities into. Leave blank if the entities do not need to be included to any solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="publish" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set to TRUE to publish the solution. Default to true when a solution name is provided.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="languagecode" type="xs:int" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set the language code to be used for all the labels. Default to 1033 (English-US). This will only be in-play for CRM installed with multiple language.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="continueOnError" type="xs:boolean" use="required">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the tool continue parsing through all the lines if there is an error.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="metadataconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the metadata XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/metadatas), if provided the tool will use the metadata files defined in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="schemaLowerCase" type="xs:boolean" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the schema name will always be set to lower case. By default, this will be set to true.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="suffixLookupWithId" type="xs:boolean" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the schema name for all Lookup/Customer data type attribute will always ends with Id. By default, this will be set to true.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="suffixOptionSetWithId" type="xs:boolean" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the schema name for all OptionSet data type attribute will always ends with Id. By default, this will be set to true.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="globaloptionsetmetadatas">
+                        <xs:annotation>
+                          <xs:documentation>The collection of global option set definitions to be created/updated. Use this to generate global option sets based on a XML definition file, you will be able to define the global option sets. Tested for CRM2016.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="metadata" minOccurs="0" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="metadatafile" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The XML file path of the global option set definition to be created/updated. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="customizationprefix" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The customization prefix to be used when creating the global option set. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="solutionname" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the solution to add the global option set into. Leave blank if the global option set do not need to be included to any solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="publish" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set to TRUE to publish the solution. Default to true when a solution name is provided.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="languagecode" type="xs:int" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set the language code to be used for all the labels. Default to 1033 (English-US). This will only be in-play for CRM installed with multiple language.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="continueOnError" type="xs:boolean" use="required">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the tool continue parsing through all the lines if there is an error.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="metadataconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the metadata XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/metadatas), if provided the tool will use the metadata files defined in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="schemaLowerCase" type="xs:boolean" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the schema name will always be set to lower case. By default, this will be set to true.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="manytomanyrelationmetadatas">
+                        <xs:annotation>
+                          <xs:documentation>The collection of N:N relationship definitions to be created/updated. Use this to generate N:N relationship based on a XML definition file, you will be able to define the N:N relationship. Tested for CRM2016.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="metadata" minOccurs="0" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="metadatafile" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The XML file path of the N:N relationship definition to be created/updated. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="customizationprefix" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The customization prefix to be used when creating the N:N relationship. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="solutionname" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>The unique name of the solution to add the entities into. Leave blank if the entities do not need to be included to any solution. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="publish" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set to TRUE to publish the solution. Default to true when a solution name is provided.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="languagecode" type="xs:int" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Set the language code to be used for all the labels. Default to 1033 (English-US). This will only be in-play for CRM installed with multiple language.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="continueOnError" type="xs:boolean" use="required">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the tool continue parsing through all the lines if there is an error.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="metadataconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the metadata XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/metadatas), if provided the tool will use the metadata files defined in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="schemaLowerCase" type="xs:boolean" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>Determine if the schema name will always be set to lower case. By default, this will be set to true.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="incrementSolutionBuildNumber">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="solution" minOccurs="0" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="publishType" use="required">
+                            <xs:annotation>
+                              <xs:documentation>Determine if all the customizations are publish in a batch or seperately or not publish at all before and after the action.</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                              <xs:restriction base="xs:string">
+                                <xs:enumeration value="Separately"/>
+                                <xs:enumeration value="Batch"/>
+                                <xs:enumeration value="None"/>
+                              </xs:restriction>
+                            </xs:simpleType>
+                          </xs:attribute>
+                          <xs:attribute name="solutionconfig" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The file path of the solution XML config (http://schemas.zerostudioinc.com/crmdeployment/2016/solutions), if provided the tool will use the solutions in the XML. Accept tokens from Execution Context.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="setversion" type="xs:boolean" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>Indicate if the version is to be updated to the value in the attribute SetVersionValue for all the solutions.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                          <xs:attribute name="setversionvalue" type="xs:string" use="optional">
+                            <xs:annotation>
+                              <xs:documentation>The version value to be set to the solutions.</xs:documentation>
+                            </xs:annotation>
+                          </xs:attribute>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="webresources">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="webresource" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="source" type="xs:string" use="required" />
+                                <xs:attribute name="sourcetype" type="xs:string" use="required" />
+                                <xs:attribute name="customizationPrefix" type="xs:string" use="required" />
+                                <xs:attribute name="filename" type="xs:string" use="optional" />
+                                <xs:attribute name="solution" type="xs:string" use="required" />
+                                <xs:attribute name="usecustomizationprefixindisplayname" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Appends the customization prefix as the prefix of the web resource display name, this will prefix the file extension as prefix.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="usepathinname" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Include the folder path in the web resource name and display name.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="useextensionasprefix" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Prefix the file extension in the web resource name and display name.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="useextensioninname" type="xs:boolean" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Include the file extension in the web resource name and display name.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="updatedescription" type="xs:boolean" use="optional" />
+                                <xs:attribute name="removeOnUninstall" type="xs:boolean" use="optional" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="ribbon">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="ribbonelement">
+                              <xs:complexType>
+                                <xs:attribute name="filename" type="xs:string" use="required" />
+                                <xs:attribute name="entities" type="xs:string" use="required" />
+                                <xs:attribute name="includeappribbon" type="xs:string" use="required" />
+                                <xs:attribute name="action" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="sitemap">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="sitemapelement">
+                              <xs:complexType>
+                                <xs:attribute name="filename" type="xs:string" use="required" />
+                                <xs:attribute name="action" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="reports">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="report" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                                <xs:attribute name="fileName" type="xs:string" use="required" />
+                                <xs:attribute name="description" type="xs:string" use="required" />
+                                <xs:attribute name="languageCode" type="xs:int" use="required" />
+                                <xs:attribute name="relatedRecords" type="xs:string" use="required" />
+                                <xs:attribute name="displayAreas" type="xs:string" use="required" />
+                                <xs:attribute name="installBehaviour" use="required">
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="RemoveAndRecreate"/>
+                                      <xs:enumeration value="UpdateExisting"/>
+                                      <xs:enumeration value="LeaveExisting"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:attribute>
+                                <xs:attribute name="categoryCodes" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Accepts the Category Code to register the report into in CRM. Retrieve the category code from CRM 'select CategoryCode as categoryCodes, * from dbo.ReportCategoryBase where reportid in (select reportid from dbo.ReportBase where name like @reportname)'.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="parentName" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Provide the name of the parent report if this report to register is a child report.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="dataMap">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="map">
+                              <xs:complexType>
+                                <xs:attribute name="fileName" type="xs:string" use="required" />
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                                <xs:attribute name="action" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="dataExport">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="export">
+                              <xs:complexType>
+                                <xs:attribute name="fileName" type="xs:string" use="required" />
+                                <xs:attribute name="entityName" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="dataImport">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="import" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="fileName" type="xs:string" use="required" />
+                                <xs:attribute name="datamap" type="xs:string" use="required" />
+                                <xs:attribute name="entityName" type="xs:string" use="required" />
+                                <xs:attribute name="fieldDelimiter" type="xs:string" use="required" />
+                                <xs:attribute name="dataDelimiter" type="xs:string" use="required" />
+                                <xs:attribute name="domainUserName" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Assign the imported records to this user as owner. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="owningTeam" type="xs:string" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Assign the imported records to this team as owner. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="detectDuplicates" type="xs:boolean" use="required" />
+                                <xs:attribute name="waitForCompletion" type="xs:boolean" use="required" />
+                                <xs:attribute name="waitTimeout" type="xs:int" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>Determine how many seconds to wait before the Data Import job timeouts. Default to 240.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="dataDelete">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="delete" minOccurs="1" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="entityName" type="xs:string" use="required" />
+                                <xs:attribute name="dataBackUp" type="xs:string" use="required" />
+                                <xs:attribute name="waitForCompletion" type="xs:string" use="required" />
+                                <xs:attribute name="waitTimeout" type="xs:int" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>Determine how many seconds to wait before the Data Delete job timeouts.Default to 240.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="assignSecurityRole">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="element">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:unsignedByte" use="required" />
+                                <xs:attribute name="securityrole" type="xs:string" use="required" />
+                                <xs:attribute name="domainusername" type="xs:string" use="required" />
+                                <xs:attribute name="teamname" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="assignWorkflowToUser">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="element">
+                              <xs:complexType>
+                                <xs:attribute name="domainusername" type="xs:string" use="required" />
+                                <xs:attribute name="workflow" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="activateWorkflows">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="workflow" minOccurs="0" maxOccurs="unbounded">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                          <xs:attribute name="allWorkflows" type="xs:boolean" use="required" />
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="external">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="action">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                                <xs:attribute name="executable" type="xs:string" use="required" />
+                                <xs:attribute name="arguments" type="xs:string" use="required" />
+                                <xs:attribute name="workingDirectory" type="xs:string" use="required" />
+                                <xs:attribute name="captureOutput" type="xs:boolean" use="required" />
+                                <xs:attribute name="expectZeroReturnCode" type="xs:boolean" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="copy">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="element">
+                              <xs:complexType>
+                                <xs:attribute name="type" type="xs:string" use="required" />
+                                <xs:attribute name="source" type="xs:string" use="required" />
+                                <xs:attribute name="target" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="sql">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="script">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                                <xs:attribute name="executeActionOn" use="optional">
+                                  <xs:annotation>
+                                    <xs:documentation>Determine when this SQL action will be executed, by default for Install action.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="Install"/>
+                                      <xs:enumeration value="Uninstall"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:attribute>
+                                <xs:attribute name="connectionString" type="xs:string" use="required" />
+                                <xs:attribute name="sourceFile" type="xs:string" use="required" />
+                                <xs:attribute name="executeInTransaction" type="xs:boolean" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="windowsServices">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="windowsService">
+                              <xs:complexType>
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                                <xs:attribute name="executable" type="xs:string" use="required" />
+                                <xs:attribute name="sourceDirectory" type="xs:string" use="required" />
+                                <xs:attribute name="targetDirectory" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element minOccurs="0" maxOccurs="unbounded" name="patchCustomizationXmls">
+                        <xs:annotation>
+                          <xs:documentation>Grouping of CRM solution customization to be patched.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element minOccurs="1" maxOccurs="unbounded" name="patchCustomizationXml">
+                              <xs:complexType>
+                                <xs:attribute name="file" type="xs:string" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The solution zip file that is the input file to be patched. Accept tokens from Execution Context.</xs:documentation>
+                                  </xs:annotation>
+                                </xs:attribute>
+                                <xs:attribute name="patchType" use="required">
+                                  <xs:annotation>
+                                    <xs:documentation>The patch type.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                      <xs:enumeration value="CustomControlDefaultConfigs"/>
+                                    </xs:restriction>
+                                  </xs:simpleType>
+                                </xs:attribute>
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="websites">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="website">
+                              <xs:complexType>
+                                <xs:sequence>
+                                  <xs:element maxOccurs="unbounded" name="mime">
+                                    <xs:complexType>
+                                      <xs:attribute name="extension" type="xs:string" use="required" />
+                                      <xs:attribute name="type" type="xs:string" use="required" />
+                                    </xs:complexType>
+                                  </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                                <xs:attribute name="virtualDirectory" type="xs:string" use="required" />
+                                <xs:attribute name="applicationPool" type="xs:string" use="required" />
+                                <xs:attribute name="sourceDirectory" type="xs:string" use="required" />
+                                <xs:attribute name="targetDirectory" type="xs:string" use="required" />
+                                <xs:attribute name="allowAnonymousAccess" type="xs:boolean" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="startWindowsService">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="service">
+                              <xs:complexType>
+                                <xs:attribute name="server" type="xs:string" use="required" />
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                      <xs:element name="stopWindowsService">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="service">
+                              <xs:complexType>
+                                <xs:attribute name="server" type="xs:string" use="required" />
+                                <xs:attribute name="name" type="xs:string" use="required" />
+                              </xs:complexType>
+                            </xs:element>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:choice>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:ID" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The unique name of the deployment configuration. Must be unique.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="enabled" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Indicate if the deployment configuration is enabled. Optional value, default to true when no value is provided. Accept tokens from Execution Context.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="executionContexts">
+          <xs:annotation>
+            <xs:documentation>The collection of execution contexts.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="executionContext" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="add">
+                      <xs:complexType>
+                        <xs:attribute name="name" type="xs:ID" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The key name of the context without the @ prefix or suffix. Must be unique. In order to use the execution context in the configuration XML, append @ to the front and end of the key name, e.g. @ORGNAME@.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="value" type="xs:string" use="required" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:ID" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The unique name of the execution context.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="contextFile" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The file path of the execution context XML file (http://schemas.zerostudioinc.com/crmdeployment/2016/executioncontexts), if provided the tool will use the context value defined in the XML.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="action" use="required">
+        <xs:annotation>
+          <xs:documentation>The deployment action.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Install"/>
+            <xs:enumeration value="Uninstall"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
+      <xs:attribute name="failOnError" type="xs:boolean" use="required">
+        <xs:annotation>
+          <xs:documentation>Determine if any failure will end the deployment process.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="loggingDirectory" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>The logging and backup directory. Value: .\log</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

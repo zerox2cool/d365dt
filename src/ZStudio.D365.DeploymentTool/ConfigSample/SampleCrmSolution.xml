@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<solutions xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/solutions">
+  <solution>
+    <name value="crmdeploymentsol1" />
+    <displayname value="CrmDeploymentSolution1" />
+    <publisheruniquename value="crmdeploymentdemo" />
+    <version value="1.1.0.0" />
+    <description>
+      <![CDATA[
+        This is a test solution.
+        Description with multiple lines.
+        It has carriage returns.
+      ]]>
+    </description>
+  </solution>
+  <solution>
+    <name value="crmdeploymentsol2" />
+    <displayname value="CrmDeploymentSolution2" />
+    <publisheruniquename value="crmdeploymentdemo2" />
+    <description>
+      <![CDATA[
+        This is a test solution.
+        Description with multiple lines.
+        It has carriage returns.
+      ]]>
+    </description>
+  </solution>
+</solutions>

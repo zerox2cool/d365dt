@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<entities xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/entities">
+  <entity name="account" issystem="true" displayname="Account" displaypluralname="Accounts" ownership="User" isactivityentity="false" color="FF00FF" donotincludesubcomponents="true">
+    <primaryfield name="Name" displayname="The Account Name" length="100" description="My Account Name" fieldrequirement="Required" />
+    <attributes>
+      <attribute issystem="false" name="TestFieldA" displayname="Test Field A" fieldrequirement="Optional" searchable="false" auditing="false" fieldsecurity="true" datatype="SingleText" length="100" />
+    </attributes>
+  </entity>
+  <entity name="Country" issystem="false" displayname="Country" displaypluralname="All Countries" ownership="Organization" isactivityentity="false" color="FF0000" notes="false" activities="false" connections="false" queues="false" mailmerge="false" documentmanagement="false" auditing="false" duplicatedetection="false" phoneexpress="false" mobile="false" availableoffline="true">
+    <description>
+      <![CDATA[A reference entity for Country.
+      Country data comes from another system.]]>
+    </description>
+    <primaryfield name="Name" displayname="Name" length="200" description="My Country Name." fieldrequirement="Required" />
+    <attributes>
+      <attribute issystem="false" name="Code" displayname="Code" fieldrequirement="Required" auditing="false" datatype="SingleText" length="2">
+        <description>
+          <![CDATA[Country Code. e.g. AU]]>
+        </description>
+      </attribute>
+      <attribute issystem="false" name="PhoneCode" displayname="Phone Code" fieldrequirement="Optional" searchable="false" datatype="SingleText" formattype="Text" length="4">
+        <description>
+          <![CDATA[The country international phone code. e.g. +61]]>
+        </description>
+      </attribute>
+      <attribute issystem="false" name="Description" displayname="Description" fieldrequirement="Optional" searchable="false" datatype="MultiText" length="2000" />
+      <attribute issystem="false" name="ID" displayname="ID" fieldrequirement="Optional" searchable="true" datatype="Int32" formattype="None" minvalue="0">
+        <description>
+          <![CDATA[The Country ID.]]>
+        </description>
+      </attribute>
+    </attributes>
+  </entity>
+  <entity name="TestEntityGen" issystem="false" displayname="Test Entity Gen" displaypluralname="Test Entities Gen" ownership="Organization" isactivityentity="false" notes="false" activities="false" connections="false" queues="false" mailmerge="false" documentmanagement="false" auditing="false" duplicatedetection="false" smallicon="zs_16x16/copydatafieldconfig.png" mediumicon="zs_32x32/copydatafieldconfig.png" vectoricon="zs_svg/copydatafieldconfig.svg">
+    <description>
+      <![CDATA[A test entity for CRM Deployment Tool.]]>
+    </description>
+    <primaryfield name="Name" displayname="Name" length="201" description="Name of the TestEntity 1." fieldrequirement="Optional" searchable="true" auditing="true" />
+    <attributes>
+      <attribute issystem="false" name="Image" displayname="Image" fieldrequirement="Optional" datatype="Image" />
+      <attribute issystem="false" name="SingleText" displayname="Single Line of Text 1" fieldrequirement="Required" auditing="false" datatype="SingleText" fieldtype="Simple" length="1001">
+        <description>
+          <![CDATA[SingleText 1]]>
+        </description>
+      </attribute>
+      <attribute issystem="false" name="MultiText" displayname="Multiple Line of Text 1" fieldrequirement="Required" searchable="true" auditing="true" datatype="MultiText" length="1001" />
+      <attribute issystem="false" name="WholeNumber" displayname="Whole Number" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Int32" formattype="None" fieldtype="Calculated" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="WholeNumber2" displayname="Whole Number 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Int32" formattype="Duration" fieldtype="Simple" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="WholeNumber3" displayname="Whole Number 3" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Int32" formattype="None" fieldtype="Simple" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Decimal" displayname="Decimal" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Decimal" formattype="None" fieldtype="Rollup" precision="9" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Decimal2" displayname="Decimal 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Decimal" formattype="None" fieldtype="Simple" />
+      <attribute issystem="false" name="Float" displayname="Float" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Float" formattype="None" fieldtype="Simple" precision="2" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Float2" displayname="Float 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Float" formattype="None" fieldtype="Simple" precision="1" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Currency" displayname="Currency" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Currency" precisionsource="Pricing" fieldtype="Rollup" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Currency2" displayname="Currency 2 1" fieldrequirement="Optional" searchable="true" auditing="false" datatype="Currency" fieldtype="Simple" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="TwoOptions" displayname="TwoOptions" fieldrequirement="Optional" searchable="true" auditing="true" datatype="TwoOptions" fieldtype="Calculated" truelabel="Selected 1" truecolor="AABBCC" falselabel="Not Selected 1" twooptionsdefault="true" />
+      <attribute issystem="false" name="TwoOptions2" displayname="TwoOptions 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="TwoOptions" fieldtype="Simple" truelabel="Selected 1a" truecolor="AABBCC" falselabel="Not Selected 1b" twooptionsdefault="true" />
+      <attribute issystem="false" name="GlobalOptionSet" displayname="GlobalOptionSet" fieldrequirement="Optional" searchable="false" auditing="true" datatype="OptionSet" globaloptionsetname="accounttype" issystemglobaloptionset="false" />
+      <attribute issystem="false" name="LocalOptionSet" displayname="LocalOptionSet" fieldrequirement="Optional" searchable="false" auditing="true" datatype="OptionSet" optionsetdefault="3">
+        <options>
+          <option value="1" label="Facebook" description="Facebook Site" order="1" />
+          <option value="2" label="Sound Cloud" description="Sound Cloud Site" order="2" />
+          <option value="3" label="Google++" description="Google++ Site" color="FFFFFF" order="3" />
+          <option value="4" label="Linkedin" description="Linkedin Site" color="FFFFFF" order="4" />
+        </options>
+      </attribute>
+      <attribute issystem="false" name="DateTime" displayname="DateTime" fieldrequirement="Optional" searchable="false" auditing="true" datatype="DateTime" fieldtype="Simple" formattype="DateTime" datetimebehavior="UserLocal" />
+      <attribute issystem="false" name="DateOnly" displayname="DateOnly" fieldrequirement="Optional" searchable="false" auditing="true" datatype="DateTime" fieldtype="Simple" formattype="DateOnly" datetimebehavior="TimeZoneIndependent" />
+      <attribute issystem="false" name="LookupToCountry" displayname="Lookup to Country" fieldrequirement="Optional" auditing="true" searchable="false" datatype="Lookup" lookupreferenceentityname="Country" issystemreferenceentity="false" lookuprelationshipname="testentitygen_country_lookuptocountry" lookupmenubehavior="UseLabel" lookupmenucustomlabel="Test Country Custom Label" lookupmenugroup="Details" lookupmenuorder="10001" lookuprelationshipbehaviorassign="CascadeAll" lookuprelationshipbehaviorshare="CascadeAll" lookuprelationshipbehaviorunshare="CascadeAll" lookuprelationshipbehaviorreparent="CascadeAll" lookuprelationshipbehaviordelete="Restrict" />
+      <attribute issystem="false" name="LookupToCountry2" displayname="Lookup to Country 2" fieldrequirement="Optional" auditing="true" searchable="false" datatype="Lookup" lookupreferenceentityname="Country" issystemreferenceentity="false" lookuprelationshipname="testentitygen_country_lookuptocountry2" lookupmenubehavior="DoNotDisplay" lookupmenugroup="Details" lookupmenuorder="10002" />
+      <attribute issystem="false" name="Customer" displayname="My Customer" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Customer" />
+    </attributes>
+  </entity>
+  <entity name="TestEntityGen2" issystem="false" displayname="Test Entity Gen 2" displaypluralname="Test Entities Gen 2" ownership="User" isactivityentity="false" notes="false" activities="false" connections="false" queues="false" mailmerge="false" documentmanagement="false" auditing="false" duplicatedetection="false">
+    <description>
+      <![CDATA[A test entity 2 for CRM Deployment Tool.]]>
+    </description>
+    <primaryfield name="Name" displayname="Name" length="201" description="Name of the TestEntity 2." fieldrequirement="Optional" searchable="false" auditing="false" />
+    <attributes>
+      <attribute issystem="false" name="Image" displayname="Image" fieldrequirement="Optional" datatype="Image" />
+      <attribute issystem="false" name="SingleText" displayname="Single Line of Text 1" fieldrequirement="Required" auditing="false" datatype="SingleText" fieldtype="Simple" length="1001">
+        <description>
+          <![CDATA[SingleText 1]]>
+        </description>
+      </attribute>
+      <attribute issystem="false" name="MultiText" displayname="Multiple Line of Text 1" fieldrequirement="Required" searchable="true" auditing="true" datatype="MultiText" length="1001" />
+      <attribute issystem="false" name="WholeNumber" displayname="Whole Number" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Int32" formattype="None" fieldtype="Simple" />
+      <attribute issystem="false" name="WholeNumber2" displayname="Whole Number 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Int32" formattype="None" fieldtype="Simple" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="WholeNumber3" displayname="Whole Number 3" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Int32" formattype="None" fieldtype="Simple" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Decimal" displayname="Decimal" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Decimal" formattype="None" fieldtype="Simple" precision="8" />
+      <attribute issystem="false" name="Decimal2" displayname="Decimal 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Decimal" formattype="None" fieldtype="Simple" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Float" displayname="Float" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Float" formattype="None" fieldtype="Simple" precision="3" />
+      <attribute issystem="false" name="Float2" displayname="Float 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Float" formattype="None" fieldtype="Simple" precision="1" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="Currency" displayname="Currency" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Currency" precisionsource="Pricing" fieldtype="Simple" />
+      <attribute issystem="false" name="Currency2" displayname="Currency 2 1" fieldrequirement="Optional" searchable="true" auditing="false" datatype="Currency" fieldtype="Simple" precisionsource="Custom" precision="3" minvalue="-1" maxvalue="1" />
+      <attribute issystem="false" name="TwoOptions" displayname="TwoOptions" fieldrequirement="Optional" searchable="true" auditing="true" datatype="TwoOptions" fieldtype="Simple" truelabel="Selected Y" truecolor="AABBCC" falselabel="Not Selected X" twooptionsdefault="false" />
+      <attribute issystem="false" name="TwoOptions2" displayname="TwoOptions 2" fieldrequirement="Optional" searchable="true" auditing="true" datatype="TwoOptions" fieldtype="Simple" truelabel="Selected 1" truecolor="AABBCC" falselabel="Not Selected 1" twooptionsdefault="true" />
+      <attribute issystem="false" name="GlobalOptionSet" displayname="GlobalOptionSet" fieldrequirement="Optional" searchable="false" auditing="true" datatype="OptionSet" globaloptionsetname="accounttype" issystemglobaloptionset="false" />
+      <attribute issystem="false" name="LocalOptionSet" displayname="LocalOptionSet" fieldrequirement="Optional" searchable="false" auditing="true" datatype="OptionSet" optionsetdefault="3">
+        <options>
+          <option value="1" label="Facebook" description="Facebook Site" order="1" />
+          <option value="2" label="Sound Cloud" description="Sound Cloud Site" order="2" />
+          <option value="3" label="Google+" description="Google+ Site" color="FFFFFF" order="3" />
+          <option value="4" label="Linkedin" description="Linkedin Site" color="FFFFFF" order="4" />
+        </options>
+      </attribute>
+      <attribute issystem="false" name="DateTime" displayname="Date Time" fieldrequirement="Optional" searchable="false" auditing="true" datatype="DateTime" fieldtype="Simple" formattype="DateTime" datetimebehavior="UserLocal" />
+      <attribute issystem="false" name="DateOnly" displayname="Date Only" fieldrequirement="Optional" searchable="false" auditing="true" datatype="DateTime" fieldtype="Simple" formattype="DateOnly" datetimebehavior="TimeZoneIndependent" />
+      <attribute issystem="false" name="LookupToCountry" displayname="Lookup to Country 1" fieldrequirement="Optional" auditing="true" searchable="false" datatype="Lookup" lookupreferenceentityname="Country" issystemreferenceentity="false" lookuprelationshipname="testentitygen2_country_lookuptocountry" lookupmenubehavior="UseCollectionName" lookupmenugroup="Details" lookupmenuorder="10005" lookuprelationshipbehaviorassign="CascadeAll" lookuprelationshipbehaviorshare="CascadeAll" lookuprelationshipbehaviorunshare="CascadeAll" lookuprelationshipbehaviorreparent="CascadeAll" lookuprelationshipbehaviordelete="Restrict" />
+      <attribute issystem="false" name="LookupToCountry2" displayname="Lookup to Country 2" fieldrequirement="Optional" auditing="true" searchable="false" datatype="Lookup" lookupreferenceentityname="Country" issystemreferenceentity="false" lookuprelationshipname="testentitygen2_country_lookuptocountry2_testentitygen2_country_lookuptocountry2" lookupmenubehavior="DoNotDisplay" lookupmenugroup="Details" lookupmenuorder="10002" />
+      <attribute issystem="false" name="Customer" displayname="My Customer" fieldrequirement="Optional" searchable="true" auditing="true" datatype="Customer" />
+      <attribute issystem="true" name="CreatedOn" displayname="My Created On" fieldrequirement="Optional" searchable="false" datatype="DateTime" formattype="DateTime" />
+      <attribute issystem="true" name="CreatedBy" displayname="My Created By" fieldrequirement="Optional" searchable="false" datatype="Lookup" lookupreferenceentityname="SystemUser" issystemreferenceentity="true" lookuprelationshipname="lk_zs_testentitygen2_createdby" />
+      <attribute issystem="true" name="ModifiedOn" displayname="My Modified On" fieldrequirement="Optional" searchable="false" datatype="DateTime" formattype="DateTime" />
+      <attribute issystem="true" name="ModifiedBy" displayname="My Modified By" fieldrequirement="Optional" searchable="false" datatype="Lookup" lookupreferenceentityname="SystemUser" issystemreferenceentity="true" lookuprelationshipname="lk_zs_testentitygen2_modifiedby" />
+    </attributes>
+  </entity>
+</entities>

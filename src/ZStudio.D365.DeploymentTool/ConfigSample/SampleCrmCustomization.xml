@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<customizations xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/customizations">
+  <customization>
+    <file value=".\Customizations\@ZS_SOLUTION@1_@PACKAGE_MANAGED_UNMANAGED@.zip" />
+    <solutionName value="@ZS_SOLUTION@1" />
+    <action value="export" />
+    <ismanaged value="true" />
+    <deactivateworkflow value="false" />
+    <publishBeforeExport value="false" />
+    <backupBeforeImport value="false" />
+  </customization>
+  <customization>
+    <file value=".\Customizations\@ZS_SOLUTION@2_@PACKAGE_MANAGED_UNMANAGED@.zip" />
+    <solutionName value="@ZS_SOLUTION@2" />
+    <action value="export" />
+    <ismanaged value="true" />
+    <deactivateworkflow value="false" />
+    <publishBeforeExport value="false" />
+    <backupBeforeImport value="false" />
+  </customization>
+</customizations>

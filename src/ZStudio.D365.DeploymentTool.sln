@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29509.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DeploymentTool", "DeploymentTool", "{867A862F-5CBC-44A4-BBC4-67A3CF13DF92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{588C76A2-EB14-47B5-AAA2-7399C50CA310}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sdkbin", "sdkbin", "{1170CCBC-3DF4-4BB1-9AF6-91CDB714B28C}"
+	ProjectSection(SolutionItems) = preProject
+		sdkbin\CrmSvcUtil.exe = sdkbin\CrmSvcUtil.exe
+		sdkbin\CrmSvcUtil.exe.config = sdkbin\CrmSvcUtil.exe.config
+		sdkbin\Microsoft.ApplicationInsights.dll = sdkbin\Microsoft.ApplicationInsights.dll
+		sdkbin\Microsoft.Crm.Sdk.Proxy.dll = sdkbin\Microsoft.Crm.Sdk.Proxy.dll
+		sdkbin\Microsoft.IdentityModel.Clients.ActiveDirectory.dll = sdkbin\Microsoft.IdentityModel.Clients.ActiveDirectory.dll
+		sdkbin\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll = sdkbin\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll
+		sdkbin\Microsoft.PowerApps.AppInsights.BatchedTelemetry.dll = sdkbin\Microsoft.PowerApps.AppInsights.BatchedTelemetry.dll
+		sdkbin\Microsoft.PowerApps.AppInsights.BatchedTelemetryChannel.dll = sdkbin\Microsoft.PowerApps.AppInsights.BatchedTelemetryChannel.dll
+		sdkbin\Microsoft.Rest.ClientRuntime.dll = sdkbin\Microsoft.Rest.ClientRuntime.dll
+		sdkbin\Microsoft.Xrm.Sdk.Deployment.dll = sdkbin\Microsoft.Xrm.Sdk.Deployment.dll
+		sdkbin\Microsoft.Xrm.Sdk.dll = sdkbin\Microsoft.Xrm.Sdk.dll
+		sdkbin\Microsoft.Xrm.Sdk.Workflow.dll = sdkbin\Microsoft.Xrm.Sdk.Workflow.dll
+		sdkbin\Microsoft.Xrm.Tooling.Connector.dll = sdkbin\Microsoft.Xrm.Tooling.Connector.dll
+		sdkbin\Microsoft.Xrm.Tooling.CrmConnectControl.dll = sdkbin\Microsoft.Xrm.Tooling.CrmConnectControl.dll
+		sdkbin\SolutionPackager.exe = sdkbin\SolutionPackager.exe
+		sdkbin\SolutionPackagerLib.dll = sdkbin\SolutionPackagerLib.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZStudio.D365.DT.CrmSvcUtilExt", "ZStudio.D365.DT.CrmSvcUtilExt\ZStudio.D365.DT.CrmSvcUtilExt.csproj", "{4304B529-2342-4C58-A116-730D554A2E7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZStudio.D365.DeploymentTool", "ZStudio.D365.DeploymentTool\ZStudio.D365.DeploymentTool.csproj", "{2AF36237-FF23-4D4A-B750-4317B40EB595}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Debugger", "Debugger", "{B74DBF1C-6CA3-470C-A059-F01E41BD50F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZStudio.D365.DT.WinTest", "ZStudio.D365.DT.WinTest\ZStudio.D365.DT.WinTest.csproj", "{F35512E2-CF6A-43AD-921D-F63BA9006096}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug-DeploymentPackage|Any CPU = Debug-DeploymentPackage|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Release-DeploymentPackage|Any CPU = Release-DeploymentPackage|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Debug-DeploymentPackage|Any CPU.ActiveCfg = Debug|Any CPU
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Debug-DeploymentPackage|Any CPU.Build.0 = Debug|Any CPU
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Release-DeploymentPackage|Any CPU.ActiveCfg = Release|Any CPU
+		{4304B529-2342-4C58-A116-730D554A2E7D}.Release-DeploymentPackage|Any CPU.Build.0 = Release|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Debug-DeploymentPackage|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Debug-DeploymentPackage|Any CPU.Build.0 = Debug|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Release-DeploymentPackage|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF36237-FF23-4D4A-B750-4317B40EB595}.Release-DeploymentPackage|Any CPU.Build.0 = Release|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Debug-DeploymentPackage|Any CPU.ActiveCfg = Debug|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Debug-DeploymentPackage|Any CPU.Build.0 = Debug|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Release-DeploymentPackage|Any CPU.ActiveCfg = Release|Any CPU
+		{F35512E2-CF6A-43AD-921D-F63BA9006096}.Release-DeploymentPackage|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1170CCBC-3DF4-4BB1-9AF6-91CDB714B28C} = {588C76A2-EB14-47B5-AAA2-7399C50CA310}
+		{4304B529-2342-4C58-A116-730D554A2E7D} = {867A862F-5CBC-44A4-BBC4-67A3CF13DF92}
+		{2AF36237-FF23-4D4A-B750-4317B40EB595} = {867A862F-5CBC-44A4-BBC4-67A3CF13DF92}
+		{F35512E2-CF6A-43AD-921D-F63BA9006096} = {B74DBF1C-6CA3-470C-A059-F01E41BD50F0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {443BE33F-29FE-4C42-91CF-A9818B1A4281}
+	EndGlobalSection
+EndGlobal

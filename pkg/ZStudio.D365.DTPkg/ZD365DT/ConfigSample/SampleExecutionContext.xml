@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<executionContext xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/executioncontexts">
+  <add name="ORGNAME" value="CrmDeploymentTool" />
+  <add name="CRM_SERVER" value="Url=https://demo.crm6.dynamics.com/; AuthType=OAuth; Username=demo@demo.onmicrosoft.com; Password=***; AppId=51f81489-12ee-4a9e-aaae-a2591f45987d; RedirectUri=app://58145B91-0C36-4500-8554-080854F2AC97; LoginPrompt=Never" />
+</executionContext>

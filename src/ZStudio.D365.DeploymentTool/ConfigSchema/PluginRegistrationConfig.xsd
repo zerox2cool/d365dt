@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/pluginregister" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="deploy">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="assembly" minOccurs="1" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="type">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="step" minOccurs="0" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element minOccurs="0" maxOccurs="unbounded" name="image">
+                            <xs:complexType>
+                              <xs:attribute name="type" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Type of image requested. Post-Image is only available on post-operation. Pre-Image is not available on create message. Example: pre, post or both.</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                  <xs:restriction base="xs:string">
+                                    <xs:enumeration value="pre"/>
+                                    <xs:enumeration value="post"/>
+                                    <xs:enumeration value="both"/>
+                                  </xs:restriction>
+                                </xs:simpleType>
+                              </xs:attribute>
+                              <xs:attribute name="name" type="xs:string" use="optional">
+                                <xs:annotation>
+                                  <xs:documentation>The name of the image. When no value is provided, the name of the image type will be used. Example: PluginStepImage</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="entityalias" type="xs:string" use="required">
+                                <xs:annotation>
+                                  <xs:documentation>Key name used to access the pre-image or post-image property bags in a step. Example: entityImage</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                              <xs:attribute name="attributes" type="xs:string" use="optional">
+                                <xs:annotation>
+                                  <xs:documentation>A comma separated list of attribute schema name if there are specific attributes selected for the image, this attribute is not required when all attributes are selected. Example: zs_number,zs_description</xs:documentation>
+                                </xs:annotation>
+                              </xs:attribute>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="entity" type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The entity logical name. Example: zs_demoentity</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="message" type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The step message name. Example: create or update or delete</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="stage" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Stage in the execution pipeline that the SDK message processing step is in. Example: prevalidation, pre, post or async.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="prevalidation"/>
+                              <xs:enumeration value="pre"/>
+                              <xs:enumeration value="post"/>
+                              <xs:enumeration value="async"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="rank" type="xs:int" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Processing order within the stage. Example: 10</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="filterattributes" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>A comma separated list of attribute schema name if there are specific attributes selected, this attribute is not required when all attributes are selected. Example: zs_number,zs_description</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="configuration" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>Step-specific configuration for the plug-in type. Passed to the plug-in constructor at run time.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="impersonatinguserid" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>Unique identifier (GUID) of the user to impersonate context when step is executed.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="asyncautodelete" type="xs:boolean" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Indicates whether the asynchronous system job is automatically deleted on completion. true or false</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="supporteddeployment" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Deployment that the SDK message processing step should be executed on; server, client (offline), or both.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="server"/>
+                              <xs:enumeration value="offline"/>
+                              <xs:enumeration value="both"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute name="name" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The full type name (including the class name). Example: Xrm.Plugin.Contact.PreOpCreate.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="displayname" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The plugin display name, optional. Will default to the full type name set. Example: Xrm.Plugin.Contact.PreOpCreate.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="description" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The plugin type description, optional. Will default to the class name. Example: PreOpCreate</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="workflowgroup" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The workflow group name, only for custom workflow activity. The custom activities will not be grouped if no value is provided.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="src" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>The location of the DLL.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="location" use="required">
+              <xs:annotation>
+                <xs:documentation>Location of the assembly, either Database, Disk or GAC.</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="on-disk"/>
+                  <xs:enumeration value="database"/>
+                  <xs:enumeration value="gac"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="sandbox" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>How the plugin assembly is to be isolated at execution time; None / Sandboxed. true or false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

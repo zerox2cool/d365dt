@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="ZD365DT\ConfigSample\SampleCrmCustomization.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleCrmEntity.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleCrmGlobalOp.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleCrmNtoNRelation.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleCrmPublisher.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleCrmSolution.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleCrmTheme.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleDeployConfiguration.config" />
+    <None Remove="ZD365DT\ConfigSample\SampleDuplicateDetectionRules.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleEntityMetadata.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleExecutionContext.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleGlobalOpMetadata.xml" />
+    <None Remove="ZD365DT\ConfigSample\SampleNtoNRelationMetadata.xml" />
+    <None Remove="ZD365DT\ConfigSample\SamplePluginRegister.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="ZD365DT\ConfigSample\SampleCrmCustomization.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleCrmEntity.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleCrmGlobalOp.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleCrmNtoNRelation.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleCrmPublisher.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleCrmSolution.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleCrmTheme.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleDeployConfiguration.config" />
+    <Content Include="ZD365DT\ConfigSample\SampleDuplicateDetectionRules.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleEntityMetadata.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleExecutionContext.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleGlobalOpMetadata.xml" />
+    <Content Include="ZD365DT\ConfigSample\SampleNtoNRelationMetadata.xml" />
+    <Content Include="ZD365DT\ConfigSample\SamplePluginRegister.xml" />
+  </ItemGroup>
+
+</Project>

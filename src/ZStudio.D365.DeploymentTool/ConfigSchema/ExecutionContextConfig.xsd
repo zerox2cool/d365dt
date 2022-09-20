@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/executioncontexts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="executionContext">
+    <xs:annotation>
+      <xs:documentation>The collection of execution context values.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="add">
+          <xs:complexType>
+            <xs:attribute name="name" type="xs:ID" use="required">
+              <xs:annotation>
+                <xs:documentation>The key name of the context without the @ prefix or suffix. Must be unique. In order to use the execution context in the configuration XML, append @ to the front and end of the key name, e.g. @ORGNAME@.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="value" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

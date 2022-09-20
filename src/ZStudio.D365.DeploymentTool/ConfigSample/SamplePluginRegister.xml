@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<deploy xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/pluginregister">
+  <assembly src=".\Plugins\Demo.Crm.Plugins.dll" location="database" sandbox="true">
+    <type name="Demo.Crm.Plugins.AdditionalInformationPreUpdate">
+      <step entity="zs_additionalinformation" message="update" stage="prevalidation/pre/post/async" rank="10" filterattributes="zs_billingaccountid,zs_workingaccountid" configuration="unsecureparameter" asyncautodelete="false" supporteddeployment="server/offline/both">
+        <image type="pre" name="preImg" entityalias="Target" attributes="statecode,statuscode"/>
+        <image type="post" name="postImg" entityalias="Target" attributes="statecode,statuscode" />
+        <image type="both" name="bothImg" entityalias="TargetBoth" attributes="statecode,statuscode" />
+      </step>
+    </type>
+    <type name="Demo.Crm.Plugins.AdditionalInformationPreCreate">
+      <step entity="zs_additionalinformation" message="create" stage="pre" rank="1" asyncautodelete="false" supporteddeployment="server" impersonatinguserid="d9d9cf04-eb9f-ea11-a812-000d3ad20986" />
+    </type>
+  </assembly>
+</deploy>

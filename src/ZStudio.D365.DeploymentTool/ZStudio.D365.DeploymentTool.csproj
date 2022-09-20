@@ -1,0 +1,374 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\ILMerge.3.0.41\build\ILMerge.props" Condition="Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2AF36237-FF23-4D4A-B750-4317B40EB595}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ZD365DT.DeploymentTool</RootNamespace>
+    <AssemblyName>DeployD365Customizations</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>program48x48.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>ZD365DT.DeploymentTool.DeployCrm</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>ZStudio.D365.DeploymentTool.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Interop.IISOle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Crm.Sdk.Proxy, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.42\lib\net462\Microsoft.Crm.Sdk.Proxy.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.92\lib\net462\Microsoft.Rest.ClientRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.CoreAssemblies.9.0.2.42\lib\net462\Microsoft.Xrm.Sdk.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk.Deployment, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.Deployment.9.0.2.34\lib\net462\Microsoft.Xrm.Sdk.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Sdk.Workflow, Version=9.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.Workflow.9.0.2.42\lib\net462\Microsoft.Xrm.Sdk.Workflow.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xrm.Tooling.Connector, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CrmSdk.XrmTooling.CoreAssembly.9.1.0.92\lib\net462\Microsoft.Xrm.Tooling.Connector.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Activities" />
+    <Reference Include="System.Activities.Presentation" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.IdentityModel" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.1\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.2\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\ActivateWorkflowsCollection.cs" />
+    <Compile Include="Configuration\AssemblyCollection.cs" />
+    <Compile Include="Configuration\AssemblyModeCollection.cs" />
+    <Compile Include="Configuration\AssignSecurityRoleCollection.cs" />
+    <Compile Include="Configuration\AssignWorkflowsCollection.cs" />
+    <Compile Include="Configuration\CopyCollection.cs" />
+    <Compile Include="Configuration\CrmConnectionElement.cs" />
+    <Compile Include="Configuration\CrmDeploymentConnectionElement.cs" />
+    <Compile Include="Configuration\CustomizationCollection.cs" />
+    <Compile Include="Configuration\DataDeleteCollection.cs" />
+    <Compile Include="Configuration\DataExportCollection.cs" />
+    <Compile Include="Configuration\DataImportCollection.cs" />
+    <Compile Include="Configuration\DataMapCollection.cs" />
+    <Compile Include="Configuration\DefaultPublisherCollection.cs" />
+    <Compile Include="Configuration\DeleteCollection.cs" />
+    <Compile Include="Configuration\DeploymentConfigurationSection.cs" />
+    <Compile Include="Configuration\DeploymentOrganizationCollection.cs" />
+    <Compile Include="Configuration\DuplicateDetectionElement.cs" />
+    <Compile Include="Configuration\EntMetadataCollection.cs" />
+    <Compile Include="Configuration\ExecuteActionOn.cs" />
+    <Compile Include="Configuration\ExecutionContextCollection.cs" />
+    <Compile Include="Configuration\ExternalActionCollection.cs" />
+    <Compile Include="Configuration\GlobalOpMetadataCollection.cs" />
+    <Compile Include="Configuration\IncrementSolutionCollection.cs" />
+    <Compile Include="Configuration\ManyToManyRelationMetadataCollection.cs" />
+    <Compile Include="Configuration\OrganizationCollection.cs" />
+    <Compile Include="Configuration\PatchCustomizationXml.cs" />
+    <Compile Include="Configuration\PluginCollection.cs" />
+    <Compile Include="Configuration\PluginXmlExportElement.cs" />
+    <Compile Include="Configuration\PublisherCollection.cs" />
+    <Compile Include="Configuration\ReportsCollection.cs" />
+    <Compile Include="Configuration\RibbonCollection.cs" />
+    <Compile Include="Configuration\SitemapCollection.cs" />
+    <Compile Include="Configuration\SolutionCollection.cs" />
+    <Compile Include="Configuration\SqlCollection.cs" />
+    <Compile Include="Configuration\StartWindowsServiceCollection.cs" />
+    <Compile Include="Configuration\StopWindowsServiceCollection.cs" />
+    <Compile Include="Configuration\ThemeCollection.cs" />
+    <Compile Include="Configuration\WebResourceCollection.cs" />
+    <Compile Include="Configuration\WebsiteCollection.cs" />
+    <Compile Include="Configuration\WindowsServiceCollection.cs" />
+    <Compile Include="Context\CommandLineTokens.cs" />
+    <Compile Include="Context\DeploymentContext.cs" />
+    <Compile Include="Context\IDeploymentContext.cs" />
+    <Compile Include="Context\OrganizationContext.cs" />
+    <Compile Include="DeployCrm.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="InstallAction\InstallAction.cs" />
+    <Compile Include="InstallAction\InstallActivateWorkflowsAction.cs" />
+    <Compile Include="InstallAction\InstallAssemblyAction.cs" />
+    <Compile Include="InstallAction\InstallAssemblyModeAction.cs" />
+    <Compile Include="InstallAction\InstallAssignSecurityRoleAction.cs" />
+    <Compile Include="InstallAction\InstallAssignWorkflowAction.cs" />
+    <Compile Include="InstallAction\InstallCopyAction.cs" />
+    <Compile Include="InstallAction\InstallCustomizationsAction.cs" />
+    <Compile Include="InstallAction\InstallDataDeleteAction.cs" />
+    <Compile Include="InstallAction\InstallDataExportAction.cs" />
+    <Compile Include="InstallAction\InstallDataImportAction.cs" />
+    <Compile Include="InstallAction\InstallDataMapAction.cs" />
+    <Compile Include="InstallAction\InstallDefaultPublisherAction.cs" />
+    <Compile Include="InstallAction\InstallDeleteAction.cs" />
+    <Compile Include="InstallAction\InstallDuplicateDetectionAction.cs" />
+    <Compile Include="InstallAction\InstallEntityDefAction.cs" />
+    <Compile Include="InstallAction\InstallExternalAction.cs" />
+    <Compile Include="InstallAction\InstallGlobalOpDefAction.cs" />
+    <Compile Include="InstallAction\InstallIncrementSolutionNumberAction.cs" />
+    <Compile Include="InstallAction\InstallManyToManyRelationDefAction.cs" />
+    <Compile Include="InstallAction\InstallOrganizationAction.cs" />
+    <Compile Include="InstallAction\InstallPatchCustomizationXmlAction.cs" />
+    <Compile Include="InstallAction\InstallPluginsAction.cs" />
+    <Compile Include="InstallAction\InstallPluginXmlExport.cs" />
+    <Compile Include="InstallAction\InstallPublisherAction.cs" />
+    <Compile Include="InstallAction\InstallReportsAction.cs" />
+    <Compile Include="InstallAction\InstallRibbonAction.cs" />
+    <Compile Include="InstallAction\InstallSitemapAction.cs" />
+    <Compile Include="InstallAction\InstallSolutionAction.cs" />
+    <Compile Include="InstallAction\InstallSqlAction.cs" />
+    <Compile Include="InstallAction\InstallStartWindowsServiceAction.cs" />
+    <Compile Include="InstallAction\InstallStopWindowsServiceAction.cs" />
+    <Compile Include="InstallAction\InstallThemeAction.cs" />
+    <Compile Include="InstallAction\InstallWebResourceAction.cs" />
+    <Compile Include="InstallAction\InstallWebsiteAction.cs" />
+    <Compile Include="InstallAction\InstallWindowsServiceAction.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\CacheManager.cs" />
+    <Compile Include="Utils\ClientExtensionEditor.cs" />
+    <Compile Include="Utils\CommonHelper.cs" />
+    <Compile Include="Utils\ConfigXmlConstants.cs" />
+    <Compile Include="Utils\ConfigXmlHelper.cs" />
+    <Compile Include="Utils\CrmAsyncServiceUtil.cs" />
+    <Compile Include="Utils\CrmMetadata\CrmAttribute.cs" />
+    <Compile Include="Utils\CrmMetadata\CrmEntity.cs" />
+    <Compile Include="Utils\CrmMetadata\CrmGlobalOp.cs" />
+    <Compile Include="Utils\CrmMetadata\CrmManyToManyRelation.cs" />
+    <Compile Include="Utils\CrmMetadata\CrmMetadataObject.cs" />
+    <Compile Include="Utils\CrmRegistryUtils.cs" />
+    <Compile Include="Utils\DuplicateDetection\DuplicateDetection.cs" />
+    <Compile Include="Utils\DuplicateDetection\DuplicateDetectionManager.cs" />
+    <Compile Include="Utils\IisUtils.cs" />
+    <Compile Include="Utils\IOUtils.cs" />
+    <Compile Include="Utils\Logger.cs" />
+    <Compile Include="Utils\LoggingProcess.cs" />
+    <Compile Include="Utils\Metadata.cs" />
+    <Compile Include="Utils\OrganizationUtils.cs" />
+    <Compile Include="Utils\Plugin\RegisterPlugins.cs" />
+    <Compile Include="Utils\SitemapCustomization\SiteMap.cs" />
+    <Compile Include="Utils\SitemapCustomization\SiteMapComparer.cs" />
+    <Compile Include="Utils\SolutionManager.cs" />
+    <Compile Include="Utils\SqlScriptParser.cs" />
+    <Compile Include="Utils\TimerWatch.cs" />
+    <Compile Include="Utils\WatchSummary.cs" />
+    <Compile Include="Utils\WebResourceInternal.cs" />
+    <Compile Include="Utils\WebServiceUtils.cs" />
+    <Compile Include="Utils\WindowsServiceUtils.cs" />
+    <Compile Include="XRM\OptionSets.cs" />
+    <Compile Include="XRM\Xrm.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Readme.txt" />
+    <Content Include="program16x16.ico" />
+    <Content Include="program48x48.ico" />
+    <Content Include="ReleaseNote.txt" />
+    <Content Include="workflow_lists.txt" />
+    <Content Include="XRMSvcGen\XrmEntityList.xml" />
+    <None Include="App.config" />
+    <None Include="ConfigSample\SampleDeployConfiguration.config" />
+    <None Include="ConfigSchema\CrmCustomizationConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\CrmEntityConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\CrmGlobalOptionSetConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\CrmManyToManyRelationConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\CrmPublisherConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\CrmSolutionConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\CrmThemeConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\DeploymentConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\ExecutionContextConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\MetadataConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ConfigSchema\PluginRegistrationConfig.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+    <Content Include="ScriptFiles\CrmSvcUtil-Gen.bat" />
+    <Content Include="ScriptFiles\CrmSvcUtilFiles-Copy.bat" />
+    <Content Include="ScriptFiles\CrmSvcUtilFiles-Del.bat" />
+    <Content Include="ScriptFiles\MergeDll-WebApi.bat" />
+    <Content Include="ScriptFiles\MergeDll.bat" />
+    <None Include="SetNupkgVersion.ps1" />
+    <None Include="XRMSvcGen\CopyCrmSvcUtilFiles.bat" />
+    <None Include="XRMSvcGen\CopyCrmSvcUtilFiles.ps1" />
+    <None Include="XRMSvcGen\CrmSvcUtil.exe.config" />
+    <None Include="XRMSvcGen\DelCrmSvcUtilFiles.bat" />
+    <None Include="XRMSvcGen\DelCrmSvcUtilFiles.ps1" />
+    <None Include="XRMSvcGen\RunCrmSvcUtil.bat" />
+    <None Include="XRMSvcGen\RunCrmSvcUtil.ps1" />
+    <None Include="ZStudio.D365.DeploymentTool.snk" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Binaries\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Binaries\ILMerge.exe" />
+    <Content Include="Binaries\Interop.IISOle.dll" />
+    <Content Include="Binaries\System.Compiler.dll" />
+    <Content Include="Binaries\ZD365DT.CrmSvcUtilExt.dll" />
+    <Content Include="ConfigSample\SampleCrmCustomization.xml" />
+    <Content Include="ConfigSample\SampleCrmEntity.xml" />
+    <Content Include="ConfigSample\SampleCrmGlobalOp.xml" />
+    <Content Include="ConfigSample\SampleCrmNtoNRelation.xml" />
+    <Content Include="ConfigSample\SampleCrmPublisher.xml" />
+    <Content Include="ConfigSample\SampleCrmSolution.xml" />
+    <Content Include="ConfigSample\SampleCrmTheme.xml" />
+    <Content Include="ConfigSample\SampleDuplicateDetectionRules.xml" />
+    <Content Include="ConfigSample\SampleEntityMetadata.xml" />
+    <Content Include="ConfigSample\SampleExecutionContext.xml" />
+    <Content Include="ConfigSample\SampleGlobalOpMetadata.xml" />
+    <Content Include="ConfigSample\SampleNtoNRelationMetadata.xml" />
+    <Content Include="ConfigSample\SamplePluginRegister.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>SET ILMERGE_VERSION=3.0.41
+copy "%25USERPROFILE%25\.nuget\packages\ilmerge\%25ILMERGE_VERSION%25\tools\net452\*.*" "$(ProjectDir)Binaries"</PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>echo Copy DLL and PDB to test project for debugging and testing
+REM copy "$(TargetPath)" "$(SolutionDir)Test\D365DT.Test.Demo.Deployment\Build\Executables\"
+REM copy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)Test\D365DT.Test.Demo.Deployment\Build\"
+
+REM NugetPkg project
+IF "$(ConfigurationName)"=="Release" echo Calling Post-Build script to copy output into NugetPkg project for Release config only to NugetPkg project
+IF "$(ConfigurationName)"=="Release" copy "$(TargetPath)" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)..\sdkbin\*.dll" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)Binaries\ILMerge.exe" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ILMerge\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)Binaries\System.Compiler.dll" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ILMerge\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ScriptFiles\MergeDll*.bat" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ILMerge\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)..\sdkbin\CrmSvcUtil.*" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\CrmSvcUtil\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)Binaries\ZD365DT.CrmSvcUtilExt.dll" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\CrmSvcUtil\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ScriptFiles\CrmSvcUtil*.bat" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\CrmSvcUtil\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)..\sdkbin\SolutionPackager.exe" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\SolutionPackager\"
+
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ConfigSample\*.*" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ConfigSample\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ConfigSchema\*.*" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ConfigSchema\"
+
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.txt" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)SetNupkgVersion.ps1" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"</PostBuildEvent>
+  </PropertyGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\ILMerge.3.0.41\build\ILMerge.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\ILMerge.3.0.41\build\ILMerge.props'))" />
+  </Target>
+</Project>

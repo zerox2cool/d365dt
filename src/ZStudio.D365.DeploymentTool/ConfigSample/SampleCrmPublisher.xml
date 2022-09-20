@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<publishers xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/publishers">
+  <publisher>
+    <name value="crmdeploymentdemo" />
+    <displayname value="crmdeploymentdemo" />
+    <description>
+      <![CDATA[
+        This is a test publisher.
+        Description with multiple lines.
+        It has carriage returns.
+      ]]>
+    </description>
+    <prefix value="zs" />
+    <optionvalueprefix value="15000" />
+    <email value="zs@example.com" />
+    <phone value="0290001234" />
+    <website value="http://www.zerostudioinc.com/" />
+    <addressline1 value="2 Park St" />
+    <addressline2 value="" />
+    <addresscity value="Sydney" />
+    <addressstate value="NSW" />
+    <addresspostalcode value="2000" />
+    <addresscountry value="Australia" />
+  </publisher>
+  <publisher>
+    <name value="crmdeploymentdemo2" />
+    <displayname value="crmdeploymentdemo2" />
+    <description>
+      <![CDATA[
+        This is a test publisher.
+        Description with multiple lines.
+        It has carriage returns.
+      ]]>
+    </description>
+    <prefix value="zs" />
+    <optionvalueprefix value="25000" />
+    <email value="zs@example.com" />
+    <phone value="0290001234" />
+    <website value="http://www.zerostudioinc.com/" />
+    <addressline1 value="2 Park St" />
+    <addresscity value="Sydney" />
+    <addressstate value="NSW" />
+    <addresspostalcode value="2000" />
+    <addresscountry value="Australia" />
+  </publisher>
+</publishers>

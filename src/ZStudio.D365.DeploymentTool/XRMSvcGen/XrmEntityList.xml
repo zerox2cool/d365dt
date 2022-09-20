@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<filter>
+  <entities>
+    <!--System Entities for Deployment Tools-->
+    <entity>systemuser</entity>
+    <entity>systemuserroles</entity>
+    <entity>team</entity>
+    <entity>teammembership</entity>
+    <entity>teamroles</entity>
+    <entity>role</entity>
+    <entity>businessunit</entity>
+    <entity>activitypointer</entity>
+    <entity>task</entity>
+    <entity>email</entity>
+    <entity>letter</entity>
+    <entity>phonecall</entity>
+    <entity>annotation</entity>
+    <entity>transactioncurrency</entity>
+    <entity>connection</entity>
+    <entity>connectionrole</entity>
+    <entity>queue</entity>
+    <entity>userquery</entity>
+    <entity>savedquery</entity>
+    <entity>workflow</entity>
+    <entity>pluginassembly</entity>
+    <entity>plugintype</entity>
+    <entity>sdkmessageprocessingstep</entity>
+    <entity>sdkmessageprocessingstepimage</entity>
+    <entity>sdkmessage</entity>
+    <entity>sdkmessagefilter</entity>
+    <entity>organization</entity>
+    <entity>publisher</entity>
+    <entity>solution</entity>
+    <entity>solutioncomponent</entity>
+    <entity>solutionhistorydata</entity>
+    <entity>stagesolutionupload</entity>
+    <entity>processstage</entity>
+    <entity>theme</entity>
+    <entity>tracelog</entity>
+    <entity>webresource</entity>
+    <entity>entityimageconfig</entity>
+    <entity>entitymap</entity>
+    <entity>picklistmapping</entity>
+    <entity>duplicaterule</entity>
+    <entity>duplicaterulecondition</entity>
+    <entity>report</entity>
+    <entity>reportcategory</entity>
+    <entity>reportentity</entity>
+    <entity>reportvisibility</entity>
+    <entity>bulkdeleteoperation</entity>
+    <entity>ribboncustomization</entity>
+    <entity>sitemap</entity>
+    <entity>asyncoperation</entity>
+    <entity>importjob</entity>
+    <entity>importmap</entity>
+  </entities>
+</filter>

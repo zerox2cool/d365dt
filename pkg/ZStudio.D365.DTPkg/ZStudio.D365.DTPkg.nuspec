@@ -1,0 +1,24 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>ZD365.DeploymentTool</id>
+		<title>ZD365.DeploymentTool</title>
+		<version>$version$</version>
+		<authors>Winson Choo</authors>
+		<owners>Winson Choo</owners>
+		<!--<licenseUrl>http://www.zerostudioinc.com/</licenseUrl>
+		<projectUrl>http://www.zerostudioinc.com/</projectUrl>-->
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>D365 CE Deployment Tool - v1.1 - the tools and configuration schema will be install to ZD365DT folder of the .NET Framework project when the NuGet is install. NOTE: NuGet content files copy is not supported on a .NET Core project.</description>
+	</metadata>
+	<files>
+		<!--<file src="bin\$configuration$\netcoreapp3.1\ZStudio.D365.DTPkg.*" target="lib\netcoreapp3.1" />-->
+		<file src="ReleaseNote.txt" target="content\ZD365DT" />
+		<file src="ZD365DT\*.*" target="content\ZD365DT" />
+		<file src="ZD365DT\ILMerge\*.*" target="content\ZD365DT\ILMerge" />
+		<file src="ZD365DT\CrmSvcUtil\*.*" target="content\ZD365DT\CrmSvcUtil" />
+		<file src="ZD365DT\SolutionPackager\*.*" target="content\ZD365DT\SolutionPackager" />
+		<file src="ZD365DT\ConfigSchema\*.*" target="content\ZD365DT\ConfigSchema" />
+		<file src="ZD365DT\ConfigSample\*.*" target="content\ZD365DT\ConfigSample" />
+	</files>
+</package>

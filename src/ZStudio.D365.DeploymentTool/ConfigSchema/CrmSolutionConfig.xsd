@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/solutions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="solutions">
+    <xs:annotation>
+      <xs:documentation>The collection of CRM solutions.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="solution">
+          <xs:annotation>
+            <xs:documentation>The CRM solution record.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name">
+                <xs:annotation>
+                  <xs:documentation>This is the unique name of the solution. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="displayname">
+                <xs:annotation>
+                  <xs:documentation>This is the display name of the solution. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="publisheruniquename">
+                <xs:annotation>
+                  <xs:documentation>The publisher of the solution, populate the unique name of the publisher. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="version" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The version of the solution to be created, this will only be used on creation of a new solution, by default it will be set to 1.0.0.0.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="description" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The description of the solution.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

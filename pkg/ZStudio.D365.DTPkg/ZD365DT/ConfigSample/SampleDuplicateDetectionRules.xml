@@ -1,0 +1,15 @@
+﻿<DuplicateDetectionRules>
+  <DuplicateDetectionRule>
+    <BaseEntity>zs_country</BaseEntity>
+    <IsCaseSensitive>false</IsCaseSensitive>
+    <MatchingEntity>zs_country</MatchingEntity>
+    <Name>Country with the same Code.</Name>
+    <Description>Detects country records with the same code.</Description>
+    <Condition>
+      <BaseAttribute>zs_code</BaseAttribute>
+      <MatchingAttribute>zs_code</MatchingAttribute>
+      <MatchType>ExactMatch</MatchType>
+      <NoOfMatchCharacters>0</NoOfMatchCharacters>
+    </Condition>
+  </DuplicateDetectionRule>
+</DuplicateDetectionRules>

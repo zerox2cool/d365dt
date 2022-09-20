@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manytomanyrelations xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/manytomanyrelations">
+  <manytomanyrelation issystem="false" name="account_country_1_account_country_1_test1" searchable="false">
+    <entity1 issystem="true" name="account" menubehavior="DoNotDisplay" menuorder="10000" />
+    <entity2 issystem="false" name="Country" menubehavior="UseCollectionName" menugroup="Details" menuorder="10000" />
+  </manytomanyrelation>
+  <manytomanyrelation issystem="false" name="account_country_1_account_country_1_test2" searchable="true">
+    <entity1 issystem="true" name="account" menubehavior="DoNotDisplay" menuorder="10001" />
+    <entity2 issystem="false" name="Country" menubehavior="UseCollectionName" menugroup="Service" menuorder="10001" />
+  </manytomanyrelation>
+</manytomanyrelations>

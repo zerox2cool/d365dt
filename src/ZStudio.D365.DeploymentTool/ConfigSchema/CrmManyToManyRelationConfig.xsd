@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/manytomanyrelations" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="manytomanyrelations">
+    <xs:annotation>
+      <xs:documentation>The collection of CRM N:N relationship metadata.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="manytomanyrelation">
+          <xs:annotation>
+            <xs:documentation>A single N:N relationship metadata.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="entity1">
+                <xs:annotation>
+                  <xs:documentation>The current entity in the N:N relationship.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The logical entity name without customization prefix.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="issystem" type="xs:boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Indicate if the relationship is out-of-the-box. Default to FALSE. No prefix will be applied to the name.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="customlabelname" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The custom label name to be display on the associated menu for the reference entity. Required only when the menu behavior is UseLabel.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="menuorder" type="xs:int" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The Associated Menu order for the reference entity. This will determine the order of the item on the associated menu of the record, minimum value is 10,000. Default to 10,000.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="menubehavior" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The Associated Menu Behavior. This will whether the item appear on the associated menu of the record. Default to UseCollectionName.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="UseCollectionName"/>
+                        <xs:enumeration value="UseLabel"/>
+                        <xs:enumeration value="DoNotDisplay"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="menugroup" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The Associated Menu Group. This will determine which section group the item appear on the associated menu of the record. Default to Details.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="Details"/>
+                        <xs:enumeration value="Sales"/>
+                        <xs:enumeration value="Service"/>
+                        <xs:enumeration value="Marketing"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="entity2">
+                <xs:annotation>
+                  <xs:documentation>The other entity in the N:N relationship.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The logical entity name without customization prefix.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="issystem" type="xs:boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Indicate if the relationship is out-of-the-box. Default to FALSE. No prefix will be applied to the name.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="customlabelname" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The custom label name to be display on the associated menu for the reference entity. Required only when the menu behavior is UseLabel.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="menuorder" type="xs:int" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The Associated Menu order for the reference entity. This will determine the order of the item on the associated menu of the record, minimum value is 10,000. Default to 10,000.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="menubehavior" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The Associated Menu Behavior. This will whether the item appear on the associated menu of the record. Default to UseCollectionName.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="UseCollectionName"/>
+                        <xs:enumeration value="UseLabel"/>
+                        <xs:enumeration value="DoNotDisplay"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="menugroup" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The Associated Menu Group. This will determine which section group the item appear on the associated menu of the record. Default to Details.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="Details"/>
+                        <xs:enumeration value="Sales"/>
+                        <xs:enumeration value="Service"/>
+                        <xs:enumeration value="Marketing"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:ID" use="required">
+              <xs:annotation>
+                <xs:documentation>The schema name of the relationship without customization prefix.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="searchable" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>Searchable, determine if relationship is visible in advanced find. Default to true.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="issystem" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Indicate if the relationship is out-of-the-box. Default to FALSE. No prefix will be applied to the name.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

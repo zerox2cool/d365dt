@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/globaloptionsets" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="globaloptionsets">
+    <xs:annotation>
+      <xs:documentation>The collection of CRM global option sets metadata.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="globaloptionset">
+          <xs:annotation>
+            <xs:documentation>A single global option set metadata.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="description" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The description of the global option set.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="options">
+                <xs:annotation>
+                  <xs:documentation>The list of options in the global option sets.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="unbounded" name="option">
+                      <xs:annotation>
+                        <xs:documentation>The option value.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:attribute name="label" type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The label of the option.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="value" type="xs:int" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The value of the option.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="description" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The description of the option.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="color" type="xs:hexBinary" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The color of the option, currently not in used. Only applicable to CRM2016.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="order" type="xs:int" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The order of the option in the optionset.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:ID" use="required">
+              <xs:annotation>
+                <xs:documentation>The schema name of the option set without customization prefix.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="displayname" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>The display name of the global option set.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="issystem" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Indicate if the global optionset is out-of-the-box. Default to FALSE. No prefix will be applied to the name.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

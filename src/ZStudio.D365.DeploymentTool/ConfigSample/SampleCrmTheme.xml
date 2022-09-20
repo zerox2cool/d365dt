@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<themes xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/themes">
+  <theme>
+    <name value="SampleTheme" />
+    <logo value="zs_png_crmlogo" />
+    <logoTooltip value="My Theme" />
+    <navigationBarColor value="#CD0000" />
+    <navigationBarShelfColor value="#FFB27F" />
+    <headerColor value="#1160B7" />
+    <globalLinkColor value="#1160B7" />
+    <selectedLinkEffect value="#B1D6F0" />
+    <hoverLinkEffect value="#D7EBF9" />
+    <processControlColor value="#D24726" />
+    <defaultEntityColor value="#706684" />
+    <defaultCustomEntityColor value="#FF6551" />
+    <controlShade value="#F3F1F1" />
+    <controlBorder value="#CCCCCC" />
+  </theme>
+</themes>

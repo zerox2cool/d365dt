@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/customizations" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="customizations">
+    <xs:annotation>
+      <xs:documentation>The collection of CRM customization actions.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="customization">
+          <xs:annotation>
+            <xs:documentation>The CRM customization action.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="file">
+                <xs:annotation>
+                  <xs:documentation>The solution zip file, the output file name if the action is an export, the input file name if the action is an import/upgrade. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="solutionName">
+                <xs:annotation>
+                  <xs:documentation>The unique name of the solution. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="action">
+                <xs:annotation>
+                  <xs:documentation>The action on the solution.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" use="required">
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="export"/>
+                        <xs:enumeration value="import"/>
+                        <xs:enumeration value="upgrade"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="ismanaged">
+                <xs:annotation>
+                  <xs:documentation>Determine if the CRM solution being import/export is a managed solution. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="deactivateworkflow">
+                <xs:annotation>
+                  <xs:documentation>Determine if the workflows will be deactivated prior to the CRM solution being imported/upgraded, the tool will use the the workflow list to determine which workflow to deactivate.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:boolean" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="publishBeforeExport">
+                <xs:annotation>
+                  <xs:documentation>Determine if the CRM solution needs to be publish before being exported, by default the solution will be publish.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:boolean" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="backupBeforeImport">
+                <xs:annotation>
+                  <xs:documentation>Determine if the CRM solution needs to be backup before being imported/upgraded, by default the solution will be backup.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:boolean" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="waitTimeout" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Set the timeout in seconds for the CRM import/export request to wait for, by default it will be set to 1800 seconds.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:int" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="exportRetryTimeout" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>Set the export retry timeout in seconds for the CRM export request to wait for before it does one retry, by default it will be set to 600 seconds.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:int" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

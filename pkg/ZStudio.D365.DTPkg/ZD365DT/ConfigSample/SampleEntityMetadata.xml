@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<metadatas xmlns="http://schemas.zerostudioinc.com/crmdeployment/2016/metadatas">
+  <metadata>
+    <metadatafile value=".\SampleEntities1.xml" />
+    <customizationprefix value="zs" />
+    <solutionname value="testsolution1" />
+    <publish value="true" />
+  </metadata>
+  <metadata>
+    <metadatafile value=".\SampleEntities2.xml" />
+    <customizationprefix value="zs" />
+    <solutionname value="testsolution2" />
+    <languagecode value="1033" />
+  </metadata>
+</metadatas>

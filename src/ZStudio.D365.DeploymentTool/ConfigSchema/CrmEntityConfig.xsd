@@ -1,0 +1,673 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/entities" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="entities">
+    <xs:annotation>
+      <xs:documentation>The collection of CRM entity metadata.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="entity">
+          <xs:annotation>
+            <xs:documentation>The entity definition.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="description" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The description of the entity.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="primaryfield">
+                <xs:annotation>
+                  <xs:documentation>The primary field of the entity, the data type is always set to single line of text. If the entity is a system entity, then the name of the attribute must be "Name".</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="name" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The schema name of the attribute without customization prefix. This will always be "Name" if the entity is a system entity. This is case-sensitive for system attribute. Only a custom entity can apply a different schema name for the primary field. The primary field will be added into the attribute collection.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="displayname" type="xs:string" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The display name of the primary field.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="length" type="xs:int" use="required">
+                    <xs:annotation>
+                      <xs:documentation>The length of the string field, it is recommended to have a length of less than 450 in orer for CRM to create an index for it on the SQL table.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="description" type="xs:string" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>The description of the field.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="fieldrequirement" use="required">
+                    <xs:annotation>
+                      <xs:documentation>Field Requirement, either Business Required, Business Recommended or Optional.</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                      <xs:restriction base="xs:string">
+                        <xs:enumeration value="Required"/>
+                        <xs:enumeration value="Recommended"/>
+                        <xs:enumeration value="Optional"/>
+                      </xs:restriction>
+                    </xs:simpleType>
+                  </xs:attribute>
+                  <xs:attribute name="auditing" type="xs:boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Enable Auditing. Default to true.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="searchable" type="xs:boolean" use="optional">
+                    <xs:annotation>
+                      <xs:documentation>Searchable, determine if attribute is visible in advanced find. Default to true.</xs:documentation>
+                    </xs:annotation>
+                  </xs:attribute>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="attributes" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The list of attributes in the entity. Out-of-the-Box attributes can also be included here to rename the display name, the attribute must be marked as IsSystem=true.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="attribute">
+                      <xs:annotation>
+                        <xs:documentation>The attribute definition.</xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="description" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>The description of the attribute.</xs:documentation>
+                            </xs:annotation>
+                          </xs:element>
+                          <xs:element name="options" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                              <xs:documentation>The list of options in for the optionsets, applicable only for optionset data type.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element minOccurs="1" maxOccurs="unbounded" name="option">
+                                  <xs:annotation>
+                                    <xs:documentation>The option value.</xs:documentation>
+                                  </xs:annotation>
+                                  <xs:complexType>
+                                    <xs:attribute name="label" type="xs:string" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>The label of the option.</xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="value" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>The value of the option.</xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="description" type="xs:string" use="optional">
+                                      <xs:annotation>
+                                        <xs:documentation>The description of the option.</xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="color" type="xs:hexBinary" use="optional">
+                                      <xs:annotation>
+                                        <xs:documentation>The color of the option, currently not in used. Only applicable to CRM2016.</xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="order" type="xs:int" use="required">
+                                      <xs:annotation>
+                                        <xs:documentation>The order of the option in the optionset.</xs:documentation>
+                                      </xs:annotation>
+                                    </xs:attribute>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="issystem" type="xs:boolean" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Indicate if the attribute is an out-of-the-box attribute. No prefix will be applied to the name. Information for OOTB attribute is only used to update the attribute, such as updating the display name or length of the string field.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="name" type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The schema name of the attribute without customization prefix. This is case-sensitive for system attribute. Must be unique.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="displayname" type="xs:string" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The display name of the attribute.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="fieldrequirement" use="required">
+                          <xs:annotation>
+                            <xs:documentation>Field Requirement, either Business Required, Business Recommended or Optional.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Required"/>
+                              <xs:enumeration value="Recommended"/>
+                              <xs:enumeration value="Optional"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="searchable" type="xs:boolean" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>Searchable, determine if attribute is visible in advanced find. Default to true.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="auditing" type="xs:boolean" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>Enable Auditing. Default to true.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="fieldsecurity" type="xs:boolean" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>Enable Field Security. Default to false.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="datatype" use="required">
+                          <xs:annotation>
+                            <xs:documentation>The data type of the attribute.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="SingleText">
+                                <xs:annotation>
+                                  <xs:documentation>Single Line of Text attribute. Maximum length of 4,000 characters.</xs:documentation>
+                                </xs:annotation>
+                              </xs:enumeration>
+                              <xs:enumeration value="MultiText">
+                                <xs:annotation>
+                                  <xs:documentation>Multiple Lines of Text attribute. Maximum length of 1,048,576 characters.</xs:documentation>
+                                </xs:annotation>
+                              </xs:enumeration>
+                              <xs:enumeration value="Int32">
+                                <xs:annotation>
+                                  <xs:documentation>Whole Number attribute.</xs:documentation>
+                                </xs:annotation>
+                              </xs:enumeration>
+                              <xs:enumeration value="Decimal"/>
+                              <xs:enumeration value="Float">
+                                <xs:annotation>
+                                  <xs:documentation>Floating Point Number attribute.</xs:documentation>
+                                </xs:annotation>
+                              </xs:enumeration>
+                              <xs:enumeration value="Currency"/>
+                              <xs:enumeration value="TwoOptions"/>
+                              <xs:enumeration value="OptionSet"/>
+                              <xs:enumeration value="MultiOptionSet"/>
+                              <xs:enumeration value="DateTime"/>
+                              <xs:enumeration value="Image">
+                                <xs:annotation>
+                                  <xs:documentation>Image attribute. Only one image can be created per entity. The schema name will always be entityimage.</xs:documentation>
+                                </xs:annotation>
+                              </xs:enumeration>
+                              <xs:enumeration value="Customer">
+                                <xs:annotation>
+                                  <xs:documentation>Customer attribute. A lookup to Account or Contact. The relationship name for both to Account and Contact will be generated based on the entity name and attribute name.</xs:documentation>
+                                </xs:annotation>
+                              </xs:enumeration>
+                              <xs:enumeration value="Lookup">
+                                <xs:annotation>
+                                  <xs:documentation>Lookup attribute.</xs:documentation>
+                                </xs:annotation>
+                              </xs:enumeration>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="fieldtype" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Field Type, either simple or calculated or rollup, default to simple</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Simple"/>
+                              <xs:enumeration value="Calculated"/>
+                              <xs:enumeration value="Rollup"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="formattype" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Format Type, applicable for certain data type such as SingleText (email, text [default], textarea, url, tickersymbol, phone), Int32 (none [default], duration, timezone, language).</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Email"/>
+                              <xs:enumeration value="Text"/>
+                              <xs:enumeration value="TextArea"/>
+                              <xs:enumeration value="Url"/>
+                              <xs:enumeration value="TickerSymbol"/>
+                              <xs:enumeration value="Phone"/>
+                              <xs:enumeration value="None"/>
+                              <xs:enumeration value="Duration"/>
+                              <xs:enumeration value="TimeZone"/>
+                              <xs:enumeration value="Language"/>
+                              <xs:enumeration value="DateTime"/>
+                              <xs:enumeration value="DateOnly"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        
+                        <xs:attribute name="length" type="xs:int" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The length of the field, applicable for single line of text and multiple line of text data type. Default to 100. Maximum Value of 4000 for single line of text, and 1048576 for multiple line of text.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="minvalue" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The minimum value of the field, applicable for whole number, decimal, floating point and currency data type. Default to CRM min for the data type. Minimum Value: -2,147,483,648 (whole number), -922,337,203,685,477 (currency), -100,000,000,000 (decimal/float)</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="maxvalue" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The maximum value of the field, applicable for whole number, decimal, floating point and currency data type. Default to CRM max for the data type. Maximum Value: 2,147,483,647 (whole number), 922,337,203,685,477 (currency), 100,000,000,000 (decimal/float)</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        
+                        <xs:attribute name="precisionsource" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Precision Source, applicable to currency data type, either custom, pricing or currency, default to currency.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Custom"/>
+                              <xs:enumeration value="Pricing"/>
+                              <xs:enumeration value="Currency"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="precision" type="xs:short" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The custom currency precision, applicable for currency (using custom precision source), decimal and floating data type. Default to 0. Value between 0 to 4 (currency), 0 to 10 (decimal), 0 to 5 (floating point number).</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+
+                        <xs:attribute name="datetimebehavior" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Date Time Behavior, applicable to datetime data type, either user local, date only or timezone independent, default to user local.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="UserLocal"/>
+                              <xs:enumeration value="DateOnly"/>
+                              <xs:enumeration value="TimeZoneIndependent"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                          
+                        <xs:attribute name="optionsetdefault" type="xs:int" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The default value of the optionset, applicable for optionset data type.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="globaloptionsetname" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The name of the global optionset (without any customization prefix, indicate whether prefix is required by setting the IsSystemGlobalOptionSet attribute), applicable for optionset data type. If the global optionset name is provided, the tool will validate that it exists and use it. If there are no global optionset name provided, it will create a local optionset using the options provided in the attribute.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="issystemglobaloptionset" type="xs:boolean" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>Indicate if the global optionset is a system optionset. Default value is false.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+
+                        <xs:attribute name="twooptionsdefault" type="xs:boolean" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The default value of the two options, applicable for two options data type. Default value is false.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="truelabel" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The label for true option, applicable for two options data type. Default value is Yes.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="falselabel" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The label for false option, applicable for two options data type. Default value is No.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="truecolor" type="xs:hexBinary" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The color for true option, applicable for two options data type, currently not in used. Only applicable to CRM2016.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="falsecolor" type="xs:hexBinary" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The color for false option, applicable for two options data type, currently not in used. Only applicable to CRM2016.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+
+                        <xs:attribute name="lookupreferenceentityname" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The reference entity logical name (without prefix) for lookup, applicable for lookup data type. Indicate if the entity is system or custom via the IsSystemgReferenceEntity. The Lookup Relationship Name is also required.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="issystemreferenceentity" type="xs:boolean" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>Indicate if the lookup is a system entity. Default value is false.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="lookuprelationshipname" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The reference entity one-to-many relationship schema name. Will be auto-generated for custom attributes when no value is provided using the entity schema, reference entity and attribute name.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="lookupmenuorder" type="xs:int" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Associated Menu order for the reference entity, applicable to lookup data type. This will determine the order of the item on the associated menu of the record, minimum value is 10,000. Default to 10,000.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="lookupmenubehavior" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Associated Menu Behavior, applicable to lookup data type. This will whether the item appear on the associated menu of the record. Default to UseCollectionName.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="UseCollectionName"/>
+                              <xs:enumeration value="UseLabel"/>
+                              <xs:enumeration value="DoNotDisplay"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="lookupmenucustomlabel" type="xs:string" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Associated Menu Custom Label, applicable to lookup data type and when Associated Menu Behavior is set to UseLabel.</xs:documentation>
+                          </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="lookupmenugroup" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Associated Menu Group, applicable to lookup data type. This will determine which section group the item appear on the associated menu of the record. Default to Details.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Details"/>
+                              <xs:enumeration value="Sales"/>
+                              <xs:enumeration value="Service"/>
+                              <xs:enumeration value="Marketing"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="lookuprelationshipbehaviorassign" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Relationship Behavior for Assign action, applicable to lookup data type. This will determine the behavior of the relationship on whether they are Parental, Referential, Referential (restrict delete). Default to Referential (CascadeNone).</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="CascadeNone"/>
+                              <xs:enumeration value="CascadeAll"/>
+                              <xs:enumeration value="CascadeActive"/>
+                              <xs:enumeration value="CascadeUserOwned"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="lookuprelationshipbehaviorshare" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Relationship Behavior for Share action, applicable to lookup data type. This will determine the behavior of the relationship on whether they are Parental, Referential, Referential (restrict delete). Default to Referential (CascadeNone).</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="CascadeNone"/>
+                              <xs:enumeration value="CascadeAll"/>
+                              <xs:enumeration value="CascadeActive"/>
+                              <xs:enumeration value="CascadeUserOwned"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="lookuprelationshipbehaviorunshare" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Relationship Behavior for Unshare action, applicable to lookup data type. This will determine the behavior of the relationship on whether they are Parental, Referential, Referential (restrict delete). Default to Referential (CascadeNone).</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="CascadeNone"/>
+                              <xs:enumeration value="CascadeAll"/>
+                              <xs:enumeration value="CascadeActive"/>
+                              <xs:enumeration value="CascadeUserOwned"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="lookuprelationshipbehaviorreparent" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Relationship Behavior for Reparent action, applicable to lookup data type. This will determine the behavior of the relationship on whether they are Parental, Referential, Referential (restrict delete). Default to Referential (CascadeNone).</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="CascadeNone"/>
+                              <xs:enumeration value="CascadeAll"/>
+                              <xs:enumeration value="CascadeActive"/>
+                              <xs:enumeration value="CascadeUserOwned"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="lookuprelationshipbehaviordelete" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The Relationship Behavior for Delete action, applicable to lookup data type. This will determine the behavior of the relationship on whether they are Parental, Referential, Referential (restrict delete). Default to Referential (RemoveLink).</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="CascadeAll"/>
+                              <xs:enumeration value="RemoveLink"/>
+                              <xs:enumeration value="Restrict"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+												<xs:attribute name="lookuprelationshipbehaviorrollupview" use="optional">
+													<xs:annotation>
+														<xs:documentation>The Relationship Behavior for Rollup View action, applicable to lookup data type with both primary and related with activities enabled. This will determine the behavior of the information rollup. Default to CascadeNone.</xs:documentation>
+													</xs:annotation>
+													<xs:simpleType>
+														<xs:restriction base="xs:string">
+															<xs:enumeration value="CascadeNone"/>
+															<xs:enumeration value="CascadeAll"/>
+														</xs:restriction>
+													</xs:simpleType>
+												</xs:attribute>
+                        
+                        <xs:attribute name="imemode" use="optional">
+                          <xs:annotation>
+                            <xs:documentation>The IME mode of the attribute, default to auto.</xs:documentation>
+                          </xs:annotation>
+                          <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                              <xs:enumeration value="Auto"/>
+                              <xs:enumeration value="Active"/>
+                              <xs:enumeration value="Inactive"/>
+                              <xs:enumeration value="Disabled"/>
+                            </xs:restriction>
+                          </xs:simpleType>
+                        </xs:attribute>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:ID" use="required">
+              <xs:annotation>
+                <xs:documentation>The schema name of the entity without customization prefix.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="issystem" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>Indicate if the entity is a CRM system entity. No prefix will be applied to the name.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="displayname" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>The display name of the entity.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="displaypluralname" type="xs:string" use="required">
+              <xs:annotation>
+                <xs:documentation>The plural display name of the entity.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="ownership" use="required">
+              <xs:annotation>
+                <xs:documentation>The entity ownership, either User or Organization.</xs:documentation>
+              </xs:annotation>
+              <xs:simpleType>
+                <xs:restriction base="xs:string">
+                  <xs:enumeration value="Organization"/>
+                  <xs:enumeration value="User"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:attribute>
+            
+            <xs:attribute name="isactivityentity" type="xs:boolean" use="required">
+              <xs:annotation>
+                <xs:documentation>Define as an Activity Entity, to enable this, Feedback, Notes, Connection, Offline Capability must be true and Activities, Mail Merge, Sending Email, Knowledge Management must be false and Ownership must be User and Primary Field name must be Subject.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="displayinactivitymenu" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Display in Activity Menus. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="color" type="xs:hexBinary" use="optional">
+              <xs:annotation>
+                <xs:documentation>Color of the Entity. Only applicable for CRM 2016 onwards.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            
+            <xs:attribute name="businessprocess" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Business Process. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="notes" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Notes. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="connections" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Connections. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="activities" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Activities. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="activityparty" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Sending Email (if email field does not exists, one will be created). Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="mailmerge" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Mail Merge. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="documentmanagement" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Document Management. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="accessteams" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Access Teams. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="queues" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Queues. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="autoroutetoownerqueue" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Automatically move records to the owner's default queue when record is created or assigned. Valid when Queue is true. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="knowledgemanagement" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Knowledge Management. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="allowquickcreate" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Allow Quick Create. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="duplicatedetection" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Duplicate Detection. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="auditing" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Auditing. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="changetracking" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Change Tracking. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="phoneexpress" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable for Phone Express. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="mobile" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable for Mobile. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="readonlymobile" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Read-Only in Mobile. Valid when Mobile is true. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="availableoffline" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Offline Capability for CRM for Outlook. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="usecustomhelp" type="xs:boolean" use="optional">
+              <xs:annotation>
+                <xs:documentation>Enable Use Custom Help. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="entityhelpurl" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation>Custom Help URL. Valid when Use Custom Help is true.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="donotincludesubcomponents" type="xs:boolean" use="optional" default="false">
+              <xs:annotation>
+                <xs:documentation>Indicate if the entity will be added to the solution with all the sub-components. Default to false.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+
+            <xs:attribute name="smallicon" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation>The Web Application icon, should be 16x16 pixels and less than 10kb. Please provide the web resource schema name.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="mediumicon" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation>The Entity Form icon, should be 32x32 pixels and less than 10kb. Please provide the web resource schema name.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="vectoricon" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation>The Entity Vector icon, must be SVG web resource file, only on D365 v9 onwards. Please provide the web resource schema name.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

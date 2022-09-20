@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://schemas.zerostudioinc.com/crmdeployment/2016/publishers" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="publishers">
+    <xs:annotation>
+      <xs:documentation>The collection of CRM publishers.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" name="publisher">
+          <xs:annotation>
+            <xs:documentation>The CRM publisher record.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name">
+                <xs:annotation>
+                  <xs:documentation>This is the unique name of the publisher. For default publisher update, enter any name. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="displayname">
+                <xs:annotation>
+                  <xs:documentation>This is the display name of the publisher. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="description" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The description of the publisher.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="prefix">
+                <xs:annotation>
+                  <xs:documentation>The customization prefix for the publisher. Accept tokens from Execution Context.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="optionvalueprefix">
+                <xs:annotation>
+                  <xs:documentation>The option value prefix for the publisher.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:int" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="email" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The support e-mail address of the publisher.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="phone" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The support telephone of the publisher.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="website" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                  <xs:documentation>The support website URL of the publisher.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="addressline1" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="addressline2" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="addresscity" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="addressstate" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="addresspostalcode" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="addresscountry" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                  <xs:attribute name="value" type="xs:string" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
