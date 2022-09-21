@@ -1,0 +1,69 @@
+#pool:
+#  vmImage: 'windows-latest'
+
+variables:
+  #ProjectName: 'ZStudio.D365.DTPkg' --to be added to the build pipeline
+  ProjectFile: 'pkg/$(ProjectName)/$(ProjectName).csproj'
+  NuspecFile: 'pkg/$(ProjectName)/$(ProjectName).nuspec'
+  NuPkgVersionScript: 'pkg/$(ProjectName)/SetNupkgVersion.ps1'
+  BuildConfiguration: 'release'
+  #NugetFeedId: 'c6cf3c3f-9acd-484e-ad48-86b0345d045a' --this value is in the variable group
+
+steps:
+- task: DotNetCoreInstaller@0
+  displayName: "Install .NET Core 3.1.0"
+  inputs:
+    packageType: 'runtime'
+    version: '3.1.0'
+  enabled: false
+
+- task: UseDotNet@2 
+  displayName: "Use .NET Core 3.1.x"
+  inputs:
+    version: '3.1.x'
+    packageType: sdk
+  enabled: false
+
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.4.1'
+  inputs:
+    versionSpec: 4.4.1
+  enabled: false
+
+- task: DotNetCoreCLI@2
+  displayName: "DotNet Restore $(ProjectFile)"
+  inputs:
+    command: 'restore'
+    projects: '$(ProjectFile)'
+    feedsToUse: 'select'
+    vstsFeed: '$(NugetFeedId)'
+  enabled: false
+
+- task: PowerShell@2
+  displayName: 'Run Nuget Version Script $(NuPkgVersionScript)'
+  inputs:
+    filePath: '$(NuPkgVersionScript)'
+  enabled: true
+
+- task: DotNetCoreCLI@2
+  displayName: "DotNet Build $(ProjectFile) - $(BuildConfiguration)"
+  inputs:
+    command: 'build'
+    projects: '$(ProjectFile)'
+    arguments: '--configuration $(BuildConfiguration)'
+  enabled: true
+
+- task: NuGetCommand@2
+  displayName: 'NuGet Pack $(NuspecFile)'
+  inputs:
+    command: pack
+    packagesToPack: '$(NuspecFile)'
+    versioningScheme: byEnvVar
+    versionEnvVar: NupkgVersion
+  enabled: true
+
+- script: |
+   echo Nuget Push
+   dotnet nuget push $(Build.ArtifactStagingDirectory)/*.nupkg --api-key $(NugetOrgApiKey) --source https://api.nuget.org/v3/index.json
+  displayName: 'NuGet Push to nuget.org'
+  enabled: true
