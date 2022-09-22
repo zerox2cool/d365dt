@@ -6,8 +6,9 @@
 		<version>$version$</version>
 		<authors>Winson Choo</authors>
 		<owners>Winson Choo</owners>
-		<!--<licenseUrl>http://www.zerostudioinc.com/</licenseUrl>
-		<projectUrl>http://www.zerostudioinc.com/</projectUrl>-->
+		<license type="expression">MIT</license>
+		<!--<licenseUrl>https://github.com/zerox2cool/d365dt/blob/main/LICENSE</licenseUrl>-->
+		<projectUrl>https://github.com/zerox2cool/d365dt</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>D365 CE Deployment Tool - v1.1 - the tools and configuration schema will be install to ZD365DT folder of the .NET Framework project when the NuGet is install. NOTE: NuGet content files copy is not supported on a .NET Core project.</description>
 	</metadata>

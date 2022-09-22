@@ -6,8 +6,9 @@
 		<version>$version$</version>
 		<authors>Winson Choo</authors>
 		<owners>Winson Choo</owners>
-		<!--<licenseUrl>http://www.zerostudioinc.com/</licenseUrl>
-		<projectUrl>http://www.zerostudioinc.com/</projectUrl>-->
+		<license type="expression">MIT</license>
+		<!--<licenseUrl>https://github.com/zerox2cool/d365dt/blob/main/LICENSE</licenseUrl>-->
+		<projectUrl>https://github.com/zerox2cool/d365dt</projectUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>A library of icons (legacy 16x16, legacy 32x32 and SVG - vector for unified interface) that can be used for custom D365 CE entities. SVG Icons made by www.flaticon.com/authors/freepik from www.flaticon.com. The icons will be install to ZD365DT-Icons folder of the .NET Framework project when the NuGet is install. NOTE: NuGet content files copy is not supported on a .NET Core project.</description>
 	</metadata>

@@ -1,7 +1,7 @@
-﻿v1.1.0.9
+﻿v1.1.0.10
 
 Updated to .NET Framework 4.6.2.
-Updated CRM SDK to v9.2.
+Updated CRM SDK to v9.0.2.3
 Updated connection string to use OAuth and deprecate Office365 when connecting to D365 CDS.
 Added CrmSvcUtilExt DLL as part of the tool. Updated the CrmSvcUtil config to include connection string.
 Updated to utilize the latest ILMerge assembly from nuget.
@@ -30,3 +30,4 @@ Updated to latest CRM SDK v9.0.2.42
 Added logic to auto-generate relationship name for custom lookup columns when no value is provided.
 Added support for rollup view update on a lookup relationship.
 Updated XSD schema name.
+Updated to latest CRM SDK v9.0.2.45
