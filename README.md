@@ -9,10 +9,12 @@ The packages are publish to nuget.org via Azure DevOps Build.
 [ZD365.DeploymentTool.Icons](https://www.nuget.org/packages/ZD365.DeploymentTool.Icons)
 
 # Release Notes
-## v1.1.0.10 - 22-Sep-2022
+## v1.1.0.10
+22-Sep-2022
 - Updated to latest CRM SDK v9.0.2.45
 
-## v1.1.0.9 - 21-Mar-2022
+## v1.1.0.9
+21-Mar-2022
 - Updated to .NET Framework 4.6.2.
 - Updated CRM SDK to v9.0.2.3
 - Updated connection string to use OAuth and deprecate Office365 when connecting to D365 CDS.
