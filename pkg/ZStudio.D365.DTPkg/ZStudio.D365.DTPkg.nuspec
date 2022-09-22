@@ -5,7 +5,6 @@
 		<title>ZD365.DeploymentTool</title>
 		<version>$version$</version>
 		<authors>Winson Choo</authors>
-		<owners>Winson Choo</owners>
 		<license type="expression">MIT</license>
 		<!--<licenseUrl>https://github.com/zerox2cool/d365dt/blob/main/LICENSE</licenseUrl>-->
 		<projectUrl>https://github.com/zerox2cool/d365dt</projectUrl>
