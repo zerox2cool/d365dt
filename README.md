@@ -9,6 +9,10 @@ The packages are publish to nuget.org via Azure DevOps Build.
 [ZD365.DeploymentTool.Icons](https://www.nuget.org/packages/ZD365.DeploymentTool.Icons)
 
 # Release Notes
+## v1.1.0.11
+28-Sep-2022
+- Fix the name of the primary field schema name for an entity that will be created as a custom activity.
+
 ## v1.1.0.10
 22-Sep-2022
 - Updated to latest CRM SDK v9.0.2.45

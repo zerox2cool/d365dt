@@ -518,7 +518,7 @@ namespace ZD365DT.DeploymentTool.Utils.CrmMetadata
         public int Length { get; set; }
         public int LanguageCode { get; set; }
 
-        public string FieldRequirement { private get; set; }
+        public string FieldRequirement { get; set; }
         public bool IsValidForAdvancedFind { get; set; }
         public bool IsAuditEnabled { get; set; }
 

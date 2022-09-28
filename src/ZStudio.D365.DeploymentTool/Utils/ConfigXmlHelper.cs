@@ -425,6 +425,7 @@ namespace ZD365DT.DeploymentTool.Utils
             {
                 //check if this is a OOTB entity
                 bool isSystem = GetXmlNodeAttributeBool(en, ConfigXml.Entity.Attribute.ISSYSTEM);
+                bool isPrimaryFieldSystem = isSystem;
 
                 CrmEntity crmentity = new CrmEntity()
                 {
@@ -476,7 +477,7 @@ namespace ZD365DT.DeploymentTool.Utils
                     PrimaryField = new CrmPrimaryField()
                     {
                         LanguageCode = languageCode,
-                        Name = isSystem == false ? string.Format(CUSTOM_SCHEMANAME_FORMAT, customizationPrefix, GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.NAME, nsmgr)) : GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.NAME, nsmgr),
+                        Name = isPrimaryFieldSystem == false ? string.Format(CUSTOM_SCHEMANAME_FORMAT, customizationPrefix, GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.NAME, nsmgr)) : GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.NAME, nsmgr),
                         DisplayName = GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.DISPLAYNAME, nsmgr),
                         Description = GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.DESCRIPTION, nsmgr, string.Empty),
                         Length = GetXmlNodeAttributeInt32(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.LENGTH, nsmgr),
@@ -487,9 +488,16 @@ namespace ZD365DT.DeploymentTool.Utils
                     Attributes = new CrmAttributeCollection(),
                 };
 
+                //check if the entity is declared as an activity, the primary field will always be created as system field with the name subject
+                if (crmentity.IsActivityEntity)
+                {
+                    isPrimaryFieldSystem = true;
+                    crmentity.PrimaryField.Name = "subject";
+                }
+
                 //validate entity schema name length
                 if (crmentity.Name.Length > customizationPrefix.Length + 39)
-                    throw new Exception("The maximum length of the entity name is 39.");
+                throw new Exception("The maximum length of the entity name is 39.");
 
                 //set schema name to logical name
                 crmentity.SchemaName = crmentity.Name;
@@ -508,16 +516,16 @@ namespace ZD365DT.DeploymentTool.Utils
                 CrmAttribute primaryField = new CrmAttribute()
                 {
                     IsPrimaryField = true,
-                    IsSystem = isSystem,
-                    LanguageCode = languageCode,
-                    Name = isSystem == false ? string.Format(CUSTOM_SCHEMANAME_FORMAT, customizationPrefix, GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.NAME, nsmgr)) : GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.NAME, nsmgr),
-                    DisplayName = GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.DISPLAYNAME, nsmgr),
-                    Description = GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.DESCRIPTION, nsmgr, string.Empty),
+                    IsSystem = isPrimaryFieldSystem,
+                    LanguageCode = crmentity.PrimaryField.LanguageCode,
+                    Name = crmentity.PrimaryField.Name,
+                    DisplayName = crmentity.PrimaryField.DisplayName,
+                    Description = crmentity.PrimaryField.Description,
                     DataType = "SingleText",
-                    MaxLength = GetXmlNodeAttributeInt32(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.LENGTH, nsmgr),
-                    FieldRequirement = GetXmlNodeAttribute(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.FIELDREQUIREMENT, nsmgr),
-                    IsValidForAdvancedFind = GetXmlNodeAttributeBool(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.ISVALIDFORADVANCEDFIND, nsmgr, true),
-                    IsAuditEnabled = GetXmlNodeAttributeBool(en, ConfigXml.Entity.Element.PRIMARYFIELD, ConfigXml.PrimaryField.Attribute.ISAUDITENABLED, nsmgr, true),
+                    MaxLength = crmentity.PrimaryField.Length,
+                    FieldRequirement = crmentity.PrimaryField.FieldRequirement,
+                    IsValidForAdvancedFind = crmentity.PrimaryField.IsValidForAdvancedFind,
+                    IsAuditEnabled = crmentity.PrimaryField.IsAuditEnabled,
                 };
                 //set schema name to logical name
                 primaryField.SchemaName = primaryField.Name;
