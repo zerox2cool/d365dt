@@ -1,4 +1,4 @@
-﻿v1.1.0.11 - 28-Sep-2022
+﻿v1.1.0.12 - 28-Sep-2022
 - Fix the name of the primary field schema name for an entity that will be created as a custom activity.
 
 v1.1.0.10 - 22-Sep-2022
