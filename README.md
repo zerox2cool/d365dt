@@ -1,5 +1,5 @@
 # Introduction 
-D365 CE Deployment Tool, up to date for D365 v9.2.
+D365 CE Deployment Tool, up to date for D365 v9.2. This version uses XML for configurations, a new version 2 is being develop.
 
 # Packages
 The packages are publish to nuget.org via Azure DevOps Build.

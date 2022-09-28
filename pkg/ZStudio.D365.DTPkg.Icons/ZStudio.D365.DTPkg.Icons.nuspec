@@ -4,7 +4,7 @@
 		<id>ZD365.DeploymentTool.Icons</id>
 		<title>ZD365.DeploymentTool.Icons</title>
 		<version>$version$</version>
-		<authors>Winson Choo</authors>
+		<authors>Winson C</authors>
 		<license type="expression">MIT</license>
 		<!--<licenseUrl>https://github.com/zerox2cool/d365dt/blob/main/LICENSE</licenseUrl>-->
 		<projectUrl>https://github.com/zerox2cool/d365dt</projectUrl>
