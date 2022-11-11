@@ -1360,7 +1360,7 @@ namespace ZD365DT.DeploymentTool.Utils
                    };
                 RetrieveFormattedImportJobResultsResponse importLogResponse = (RetrieveFormattedImportJobResultsResponse)_service.Execute(importLogRequest);
                 DateTime time = DateTime.Now;
-                string format = "yyyy_MM_dd__HH_mm";
+                string format = "yyyyMMddHHmm";
                 string logFile = Path.Combine(Logger.BackupDirectory, Path.GetFileNameWithoutExtension(path) + "_" + time.ToString(format) + ".xml");
 
                 File.WriteAllText(logFile, importLogResponse.FormattedResults);

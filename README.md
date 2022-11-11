@@ -9,6 +9,11 @@ The packages are publish to nuget.org via Azure DevOps Build.
 [ZD365.DeploymentTool.Icons](https://www.nuget.org/packages/ZD365.DeploymentTool.Icons)
 
 # Release Notes
+## v1.1.0.13
+11-Nov-2022
+- Fix backup and logging folder and filename issue, additional space was created in the folder name which result in folder not found error.
+- Updated to latest CRM SDK v9.0.2.46
+
 ## v1.1.0.12
 28-Sep-2022
 - Fix the name of the primary field schema name for an entity that will be created as a custom activity.

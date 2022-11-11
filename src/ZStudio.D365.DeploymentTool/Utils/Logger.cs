@@ -24,7 +24,7 @@ namespace ZD365DT.DeploymentTool.Utils
         private const string WARNING_MESSAGE = "Warning";
         private const string ERROR_MESSAGE = "  Error";
         private const string TIME_FORMAT = "HH:mm:ss";
-        private const string DATE_FORMAT = "yyyy-MM-dd HH.mm.ss";
+        private const string DATE_FORMAT = "yyyyMMddHHmmss";
         private static readonly char[] TRIM_CHARS = new char[] { ':', ' ', '@', '"' };
         private static string CONFIG = "config";
         private static readonly string backupDirectory;
@@ -69,8 +69,8 @@ namespace ZD365DT.DeploymentTool.Utils
                     //if reading from DeployCrm failed, pass in null and use the application config
                     config = DeploymentConfigurationSection.ReadFromConfigFile(null);
                 }
-                //string directoryName = String.Format("{0} {1}", DateTime.Now.ToString(DATE_FORMAT), config.CrmConnection.OrganizationName);
-                string directoryName = String.Format("{0} {1}", DateTime.Now.ToString(DATE_FORMAT),string.Empty);
+                //string directoryName = string.Format("{0} {1}", DateTime.Now.ToString(DATE_FORMAT), config.CrmConnection.OrganizationName);
+                string directoryName = $"{DateTime.Now.ToString(DATE_FORMAT)}";
                 string backupdir = string.Empty;
 
                 if (config == null || config.LoggingDirectory == null)
