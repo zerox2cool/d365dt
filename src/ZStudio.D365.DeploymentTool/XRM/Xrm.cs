@@ -364,6 +364,30 @@ public partial class ActivityPointer : Microsoft.Xrm.Sdk.Entity, System.Componen
 	}
 	
 	/// <summary>
+	/// Formatted scheduled end time of the activity.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("formattedscheduledend")]
+	public System.Nullable<System.DateTime> FormattedScheduledEnd
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("formattedscheduledend");
+		}
+	}
+	
+	/// <summary>
+	/// Formatted scheduled start time of the activity.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("formattedscheduledstart")]
+	public System.Nullable<System.DateTime> FormattedScheduledStart
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("formattedscheduledstart");
+		}
+	}
+	
+	/// <summary>
 	/// Type of instance of a recurring series.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("instancetypecode")]
@@ -7328,6 +7352,30 @@ public partial class DuplicateRule : Microsoft.Xrm.Sdk.Entity, System.ComponentM
 	}
 	
 	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("componentidunique")]
+	public System.Nullable<System.Guid> ComponentIdUnique
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.Guid>>("componentidunique");
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("componentstate")]
+	public Microsoft.Xrm.Sdk.OptionSetValue ComponentState
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("componentstate");
+		}
+	}
+	
+	/// <summary>
 	/// Unique identifier of the user who created the duplicate detection rule.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
@@ -7457,6 +7505,36 @@ public partial class DuplicateRule : Microsoft.Xrm.Sdk.Entity, System.ComponentM
 	}
 	
 	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("iscustomizable")]
+	public Microsoft.Xrm.Sdk.BooleanManagedProperty IsCustomizable
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.BooleanManagedProperty>("iscustomizable");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsCustomizable");
+			this.SetAttributeValue("iscustomizable", value);
+			this.OnPropertyChanged("IsCustomizable");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether the solution component is part of a managed solution.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ismanaged")]
+	public System.Nullable<bool> IsManaged
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("ismanaged");
+		}
+	}
+	
+	/// <summary>
 	/// Database table that stores match codes for potential duplicate records.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("matchingentitymatchcodetable")]
@@ -7553,6 +7631,18 @@ public partial class DuplicateRule : Microsoft.Xrm.Sdk.Entity, System.ComponentM
 	}
 	
 	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overwritetime")]
+	public System.Nullable<System.DateTime> OverwriteTime
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("overwritetime");
+		}
+	}
+	
+	/// <summary>
 	/// Unique identifier of the user or team who owns the duplicate detection rule.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
@@ -7603,6 +7693,18 @@ public partial class DuplicateRule : Microsoft.Xrm.Sdk.Entity, System.ComponentM
 		get
 		{
 			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("owninguser");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier of the associated solution.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("solutionid")]
+	public System.Nullable<System.Guid> SolutionId
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.Guid>>("solutionid");
 		}
 	}
 	
@@ -7886,6 +7988,30 @@ public partial class DuplicateRuleCondition : Microsoft.Xrm.Sdk.Entity, System.C
 	}
 	
 	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("componentidunique")]
+	public System.Nullable<System.Guid> ComponentIdUnique
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.Guid>>("componentidunique");
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("componentstate")]
+	public Microsoft.Xrm.Sdk.OptionSetValue ComponentState
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("componentstate");
+		}
+	}
+	
+	/// <summary>
 	/// Unique identifier of the user who created the condition.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
@@ -7975,6 +8101,36 @@ public partial class DuplicateRuleCondition : Microsoft.Xrm.Sdk.Entity, System.C
 			this.OnPropertyChanging("IgnoreBlankValues");
 			this.SetAttributeValue("ignoreblankvalues", value);
 			this.OnPropertyChanged("IgnoreBlankValues");
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("iscustomizable")]
+	public Microsoft.Xrm.Sdk.BooleanManagedProperty IsCustomizable
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.BooleanManagedProperty>("iscustomizable");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsCustomizable");
+			this.SetAttributeValue("iscustomizable", value);
+			this.OnPropertyChanged("IsCustomizable");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether the solution component is part of a managed solution.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ismanaged")]
+	public System.Nullable<bool> IsManaged
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("ismanaged");
 		}
 	}
 	
@@ -8069,6 +8225,18 @@ public partial class DuplicateRuleCondition : Microsoft.Xrm.Sdk.Entity, System.C
 	}
 	
 	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overwritetime")]
+	public System.Nullable<System.DateTime> OverwriteTime
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("overwritetime");
+		}
+	}
+	
+	/// <summary>
 	/// Unique identifier of the user or team who owns the duplicate rule condition.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ownerid")]
@@ -8119,6 +8287,18 @@ public partial class DuplicateRuleCondition : Microsoft.Xrm.Sdk.Entity, System.C
 			this.OnPropertyChanging("RegardingObjectId");
 			this.SetAttributeValue("regardingobjectid", value);
 			this.OnPropertyChanged("RegardingObjectId");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier of the associated solution.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("solutionid")]
+	public System.Nullable<System.Guid> SolutionId
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.Guid>>("solutionid");
 		}
 	}
 	
@@ -13290,6 +13470,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Whether to show only activities configured in this app or all activities in the 'New activity' button.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("activitytypefilterv2")]
+	public System.Nullable<bool> ActivityTypeFilterV2
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("activitytypefilterv2");
+		}
+		set
+		{
+			this.OnPropertyChanging("ActivityTypeFilterV2");
+			this.SetAttributeValue("activitytypefilterv2", value);
+			this.OnPropertyChanged("ActivityTypeFilterV2");
+		}
+	}
+	
+	/// <summary>
 	/// Flag to indicate if the display column options on a view in model-driven apps is enabled
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("advancedcolumneditorenabled")]
@@ -13362,6 +13560,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Enables advanced lookup in grid edit filter panel
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("advancedlookupineditfilter")]
+	public System.Nullable<int> AdvancedLookupInEditFilter
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<int>>("advancedlookupineditfilter");
+		}
+		set
+		{
+			this.OnPropertyChanging("AdvancedLookupInEditFilter");
+			this.SetAttributeValue("advancedlookupineditfilter", value);
+			this.OnPropertyChanged("AdvancedLookupInEditFilter");
+		}
+	}
+	
+	/// <summary>
 	/// Indicates whether background address book synchronization in Microsoft Office Outlook is allowed.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("allowaddressbooksyncs")]
@@ -13376,6 +13592,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("AllowAddressBookSyncs");
 			this.SetAttributeValue("allowaddressbooksyncs", value);
 			this.OnPropertyChanged("AllowAddressBookSyncs");
+		}
+	}
+	
+	/// <summary>
+	/// Information that specifies whether all application users are allowed to access the environment
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("allowapplicationuseraccess")]
+	public System.Nullable<bool> AllowApplicationUserAccess
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("allowapplicationuseraccess");
+		}
+		set
+		{
+			this.OnPropertyChanging("AllowApplicationUserAccess");
+			this.SetAttributeValue("allowapplicationuseraccess", value);
+			this.OnPropertyChanged("AllowApplicationUserAccess");
 		}
 	}
 	
@@ -13452,6 +13686,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Information that specifies the range of IP addresses that are in allow list for the firewall.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("allowediprangeforfirewall")]
+	public string AllowedIpRangeForFirewall
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("allowediprangeforfirewall");
+		}
+		set
+		{
+			this.OnPropertyChanging("AllowedIpRangeForFirewall");
+			this.SetAttributeValue("allowediprangeforfirewall", value);
+			this.OnPropertyChanged("AllowedIpRangeForFirewall");
+		}
+	}
+	
+	/// <summary>
 	/// Indicates whether auditing of changes to entity is allowed when no attributes have changed.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("allowentityonlyaudit")]
@@ -13466,6 +13718,42 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("AllowEntityOnlyAudit");
 			this.SetAttributeValue("allowentityonlyaudit", value);
 			this.OnPropertyChanged("AllowEntityOnlyAudit");
+		}
+	}
+	
+	/// <summary>
+	/// Enables ends-with searches in grids with the use of a leading wildcard on all tables in the environment
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("allowleadingwildcardsingridsearch")]
+	public System.Nullable<bool> AllowLeadingWildcardsInGridSearch
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("allowleadingwildcardsingridsearch");
+		}
+		set
+		{
+			this.OnPropertyChanging("AllowLeadingWildcardsInGridSearch");
+			this.SetAttributeValue("allowleadingwildcardsingridsearch", value);
+			this.OnPropertyChanged("AllowLeadingWildcardsInGridSearch");
+		}
+	}
+	
+	/// <summary>
+	/// Enables ends-with searches in grids with the use of a leading wildcard on all tables in the environment
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("allowleadingwildcardsinquickfind")]
+	public System.Nullable<int> AllowLeadingWildcardsInQuickFind
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<int>>("allowleadingwildcardsinquickfind");
+		}
+		set
+		{
+			this.OnPropertyChanging("AllowLeadingWildcardsInQuickFind");
+			this.SetAttributeValue("allowleadingwildcardsinquickfind", value);
+			this.OnPropertyChanged("AllowLeadingWildcardsInQuickFind");
 		}
 	}
 	
@@ -13520,6 +13808,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("AllowMarketingEmailExecution");
 			this.SetAttributeValue("allowmarketingemailexecution", value);
 			this.OnPropertyChanged("AllowMarketingEmailExecution");
+		}
+	}
+	
+	/// <summary>
+	/// Information that specifies whether Microsoft Trusted Service Tags are allowed
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("allowmicrosofttrustedservicetags")]
+	public System.Nullable<bool> AllowMicrosoftTrustedServiceTags
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("allowmicrosofttrustedservicetags");
+		}
+		set
+		{
+			this.OnPropertyChanging("AllowMicrosoftTrustedServiceTags");
+			this.SetAttributeValue("allowmicrosofttrustedservicetags", value);
+			this.OnPropertyChanged("AllowMicrosoftTrustedServiceTags");
 		}
 	}
 	
@@ -13736,6 +14042,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("AppointmentWithTeamsMeeting");
 			this.SetAttributeValue("appointmentwithteamsmeeting", value);
 			this.OnPropertyChanged("AppointmentWithTeamsMeeting");
+		}
+	}
+	
+	/// <summary>
+	/// Whether Teams meetings experience for appointments is enabled.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("appointmentwithteamsmeetingv2")]
+	public System.Nullable<bool> AppointmentWithTeamsMeetingV2
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("appointmentwithteamsmeetingv2");
+		}
+		set
+		{
+			this.OnPropertyChanging("AppointmentWithTeamsMeetingV2");
+			this.SetAttributeValue("appointmentwithteamsmeetingv2", value);
+			this.OnPropertyChanged("AppointmentWithTeamsMeetingV2");
 		}
 	}
 	
@@ -14142,7 +14466,7 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
-	/// CSP Policy configuration for Canvas apps.
+	/// Content Security Policy configuration for Canvas apps.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("contentsecuritypolicyconfigurationforcanvas")]
 	public string ContentSecurityPolicyConfigurationForCanvas
@@ -14156,6 +14480,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("ContentSecurityPolicyConfigurationForCanvas");
 			this.SetAttributeValue("contentsecuritypolicyconfigurationforcanvas", value);
 			this.OnPropertyChanged("ContentSecurityPolicyConfigurationForCanvas");
+		}
+	}
+	
+	/// <summary>
+	/// Content Security Policy Report Uri.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("contentsecuritypolicyreporturi")]
+	public string ContentSecurityPolicyReportUri
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("contentsecuritypolicyreporturi");
+		}
+		set
+		{
+			this.OnPropertyChanging("ContentSecurityPolicyReportUri");
+			this.SetAttributeValue("contentsecuritypolicyreporturi", value);
+			this.OnPropertyChanged("ContentSecurityPolicyReportUri");
 		}
 	}
 	
@@ -14608,6 +14950,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Days of inactivity before sync is disabled for a Teams Chat.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("daysbeforeinactiveteamschatsyncdisabled")]
+	public System.Nullable<int> DaysBeforeInactiveTeamsChatSyncDisabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<int>>("daysbeforeinactiveteamschatsyncdisabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("DaysBeforeInactiveTeamsChatSyncDisabled");
+			this.SetAttributeValue("daysbeforeinactiveteamschatsyncdisabled", value);
+			this.OnPropertyChanged("DaysBeforeInactiveTeamsChatSyncDisabled");
+		}
+	}
+	
+	/// <summary>
 	/// The maximum value for the Mobile Offline setting Days since record last modified
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dayssincerecordlastmodifiedmaxvalue")]
@@ -14920,6 +15280,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Indicates the selected default view in the enhanced insert e-mail template experience..
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailtemplatedefaultview")]
+	public Microsoft.Xrm.Sdk.OptionSetValue EmailTemplateDefaultView
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("emailtemplatedefaultview");
+		}
+		set
+		{
+			this.OnPropertyChanging("EmailTemplateDefaultView");
+			this.SetAttributeValue("emailtemplatedefaultview", value);
+			this.OnPropertyChanged("EmailTemplateDefaultView");
+		}
+	}
+	
+	/// <summary>
 	/// Determines whether records merged through the merge dialog in UCI are merged asynchronously
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enableasyncmergeapiforuci")]
@@ -14956,6 +15334,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Indicates whether to Allow calendar export import with SLA.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enablecalendarimportexport")]
+	public System.Nullable<bool> EnableCalendarImportExport
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("enablecalendarimportexport");
+		}
+		set
+		{
+			this.OnPropertyChanging("EnableCalendarImportExport");
+			this.SetAttributeValue("enablecalendarimportexport", value);
+			this.OnPropertyChanged("EnableCalendarImportExport");
+		}
+	}
+	
+	/// <summary>
 	/// Note: By enabling this feature, you will also enable the automatic creation of enviornment variables when adding data sources for your apps.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enablecanvasappsinsolutionsbydefault")]
@@ -14974,6 +15370,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Indicates whether the creation of flows is within a solution by default for this organization.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enableflowsinsolutionbydefault")]
+	public System.Nullable<bool> EnableFlowsInSolutionByDefault
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("enableflowsinsolutionbydefault");
+		}
+		set
+		{
+			this.OnPropertyChanging("EnableFlowsInSolutionByDefault");
+			this.SetAttributeValue("enableflowsinsolutionbydefault", value);
+			this.OnPropertyChanged("EnableFlowsInSolutionByDefault");
+		}
+	}
+	
+	/// <summary>
 	/// Enable Integration with Immersive Skype
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enableimmersiveskypeintegration")]
@@ -14988,6 +15402,42 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("EnableImmersiveSkypeIntegration");
 			this.SetAttributeValue("enableimmersiveskypeintegration", value);
 			this.OnPropertyChanged("EnableImmersiveSkypeIntegration");
+		}
+	}
+	
+	/// <summary>
+	/// Information that specifies whether IP based cookie binding is enabled
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enableipbasedcookiebinding")]
+	public System.Nullable<bool> EnableIpBasedCookieBinding
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("enableipbasedcookiebinding");
+		}
+		set
+		{
+			this.OnPropertyChanging("EnableIpBasedCookieBinding");
+			this.SetAttributeValue("enableipbasedcookiebinding", value);
+			this.OnPropertyChanged("EnableIpBasedCookieBinding");
+		}
+	}
+	
+	/// <summary>
+	/// Information that specifies whether IP based firewall rule is enabled
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enableipbasedfirewallrule")]
+	public System.Nullable<bool> EnableIpBasedFirewallRule
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("enableipbasedfirewallrule");
+		}
+		set
+		{
+			this.OnPropertyChanging("EnableIpBasedFirewallRule");
+			this.SetAttributeValue("enableipbasedfirewallrule", value);
+			this.OnPropertyChanged("EnableIpBasedFirewallRule");
 		}
 	}
 	
@@ -15136,6 +15586,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Leave empty to use default setting. Set to on/off to enable/disable CDN for UCI.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enableunifiedclientcdn")]
+	public System.Nullable<bool> EnableUnifiedClientCDN
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("enableunifiedclientcdn");
+		}
+		set
+		{
+			this.OnPropertyChanging("EnableUnifiedClientCDN");
+			this.SetAttributeValue("enableunifiedclientcdn", value);
+			this.OnPropertyChanged("EnableUnifiedClientCDN");
+		}
+	}
+	
+	/// <summary>
 	/// Enable site map and commanding update
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enableunifiedinterfaceshellrefresh")]
@@ -15168,6 +15636,42 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("EnforceReadOnlyPlugins");
 			this.SetAttributeValue("enforcereadonlyplugins", value);
 			this.OnPropertyChanged("EnforceReadOnlyPlugins");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether validation enforcement has been enabled for this organization's apps.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enforcevalidations")]
+	public System.Nullable<bool> EnforceValidations
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("enforcevalidations");
+		}
+		set
+		{
+			this.OnPropertyChanging("EnforceValidations");
+			this.SetAttributeValue("enforcevalidations", value);
+			this.OnPropertyChanged("EnforceValidations");
+		}
+	}
+	
+	/// <summary>
+	/// JSON string containing settings for enhanced add products experience in Sales
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("enhancedaddproductssettings")]
+	public string EnhancedAddProductsSettings
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("enhancedaddproductssettings");
+		}
+		set
+		{
+			this.OnPropertyChanging("EnhancedAddProductsSettings");
+			this.SetAttributeValue("enhancedaddproductssettings", value);
+			this.OnPropertyChanged("EnhancedAddProductsSettings");
 		}
 	}
 	
@@ -16205,6 +16709,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Determines whether users can make use of basic Geospatial featuers in Canvas apps.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isbasicgeospatialintegrationenabled")]
+	public System.Nullable<bool> IsBasicGeospatialIntegrationEnabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("isbasicgeospatialintegrationenabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsBasicGeospatialIntegrationEnabled");
+			this.SetAttributeValue("isbasicgeospatialintegrationenabled", value);
+			this.OnPropertyChanged("IsBasicGeospatialIntegrationEnabled");
+		}
+	}
+	
+	/// <summary>
 	/// Information that specifies whether BPF Entity Customization Feature is enabled
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isbpfentitycustomizationfeatureenabled")]
@@ -16417,6 +16939,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("IsDelveActionHubIntegrationEnabled");
 			this.SetAttributeValue("isdelveactionhubintegrationenabled", value);
 			this.OnPropertyChanged("IsDelveActionHubIntegrationEnabled");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether v2 schema for Desktop Flows is enabled in this organization.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isdesktopflowschemav2enabled")]
+	public System.Nullable<bool> IsDesktopFlowSchemaV2Enabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("isdesktopflowschemav2enabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsDesktopFlowSchemaV2Enabled");
+			this.SetAttributeValue("isdesktopflowschemav2enabled", value);
+			this.OnPropertyChanged("IsDesktopFlowSchemaV2Enabled");
 		}
 	}
 	
@@ -16717,6 +17257,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("IsHierarchicalSecurityModelEnabled");
 			this.SetAttributeValue("ishierarchicalsecuritymodelenabled", value);
 			this.OnPropertyChanged("IsHierarchicalSecurityModelEnabled");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether data collection for ideas in canvas PowerApps has been enabled.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isideasdatacollectionenabled")]
+	public System.Nullable<bool> IsIdeasDataCollectionEnabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("isideasdatacollectionenabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsIdeasDataCollectionEnabled");
+			this.SetAttributeValue("isideasdatacollectionenabled", value);
+			this.OnPropertyChanged("IsIdeasDataCollectionEnabled");
 		}
 	}
 	
@@ -17221,6 +17779,78 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("IsRichTextNotesEnabled");
 			this.SetAttributeValue("isrichtextnotesenabled", value);
 			this.OnPropertyChanged("IsRichTextNotesEnabled");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether AAD Join for RPA Autoscale is enabled in this organization..
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isrpaautoscaleaadjoinenabled")]
+	public System.Nullable<bool> IsRpaAutoscaleAadJoinEnabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("isrpaautoscaleaadjoinenabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsRpaAutoscaleAadJoinEnabled");
+			this.SetAttributeValue("isrpaautoscaleaadjoinenabled", value);
+			this.OnPropertyChanged("IsRpaAutoscaleAadJoinEnabled");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether Autoscale feature for RPA is enabled in this organization.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isrpaautoscaleenabled")]
+	public System.Nullable<bool> IsRpaAutoscaleEnabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("isrpaautoscaleenabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsRpaAutoscaleEnabled");
+			this.SetAttributeValue("isrpaautoscaleenabled", value);
+			this.OnPropertyChanged("IsRpaAutoscaleEnabled");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether RPA Box feature is enabled in this organization.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isrpaboxenabled")]
+	public System.Nullable<bool> IsRpaBoxEnabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("isrpaboxenabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsRpaBoxEnabled");
+			this.SetAttributeValue("isrpaboxenabled", value);
+			this.OnPropertyChanged("IsRpaBoxEnabled");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether Unattended runs feature for RPA is enabled in this organization.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("isrpaunattendedenabled")]
+	public System.Nullable<bool> IsRpaUnattendedEnabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("isrpaunattendedenabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsRpaUnattendedEnabled");
+			this.SetAttributeValue("isrpaunattendedenabled", value);
+			this.OnPropertyChanged("IsRpaUnattendedEnabled");
 		}
 	}
 	
@@ -17820,42 +18450,6 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
-	/// Maximum Rollup Fields Per Entity
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("maxrollupfieldsperentity")]
-	public System.Nullable<int> MaxRollupFieldsPerEntity
-	{
-		get
-		{
-			return this.GetAttributeValue<System.Nullable<int>>("maxrollupfieldsperentity");
-		}
-		set
-		{
-			this.OnPropertyChanging("MaxRollupFieldsPerEntity");
-			this.SetAttributeValue("maxrollupfieldsperentity", value);
-			this.OnPropertyChanged("MaxRollupFieldsPerEntity");
-		}
-	}
-	
-	/// <summary>
-	/// Maximum Rollup Fields Per Organization
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("maxrollupfieldsperorg")]
-	public System.Nullable<int> MaxRollupFieldsPerOrg
-	{
-		get
-		{
-			return this.GetAttributeValue<System.Nullable<int>>("maxrollupfieldsperorg");
-		}
-		set
-		{
-			this.OnPropertyChanging("MaxRollupFieldsPerOrg");
-			this.SetAttributeValue("maxrollupfieldsperorg", value);
-			this.OnPropertyChanged("MaxRollupFieldsPerOrg");
-		}
-	}
-	
-	/// <summary>
 	/// 
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("maxslaitemspersla")]
@@ -18060,6 +18654,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Indicates whether coauthoring is enabled in modern app designer
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modernappdesignercoauthoringenabled")]
+	public System.Nullable<bool> ModernAppDesignerCoauthoringEnabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("modernappdesignercoauthoringenabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("ModernAppDesignerCoauthoringEnabled");
+			this.SetAttributeValue("modernappdesignercoauthoringenabled", value);
+			this.OnPropertyChanged("ModernAppDesignerCoauthoringEnabled");
+		}
+	}
+	
+	/// <summary>
 	/// Unique identifier of the user who last modified the organization.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
@@ -18110,6 +18722,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("Name");
 			this.SetAttributeValue("name", value);
 			this.OnPropertyChanged("Name");
+		}
+	}
+	
+	/// <summary>
+	/// Enables Natural Language Assist Filter.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("naturallanguageassistfilter")]
+	public System.Nullable<bool> NaturalLanguageAssistFilter
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("naturallanguageassistfilter");
+		}
+		set
+		{
+			this.OnPropertyChanging("NaturalLanguageAssistFilter");
+			this.SetAttributeValue("naturallanguageassistfilter", value);
+			this.OnPropertyChanged("NaturalLanguageAssistFilter");
 		}
 	}
 	
@@ -18567,6 +19197,42 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("PostMessageWhitelistDomains");
 			this.SetAttributeValue("postmessagewhitelistdomains", value);
 			this.OnPropertyChanged("PostMessageWhitelistDomains");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether automatic permissions assignment to Power BI has been enabled for the organization
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("powerbiautomaticpermissionsassignment")]
+	public System.Nullable<bool> PowerBIAutomaticPermissionsAssignment
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("powerbiautomaticpermissionsassignment");
+		}
+		set
+		{
+			this.OnPropertyChanging("PowerBIAutomaticPermissionsAssignment");
+			this.SetAttributeValue("powerbiautomaticpermissionsassignment", value);
+			this.OnPropertyChanged("PowerBIAutomaticPermissionsAssignment");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether creation of Power BI components has been enabled for the organization
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("powerbicomponentscreate")]
+	public System.Nullable<bool> PowerBIComponentsCreate
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("powerbicomponentscreate");
+		}
+		set
+		{
+			this.OnPropertyChanging("PowerBIComponentsCreate");
+			this.SetAttributeValue("powerbicomponentscreate", value);
+			this.OnPropertyChanged("PowerBIComponentsCreate");
 		}
 	}
 	
@@ -19090,6 +19756,60 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("RiErrorStatus");
 			this.SetAttributeValue("rierrorstatus", value);
 			this.OnPropertyChanged("RiErrorStatus");
+		}
+	}
+	
+	/// <summary>
+	/// Disable the option to quick create new records and activities in the Sales mobile application
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("salesmobilequickcreatedisabled")]
+	public System.Nullable<bool> SalesMobileQuickCreateDisabled
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("salesmobilequickcreatedisabled");
+		}
+		set
+		{
+			this.OnPropertyChanging("SalesMobileQuickCreateDisabled");
+			this.SetAttributeValue("salesmobilequickcreatedisabled", value);
+			this.OnPropertyChanged("SalesMobileQuickCreateDisabled");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether Sales Mobile should use UCI forms for create
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("salesmobileuseuciformsforcreate")]
+	public System.Nullable<bool> SalesMobileUseUCIFormsForCreate
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("salesmobileuseuciformsforcreate");
+		}
+		set
+		{
+			this.OnPropertyChanging("SalesMobileUseUCIFormsForCreate");
+			this.SetAttributeValue("salesmobileuseuciformsforcreate", value);
+			this.OnPropertyChanged("SalesMobileUseUCIFormsForCreate");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether Sales Mobile should use UCI forms for view
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("salesmobileuseuciformsforview")]
+	public System.Nullable<bool> SalesMobileUseUCIFormsForView
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("salesmobileuseuciformsforview");
+		}
+		set
+		{
+			this.OnPropertyChanging("SalesMobileUseUCIFormsForView");
+			this.SetAttributeValue("salesmobileuseuciformsforview", value);
+			this.OnPropertyChanged("SalesMobileUseUCIFormsForView");
 		}
 	}
 	
@@ -19635,6 +20355,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// Controls the appearance of option to search over a single DV search indexed table in model-driven apps’ global search in the header.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("tablescopeddvsearchinapps")]
+	public System.Nullable<bool> TableScopedDVSearchInApps
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("tablescopeddvsearchinapps");
+		}
+		set
+		{
+			this.OnPropertyChanging("TableScopedDVSearchInApps");
+			this.SetAttributeValue("tablescopeddvsearchinapps", value);
+			this.OnPropertyChanged("TableScopedDVSearchInApps");
+		}
+	}
+	
+	/// <summary>
 	/// Maximum number of aggressive polling cycles executed for email auto-tagging when a new email is received.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("tagmaxaggressivecycles")]
@@ -19685,6 +20423,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 			this.OnPropertyChanging("TaskBasedFlowEnabled");
 			this.SetAttributeValue("taskbasedflowenabled", value);
 			this.OnPropertyChanged("TaskBasedFlowEnabled");
+		}
+	}
+	
+	/// <summary>
+	/// Information on whether Teams Chat Data Sync is enabled.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("teamschatdatasync")]
+	public System.Nullable<bool> TeamsChatDataSync
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("teamschatdatasync");
+		}
+		set
+		{
+			this.OnPropertyChanging("TeamsChatDataSync");
+			this.SetAttributeValue("teamschatdatasync", value);
+			this.OnPropertyChanged("TeamsChatDataSync");
 		}
 	}
 	
@@ -20129,6 +20885,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 		get
 		{
 			return this.GetAttributeValue<string>("v3calloutconfighash");
+		}
+	}
+	
+	/// <summary>
+	/// Validation mode for apps in this environment
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("validationmode")]
+	public Microsoft.Xrm.Sdk.OptionSetValue ValidationMode
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("validationmode");
+		}
+		set
+		{
+			this.OnPropertyChanging("ValidationMode");
+			this.SetAttributeValue("validationmode", value);
+			this.OnPropertyChanged("ValidationMode");
 		}
 	}
 	
@@ -25513,6 +26287,24 @@ public partial class Queue : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INo
 	}
 	
 	/// <summary>
+	/// 
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailsignature")]
+	public Microsoft.Xrm.Sdk.EntityReference EmailSignature
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("emailsignature");
+		}
+		set
+		{
+			this.OnPropertyChanging("EmailSignature");
+			this.SetAttributeValue("emailsignature", value);
+			this.OnPropertyChanged("EmailSignature");
+		}
+	}
+	
+	/// <summary>
 	/// This attribute is no longer used. The data is now in the Mailbox.UserName attribute.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("emailusername")]
@@ -25829,6 +26621,24 @@ public partial class Queue : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INo
 			this.OnPropertyChanging("msdyn_operatinghourid");
 			this.SetAttributeValue("msdyn_operatinghourid", value);
 			this.OnPropertyChanged("msdyn_operatinghourid");
+		}
+	}
+	
+	/// <summary>
+	/// Define overflow rules for work items before it enters queue
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_prequeueoverflowrulesetid")]
+	public Microsoft.Xrm.Sdk.EntityReference msdyn_prequeueoverflowrulesetid
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msdyn_prequeueoverflowrulesetid");
+		}
+		set
+		{
+			this.OnPropertyChanging("msdyn_prequeueoverflowrulesetid");
+			this.SetAttributeValue("msdyn_prequeueoverflowrulesetid", value);
+			this.OnPropertyChanged("msdyn_prequeueoverflowrulesetid");
 		}
 	}
 	
@@ -26959,6 +27769,18 @@ public partial class Report : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.IN
 	}
 	
 	/// <summary>
+	/// Contains the name of the Power Bi embedded report.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("powerbireportname")]
+	public string PowerBiReportName
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("powerbireportname");
+		}
+	}
+	
+	/// <summary>
 	/// For internal use only.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("queryinfo")]
@@ -27046,6 +27868,24 @@ public partial class Report : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.IN
 	}
 	
 	/// <summary>
+	/// Represents the status of the Report.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("reportstatus")]
+	public string ReportStatus
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("reportstatus");
+		}
+		set
+		{
+			this.OnPropertyChanging("ReportStatus");
+			this.SetAttributeValue("reportstatus", value);
+			this.OnPropertyChanged("ReportStatus");
+		}
+	}
+	
+	/// <summary>
 	/// Type of the report.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("reporttypecode")]
@@ -27060,6 +27900,24 @@ public partial class Report : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.IN
 			this.OnPropertyChanging("ReportTypeCode");
 			this.SetAttributeValue("reporttypecode", value);
 			this.OnPropertyChanged("ReportTypeCode");
+		}
+	}
+	
+	/// <summary>
+	/// Represents the version of a report.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("reportversion")]
+	public System.Nullable<int> ReportVersion
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<int>>("reportversion");
+		}
+		set
+		{
+			this.OnPropertyChanging("ReportVersion");
+			this.SetAttributeValue("reportversion", value);
+			this.OnPropertyChanged("ReportVersion");
 		}
 	}
 	
@@ -31852,6 +32710,24 @@ public partial class SdkMessageProcessingStep : Microsoft.Xrm.Sdk.Entity, System
 	}
 	
 	/// <summary>
+	/// Unique identifier for powerfxrule associated with SdkMessageProcessingStep.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("powerfxruleid")]
+	public Microsoft.Xrm.Sdk.EntityReference PowerfxRuleId
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("powerfxruleid");
+		}
+		set
+		{
+			this.OnPropertyChanging("PowerfxRuleId");
+			this.SetAttributeValue("powerfxruleid", value);
+			this.OnPropertyChanged("PowerfxRuleId");
+		}
+	}
+	
+	/// <summary>
 	/// Processing order within the stage.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("rank")]
@@ -34699,7 +35575,7 @@ public partial class StageSolutionUpload : Microsoft.Xrm.Sdk.Entity, System.Comp
 	
 	public const string EntityLogicalName = "stagesolutionupload";
 	
-	public const int EntityTypeCode = 10010;
+	public const int EntityTypeCode = 10006;
 	
 	public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 	
@@ -36763,42 +37639,6 @@ public partial class SystemUser : Microsoft.Xrm.Sdk.Entity, System.ComponentMode
 	}
 	
 	/// <summary>
-	/// Type of user - Application user or Bot application user
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_agentType")]
-	public Microsoft.Xrm.Sdk.OptionSetValue msdyn_AgentType
-	{
-		get
-		{
-			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_agentType");
-		}
-		set
-		{
-			this.OnPropertyChanging("msdyn_AgentType");
-			this.SetAttributeValue("msdyn_agentType", value);
-			this.OnPropertyChanged("msdyn_AgentType");
-		}
-	}
-	
-	/// <summary>
-	/// Application ID of the bot.
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_botapplicationid")]
-	public string msdyn_BotApplicationId
-	{
-		get
-		{
-			return this.GetAttributeValue<string>("msdyn_botapplicationid");
-		}
-		set
-		{
-			this.OnPropertyChanging("msdyn_BotApplicationId");
-			this.SetAttributeValue("msdyn_botapplicationid", value);
-			this.OnPropertyChanged("msdyn_BotApplicationId");
-		}
-	}
-	
-	/// <summary>
 	/// BOT User Description
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_botdescription")]
@@ -36835,42 +37675,6 @@ public partial class SystemUser : Microsoft.Xrm.Sdk.Entity, System.ComponentMode
 	}
 	
 	/// <summary>
-	/// Bot handle
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_bothandle")]
-	public string msdyn_bothandle
-	{
-		get
-		{
-			return this.GetAttributeValue<string>("msdyn_bothandle");
-		}
-		set
-		{
-			this.OnPropertyChanging("msdyn_bothandle");
-			this.SetAttributeValue("msdyn_bothandle", value);
-			this.OnPropertyChanged("msdyn_bothandle");
-		}
-	}
-	
-	/// <summary>
-	/// Indicates the type of bot
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_botprovider")]
-	public Microsoft.Xrm.Sdk.OptionSetValue msdyn_BotProvider
-	{
-		get
-		{
-			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("msdyn_botprovider");
-		}
-		set
-		{
-			this.OnPropertyChanging("msdyn_BotProvider");
-			this.SetAttributeValue("msdyn_botprovider", value);
-			this.OnPropertyChanged("msdyn_BotProvider");
-		}
-	}
-	
-	/// <summary>
 	/// Bot User Secret Keys
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_botsecretkeys")]
@@ -36903,42 +37707,6 @@ public partial class SystemUser : Microsoft.Xrm.Sdk.Entity, System.ComponentMode
 			this.OnPropertyChanging("msdyn_Capacity");
 			this.SetAttributeValue("msdyn_capacity", value);
 			this.OnPropertyChanged("msdyn_Capacity");
-		}
-	}
-	
-	/// <summary>
-	/// Cognitive Services Region
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_cognitiveservicesregion")]
-	public string msdyn_cognitiveservicesregion
-	{
-		get
-		{
-			return this.GetAttributeValue<string>("msdyn_cognitiveservicesregion");
-		}
-		set
-		{
-			this.OnPropertyChanging("msdyn_cognitiveservicesregion");
-			this.SetAttributeValue("msdyn_cognitiveservicesregion", value);
-			this.OnPropertyChanged("msdyn_cognitiveservicesregion");
-		}
-	}
-	
-	/// <summary>
-	/// Cognitive Services Subscription Key
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_cognitiveservicessubscriptionkey")]
-	public string msdyn_cognitiveservicessubscriptionkey
-	{
-		get
-		{
-			return this.GetAttributeValue<string>("msdyn_cognitiveservicessubscriptionkey");
-		}
-		set
-		{
-			this.OnPropertyChanging("msdyn_cognitiveservicessubscriptionkey");
-			this.SetAttributeValue("msdyn_cognitiveservicessubscriptionkey", value);
-			this.OnPropertyChanged("msdyn_cognitiveservicessubscriptionkey");
 		}
 	}
 	
@@ -36997,38 +37765,20 @@ public partial class SystemUser : Microsoft.Xrm.Sdk.Entity, System.ComponentMode
 	}
 	
 	/// <summary>
-	/// Environment Id of the CDS environment that owns the bot user.
+	/// Check if swarm is enabled for the experts.
 	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_owningenvironmentid")]
-	public string msdyn_OwningEnvironmentId
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_isexpertenabledforswarm")]
+	public System.Nullable<bool> msdyn_isexpertenabledforswarm
 	{
 		get
 		{
-			return this.GetAttributeValue<string>("msdyn_owningenvironmentid");
+			return this.GetAttributeValue<System.Nullable<bool>>("msdyn_isexpertenabledforswarm");
 		}
 		set
 		{
-			this.OnPropertyChanging("msdyn_OwningEnvironmentId");
-			this.SetAttributeValue("msdyn_owningenvironmentid", value);
-			this.OnPropertyChanged("msdyn_OwningEnvironmentId");
-		}
-	}
-	
-	/// <summary>
-	/// 
-	/// </summary>
-	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("msdyn_phonenumberid")]
-	public Microsoft.Xrm.Sdk.EntityReference msdyn_phonenumberid
-	{
-		get
-		{
-			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("msdyn_phonenumberid");
-		}
-		set
-		{
-			this.OnPropertyChanging("msdyn_phonenumberid");
-			this.SetAttributeValue("msdyn_phonenumberid", value);
-			this.OnPropertyChanged("msdyn_phonenumberid");
+			this.OnPropertyChanging("msdyn_isexpertenabledforswarm");
+			this.SetAttributeValue("msdyn_isexpertenabledforswarm", value);
+			this.OnPropertyChanged("msdyn_isexpertenabledforswarm");
 		}
 	}
 	
@@ -47529,6 +48279,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 	}
 	
 	/// <summary>
+	/// Connection References related to this workflow.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("connectionreferences")]
+	public string ConnectionReferences
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("connectionreferences");
+		}
+		set
+		{
+			this.OnPropertyChanging("ConnectionReferences");
+			this.SetAttributeValue("connectionreferences", value);
+			this.OnPropertyChanged("ConnectionReferences");
+		}
+	}
+	
+	/// <summary>
 	/// Unique identifier of the user who created the process.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
@@ -47583,6 +48351,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 	}
 	
 	/// <summary>
+	/// Definition of the business logic of this workflow instance.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("definition")]
+	public string Definition
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("definition");
+		}
+		set
+		{
+			this.OnPropertyChanging("Definition");
+			this.SetAttributeValue("definition", value);
+			this.OnPropertyChanged("Definition");
+		}
+	}
+	
+	/// <summary>
 	/// Stage of the process when triggered on Delete.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("deletestage")]
@@ -47601,6 +48387,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 	}
 	
 	/// <summary>
+	/// Soft dependencies of this workflow instance.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dependencies")]
+	public string Dependencies
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("dependencies");
+		}
+		set
+		{
+			this.OnPropertyChanging("Dependencies");
+			this.SetAttributeValue("dependencies", value);
+			this.OnPropertyChanged("Dependencies");
+		}
+	}
+	
+	/// <summary>
 	/// Description of the process.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("description")]
@@ -47615,6 +48419,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 			this.OnPropertyChanging("Description");
 			this.SetAttributeValue("description", value);
 			this.OnPropertyChanged("Description");
+		}
+	}
+	
+	/// <summary>
+	/// comma separated list of one or more Dynamics First Party Solution Unique names that this workflow is in context of.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("dynamicssolutioncontext")]
+	public string DynamicsSolutionContext
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("dynamicssolutioncontext");
+		}
+		set
+		{
+			this.OnPropertyChanging("DynamicsSolutionContext");
+			this.SetAttributeValue("dynamicssolutioncontext", value);
+			this.OnPropertyChanged("DynamicsSolutionContext");
 		}
 	}
 	
@@ -47705,6 +48527,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 			this.OnPropertyChanging("InputParameters");
 			this.SetAttributeValue("inputparameters", value);
 			this.OnPropertyChanged("InputParameters");
+		}
+	}
+	
+	/// <summary>
+	/// Inputs definition for this workflow.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("inputs")]
+	public string Inputs
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("inputs");
+		}
+		set
+		{
+			this.OnPropertyChanging("Inputs");
+			this.SetAttributeValue("inputs", value);
+			this.OnPropertyChanged("Inputs");
 		}
 	}
 	
@@ -47823,6 +48663,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 	}
 	
 	/// <summary>
+	/// Additional metadata for this workflow.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("metadata")]
+	public string Metadata
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("metadata");
+		}
+		set
+		{
+			this.OnPropertyChanging("Metadata");
+			this.SetAttributeValue("metadata", value);
+			this.OnPropertyChanged("Metadata");
+		}
+	}
+	
+	/// <summary>
 	/// Shows the mode of the process.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("mode")]
@@ -47909,6 +48767,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 			this.OnPropertyChanging("OnDemand");
 			this.SetAttributeValue("ondemand", value);
 			this.OnPropertyChanged("OnDemand");
+		}
+	}
+	
+	/// <summary>
+	/// Outputs definition for this workflow.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("outputs")]
+	public string Outputs
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("outputs");
+		}
+		set
+		{
+			this.OnPropertyChanging("Outputs");
+			this.SetAttributeValue("outputs", value);
+			this.OnPropertyChanged("Outputs");
 		}
 	}
 	
@@ -48147,6 +49023,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 	}
 	
 	/// <summary>
+	/// Schema version for this workflow.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("schemaversion")]
+	public string SchemaVersion
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("schemaversion");
+		}
+		set
+		{
+			this.OnPropertyChanging("SchemaVersion");
+			this.SetAttributeValue("schemaversion", value);
+			this.OnPropertyChanged("SchemaVersion");
+		}
+	}
+	
+	/// <summary>
 	/// Scope of the process.
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("scope")]
@@ -48254,6 +49148,24 @@ public partial class Workflow : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.
 			this.OnPropertyChanging("Subprocess");
 			this.SetAttributeValue("subprocess", value);
 			this.OnPropertyChanged("Subprocess");
+		}
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("suspensionreasondetails")]
+	public string SuspensionReasonDetails
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("suspensionreasondetails");
+		}
+		set
+		{
+			this.OnPropertyChanging("SuspensionReasonDetails");
+			this.SetAttributeValue("suspensionreasondetails", value);
+			this.OnPropertyChanged("SuspensionReasonDetails");
 		}
 	}
 	
