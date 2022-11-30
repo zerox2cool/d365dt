@@ -308,7 +308,6 @@
     <None Include="SetNupkgVersion.ps1" />
     <None Include="XRMSvcGen\CopyCrmSvcUtilFiles.bat" />
     <None Include="XRMSvcGen\CopyCrmSvcUtilFiles.ps1" />
-    <None Include="XRMSvcGen\CrmSvcUtil.exe.config" />
     <None Include="XRMSvcGen\DelCrmSvcUtilFiles.bat" />
     <None Include="XRMSvcGen\DelCrmSvcUtilFiles.ps1" />
     <None Include="XRMSvcGen\RunCrmSvcUtil.bat" />
