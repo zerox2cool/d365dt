@@ -132,10 +132,15 @@
             </xs:sequence>
             <xs:attribute name="src" type="xs:string" use="required">
               <xs:annotation>
-                <xs:documentation>The location of the DLL.</xs:documentation>
+                <xs:documentation>The location of the DLL/NUPKG.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="location" use="required">
+						<xs:attribute name="packageuniquename" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>The unique name of the package if the source file is a nupkg.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="location" use="required">
               <xs:annotation>
                 <xs:documentation>Location of the assembly, either Database, Disk or GAC.</xs:documentation>
               </xs:annotation>

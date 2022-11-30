@@ -11,6 +11,9 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk.Client;
 using ZD365DT.DeploymentTool.Configuration;
+using System.IO.Packaging;
+using System.Text.RegularExpressions;
+using Microsoft.Xrm.Sdk.Messages;
 
 /// <summary>
 /// (WINSON) NOTE: THIS CLASS NEED TO BE REFACTOR, BAD CODING
@@ -48,6 +51,7 @@ namespace ZD365DT.DeploymentTool.Utils.Plugin
         const string ELEMENT_ASSEMBLY = "assembly";
         const string ATTR_SOLUTION = "solution";
         const string ATTR_SRC = "src";
+        const string ATTR_PACKAGEUNIQUENAME = "packageuniquename";
         const string ATTR_SANDBOX = "sandbox";
         const string ATTR_LOCATION = "location";
         const string ATTR_LOCATION_DATABASE = "database";
@@ -538,8 +542,14 @@ namespace ZD365DT.DeploymentTool.Utils.Plugin
             bool uploadonly = element.UploadOnly;
             bool unregister = element.Unregister;
             bool unregisteronly = element.UnregisterOnly;
+            bool isPackage = false;
 
             string assemblyFileName = assemblyNode.Attributes[ATTR_SRC].Value;
+
+            //check if the plugin is a nupkg
+            if (assemblyFileName.ToLower().EndsWith(".nupkg"))
+                isPackage = true;
+
             string src = Path.GetFullPath(assemblyFileName);
             _solutionName = solutionName;
             if (assemblyNode.Attributes[ATTR_SOLUTION] != null)
@@ -551,199 +561,360 @@ namespace ZD365DT.DeploymentTool.Utils.Plugin
                 Logger.LogWarning("Warning: Plugins will not be registered to any solution");
             }
 
-            PluginAssembly assembly = new PluginAssembly();
+            //get package unique name
+            string packageUniqueName = null;
+            if (assemblyNode.Attributes[ATTR_PACKAGEUNIQUENAME] != null)
+                packageUniqueName = assemblyNode.Attributes[ATTR_PACKAGEUNIQUENAME].Value;
+            else if (isPackage)
+                RequireAttribute(ATTR_PACKAGEUNIQUENAME, assemblyNode);
 
-            //if the given path to the DLL is not an absolute path then try looking in the same dir as the xml file
-            if (!File.Exists(src))
+            if (!isPackage)
             {
-                if (!string.IsNullOrEmpty(_xmlFilePath))
+                //installing a regular DLL assembly
+                PluginAssembly assembly = new PluginAssembly();
+
+                //if the given path to the DLL is not an absolute path then try looking in the same dir as the xml file
+                if (!File.Exists(src))
                 {
-                    string newPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(_xmlFilePath), assemblyFileName));
-                    if (File.Exists(newPath))
+                    if (!string.IsNullOrEmpty(_xmlFilePath))
                     {
-                        src = newPath;
-                        Logger.LogInfo("Found assembly in " + src);
-                    }
-                    else
-                    {
-                        ShowErrorMessage("Assembly not Found");
-                    }
-                }
-            }
-
-            FileInfo fi = new FileInfo(src);
-            string path = fi.FullName;
-            Assembly assemblyDll = Assembly.LoadFile(path); //TODO: is there a better way to get assembly info?
-            AssemblyName assemblyDllName = assemblyDll.GetName();
-            assembly.Culture = assemblyDllName.CultureInfo.Name == string.Empty ? "neutral" : assemblyDllName.CultureInfo.Name;
-            assembly.Name = assemblyDllName.Name;
-            assembly.PublicKeyToken = BitConverter.ToString(assemblyDllName.GetPublicKeyToken());
-            assembly.Version = assemblyDllName.Version.ToString();
-            assembly.Path = fi.Name;
-
-            //default not sandboxed. sandbox mode can be enabled with sandbox='true' in assembly element or /sandbox input parameter
-            assembly.IsolationMode = new OptionSetValue(ISOMODE_NONE);
-            if ((assemblyNode.Attributes[ATTR_SANDBOX] != null && assemblyNode.Attributes[ATTR_SANDBOX].Value.ToLower() == true.ToString().ToLower()))
-            {
-                assembly.IsolationMode = new OptionSetValue(ISOMODE_SANDBOX);
-            }
-
-            //default sourcetype to disk. other locations can be set with location='database' in assembly element or /location:database input parameter
-            assembly.SourceType = new OptionSetValue(SOURCETYPE_DISK);
-            if ((assemblyNode.Attributes[ATTR_LOCATION] != null && assemblyNode.Attributes[ATTR_LOCATION].Value.ToLower() == ATTR_LOCATION_DATABASE))
-            {
-                assembly.SourceType = new OptionSetValue(SOURCETYPE_DB);
-                byte[] bytes = File.ReadAllBytes(path);
-                assembly.Content = Convert.ToBase64String(bytes);
-            }
-            if ((assemblyNode.Attributes[ATTR_LOCATION] != null && assemblyNode.Attributes[ATTR_LOCATION].Value.ToLower() == ATTR_LOCATION_GAC))
-            {
-                assembly.SourceType = new OptionSetValue(SOURCETYPE_GAC);
-            }
-
-            bool uploadOnly = assembly.SourceType.Value == SOURCETYPE_DB && uploadonly;
-
-            //find out if this assembly is already registered, having same name and major and minor version
-            QueryExpression query = new QueryExpression(PluginAssembly.EntityLogicalName);
-            query.ColumnSet = new ColumnSet("name", "major", "minor");
-            query.Criteria.Conditions.Add(new ConditionExpression("name", ConditionOperator.Equal, assembly.Name));
-            EntityCollection currentAssemblies = _utils.Service.RetrieveMultiple(query);
-            if (currentAssemblies.Entities.Count > 0)
-            {
-                //need to remove the current assembly before registering new version
-                Logger.LogInfo("Found assembly already registered");
-
-                if (!uploadOnly)
-                {
-                    #region without upload only command
-
-                    //bool unregister = false;
-                    ////Program.HasArgument(PARAM_UNREGISTER);
-                    //bool unregisteronly = false;
-                    ////Program.HasArgument(PARAM_UNREGISTERONLY);
-                    if (unregister || unregisteronly)
-                    {
-                        // Loop to check number of assemblies registered having same name
-                        //but having different major and minor version, if found delete all previously registered assemblies
-                        for (int currentAssemblyIndex = 0; currentAssemblyIndex < currentAssemblies.Entities.Count; currentAssemblyIndex++)
+                        string newPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(_xmlFilePath), assemblyFileName));
+                        if (File.Exists(newPath))
                         {
-                            DeleteAssembly(currentAssemblies.Entities[currentAssemblyIndex].Id, false);
-                            currentAssemblies.Entities.RemoveAt(currentAssemblyIndex);
+                            src = newPath;
+                            Logger.LogInfo("Found assembly in " + src);
                         }
-                        if (unregisteronly)
+                        else
                         {
-                            return;
+                            ShowErrorMessage("Assembly not Found");
                         }
                     }
-                    else
+                }
+
+                FileInfo fi = new FileInfo(src);
+                string path = fi.FullName;
+                Assembly assemblyDll = Assembly.LoadFile(path); //TODO: is there a better way to get assembly info?
+                AssemblyName assemblyDllName = assemblyDll.GetName();
+                assembly.Culture = assemblyDllName.CultureInfo.Name == string.Empty ? "neutral" : assemblyDllName.CultureInfo.Name;
+                assembly.Name = assemblyDllName.Name;
+                assembly.PublicKeyToken = BitConverter.ToString(assemblyDllName.GetPublicKeyToken());
+                assembly.Version = assemblyDllName.Version.ToString();
+                assembly.Path = fi.Name;
+
+                //default not sandboxed. sandbox mode can be enabled with sandbox='true' in assembly element or /sandbox input parameter
+                assembly.IsolationMode = new OptionSetValue(ISOMODE_NONE);
+                if ((assemblyNode.Attributes[ATTR_SANDBOX] != null && assemblyNode.Attributes[ATTR_SANDBOX].Value.ToLower() == true.ToString().ToLower()))
+                {
+                    assembly.IsolationMode = new OptionSetValue(ISOMODE_SANDBOX);
+                }
+
+                //default sourcetype to disk. other locations can be set with location='database' in assembly element or /location:database input parameter
+                assembly.SourceType = new OptionSetValue(SOURCETYPE_DISK);
+                if ((assemblyNode.Attributes[ATTR_LOCATION] != null && assemblyNode.Attributes[ATTR_LOCATION].Value.ToLower() == ATTR_LOCATION_DATABASE))
+                {
+                    assembly.SourceType = new OptionSetValue(SOURCETYPE_DB);
+                    byte[] bytes = File.ReadAllBytes(path);
+                    assembly.Content = Convert.ToBase64String(bytes);
+                }
+                if ((assemblyNode.Attributes[ATTR_LOCATION] != null && assemblyNode.Attributes[ATTR_LOCATION].Value.ToLower() == ATTR_LOCATION_GAC))
+                {
+                    assembly.SourceType = new OptionSetValue(SOURCETYPE_GAC);
+                }
+
+                bool uploadOnly = assembly.SourceType.Value == SOURCETYPE_DB && uploadonly;
+
+                //find out if this assembly is already registered, having same name and major and minor version
+                QueryExpression query = new QueryExpression(PluginAssembly.EntityLogicalName);
+                query.ColumnSet = new ColumnSet("name", "major", "minor");
+                query.Criteria.Conditions.Add(new ConditionExpression("name", ConditionOperator.Equal, assembly.Name));
+                EntityCollection currentAssemblies = _utils.Service.RetrieveMultiple(query);
+                if (currentAssemblies.Entities.Count > 0)
+                {
+                    //need to remove the current assembly before registering new version
+                    Logger.LogInfo("Found assembly already registered");
+
+                    if (!uploadOnly)
                     {
-                        GetPluginDetails(currentAssemblies.Entities[0].Id);
+                        #region without upload only command
+
+                        //bool unregister = false;
+                        ////Program.HasArgument(PARAM_UNREGISTER);
+                        //bool unregisteronly = false;
+                        ////Program.HasArgument(PARAM_UNREGISTERONLY);
+                        if (unregister || unregisteronly)
+                        {
+                            // Loop to check number of assemblies registered having same name
+                            //but having different major and minor version, if found delete all previously registered assemblies
+                            for (int currentAssemblyIndex = 0; currentAssemblyIndex < currentAssemblies.Entities.Count; currentAssemblyIndex++)
+                            {
+                                DeleteAssembly(currentAssemblies.Entities[currentAssemblyIndex].Id, false);
+                                currentAssemblies.Entities.RemoveAt(currentAssemblyIndex);
+                            }
+                            if (unregisteronly)
+                            {
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            GetPluginDetails(currentAssemblies.Entities[0].Id);
+                        }
+                        #endregion
                     }
-                    #endregion
                 }
-            }
 
-            if (unregisteronly)
-            {
-                return;
-            }
-
-            Logger.LogInfo(" ");
-            Logger.LogInfo("Registering...");
-            Logger.LogInfo("Assembly: " + assembly.Name);
-            bool isVersionDifferent = false;
-            if (uploadOnly && currentAssemblies.Entities.Count > 0)
-            {
-                // Linq to check the if currenAssemblies Entity Collection contains assembly having
-                // same major and minor version, if found update the same else create/register a new one
-                var currentAssembly = currentAssemblies.Entities.Where(x => x.Attributes["major"].ToString() == assemblyDllName.Version.Major.ToString() && x.Attributes["minor"].ToString() == assemblyDllName.Version.Minor.ToString()).ToArray();
-                if (currentAssembly.Length > 0)
+                if (unregisteronly)
                 {
-                    Logger.LogInfo("Updating assembly contents");
-                    assembly.PluginAssemblyId = currentAssembly[0].Id;
-                    _utils.Service.Update(assembly);
-                }
-                else
-                {
-                    ShowErrorMessage(@"Plugin cannot be updated as Major\Minor version has been upgraded, Refer help document for further details");
                     return;
                 }
-            }
-            else
-            {
-                //create or update the assembly
-                Guid assemblyId = Guid.Empty;
-                if (currentAssemblies.Entities.Count > 0)
+
+                Logger.LogInfo(" ");
+                Logger.LogInfo("Registering...");
+                Logger.LogInfo("Assembly: " + assembly.Name);
+                bool isVersionDifferent = false;
+                if (uploadOnly && currentAssemblies.Entities.Count > 0)
                 {
                     // Linq to check the if currenAssemblies Entity Collection contains assembly having
                     // same major and minor version, if found update the same else create/register a new one
                     var currentAssembly = currentAssemblies.Entities.Where(x => x.Attributes["major"].ToString() == assemblyDllName.Version.Major.ToString() && x.Attributes["minor"].ToString() == assemblyDllName.Version.Minor.ToString()).ToArray();
-
                     if (currentAssembly.Length > 0)
                     {
+                        Logger.LogInfo("Updating assembly contents");
                         assembly.PluginAssemblyId = currentAssembly[0].Id;
                         _utils.Service.Update(assembly);
-                        assemblyId = currentAssembly[0].Id;
-                        Logger.LogInfo("Update Assembly: " + assembly.Name);
                     }
                     else
                     {
-                        Logger.LogInfo(@"Major\Minor version of plugin is differrent,Creating new assembly");
-                        isVersionDifferent = true;
-                        assemblyId = _utils.Service.Create(assembly);
-                        Logger.LogInfo("Created Assembly: " + assembly.Name);
+                        ShowErrorMessage(@"Plugin cannot be updated as Major\Minor version has been upgraded, Refer help document for further details");
+                        return;
                     }
                 }
                 else
                 {
-                    assemblyId = _utils.Service.Create(assembly);
-                    Logger.LogInfo("Created Assembly: " + assembly.Name);
-                }
-
-                if (!string.IsNullOrEmpty(_solutionName))
-                {
-                   SolutionManager.AddSolutionComponent(_utils.Service, _solutionName, assemblyId, SolutionManager.ComponentType.PluginAssembly, false);
-                }
-
-                XmlNodeList typeNodes = assemblyNode.SelectNodes(ConfigXml.Namespace.NS_PREFIX + ":" + ELEMENT_TYPE, nsmgr);
-                if (typeNodes.Count == 0)
-                    Logger.LogInfo(@"No plugin type found.");
-
-                foreach (XmlNode typeNode in typeNodes)
-                {
-                    RegisterPluginType(assemblyId, typeNode, nsmgr);
-                }
-
-                if (!isVersionDifferent)
-                {
-                    //Delete plugin images, steps, and types that are registered on the server 
-                    //but are not found in the register.xml file. (anything that doesnt have the 'UPDATED' flag set)
-                    foreach (var image in _imageData.Values)
+                    //create or update the assembly
+                    Guid assemblyId = Guid.Empty;
+                    if (currentAssemblies.Entities.Count > 0)
                     {
-                        if (!image.Contains(UPDATED))
+                        // Linq to check the if currenAssemblies Entity Collection contains assembly having
+                        // same major and minor version, if found update the same else create/register a new one
+                        var currentAssembly = currentAssemblies.Entities.Where(x => x.Attributes["major"].ToString() == assemblyDllName.Version.Major.ToString() && x.Attributes["minor"].ToString() == assemblyDllName.Version.Minor.ToString()).ToArray();
+
+                        if (currentAssembly.Length > 0)
                         {
-                            _utils.Service.Delete(SdkMessageProcessingStepImage.EntityLogicalName, image.Id);
-                            Logger.LogInfo("Deleting plugin Image: " + image.Name);
+                            assembly.PluginAssemblyId = currentAssembly[0].Id;
+                            _utils.Service.Update(assembly);
+                            assemblyId = currentAssembly[0].Id;
+                            Logger.LogInfo("Update Assembly: " + assembly.Name);
+                        }
+                        else
+                        {
+                            Logger.LogInfo(@"Major\Minor version of plugin is differrent,Creating new assembly");
+                            isVersionDifferent = true;
+                            assemblyId = _utils.Service.Create(assembly);
+                            Logger.LogInfo("Created Assembly: " + assembly.Name);
                         }
                     }
-                    foreach (var step in _pluginStepData.Values)
+                    else
                     {
-                        if (!step.Contains(UPDATED))
-                        {
-                            _utils.Service.Delete(SdkMessageProcessingStep.EntityLogicalName, step.Id);
-                            Logger.LogInfo("Deleting plugin Step: " + step.Name);
-                        }
+                        assemblyId = _utils.Service.Create(assembly);
+                        Logger.LogInfo("Created Assembly: " + assembly.Name);
                     }
-                    foreach (var pluginType in _pluginTypeData.Values)
+
+                    if (!string.IsNullOrEmpty(_solutionName))
                     {
-                        if (!pluginType.Contains(UPDATED))
+                        SolutionManager.AddSolutionComponent(_utils.Service, _solutionName, assemblyId, SolutionManager.ComponentType.PluginAssembly, false);
+                    }
+
+                    XmlNodeList typeNodes = assemblyNode.SelectNodes(ConfigXml.Namespace.NS_PREFIX + ":" + ELEMENT_TYPE, nsmgr);
+                    if (typeNodes.Count == 0)
+                        Logger.LogInfo(@"No plugin type found.");
+
+                    foreach (XmlNode typeNode in typeNodes)
+                    {
+                        RegisterPluginType(assemblyId, typeNode, nsmgr);
+                    }
+
+                    if (!isVersionDifferent)
+                    {
+                        //Delete plugin images, steps, and types that are registered on the server 
+                        //but are not found in the register.xml file. (anything that doesnt have the 'UPDATED' flag set)
+                        foreach (var image in _imageData.Values)
                         {
-                            _utils.Service.Delete(PluginType.EntityLogicalName, pluginType.Id);
-                            Logger.LogInfo("Deleting plugin Type: " + pluginType.Name);
+                            if (!image.Contains(UPDATED))
+                            {
+                                _utils.Service.Delete(SdkMessageProcessingStepImage.EntityLogicalName, image.Id);
+                                Logger.LogInfo("Deleting plugin Image: " + image.Name);
+                            }
+                        }
+                        foreach (var step in _pluginStepData.Values)
+                        {
+                            if (!step.Contains(UPDATED))
+                            {
+                                _utils.Service.Delete(SdkMessageProcessingStep.EntityLogicalName, step.Id);
+                                Logger.LogInfo("Deleting plugin Step: " + step.Name);
+                            }
+                        }
+                        foreach (var pluginType in _pluginTypeData.Values)
+                        {
+                            if (!pluginType.Contains(UPDATED))
+                            {
+                                _utils.Service.Delete(PluginType.EntityLogicalName, pluginType.Id);
+                                Logger.LogInfo("Deleting plugin Type: " + pluginType.Name);
+                            }
                         }
                     }
                 }
             }
+            else
+            {
+                //installing a nuget package
+                QueryExpression query = new QueryExpression(pluginpackage.EntityLogicalName);
+                query.ColumnSet = new ColumnSet(true);
+                query.Criteria.Conditions.Add(new ConditionExpression("name", ConditionOperator.Equal, packageUniqueName));
+                EntityCollection currentPackages = _utils.Service.RetrieveMultiple(query);
+
+                Logger.LogInfo(" ");
+                Logger.LogInfo("Registering...");
+                Logger.LogInfo("Package: " + assemblyFileName);
+
+                if (uploadonly && currentPackages.Entities.Count > 0)
+                {
+                    //update package only with the nupkg
+                    Logger.LogInfo($"Updating package contents for {packageUniqueName}");
+                    UpdateNupkg(currentPackages.Entities[0].ToEntity<pluginpackage>(), src);
+                    Logger.LogInfo($"Updated package: {assemblyFileName} with the name {packageUniqueName}");
+                }
+                else
+                {
+                    if (currentPackages.Entities.Count > 0)
+                    {
+                        //found the package, update it
+                        Logger.LogInfo($"Updating package contents for {packageUniqueName}");
+                        UpdateNupkg(currentPackages.Entities[0].ToEntity<pluginpackage>(), src);
+                        Logger.LogInfo($"Updated package: {assemblyFileName} with the name {packageUniqueName}");
+                    }
+                    else
+                    {
+                        //package not found, create it
+                        Logger.LogInfo($"Creating new package as {packageUniqueName}");
+                        CreateNupkg(packageUniqueName, src, _solutionName);
+                        Logger.LogInfo($"Created package: {assemblyFileName} with the name {packageUniqueName}");
+                    }
+
+                    //create/update plugin steps
+                    Guid? packageId = null;
+                    QueryExpression queryUpdatedPkg = new QueryExpression(pluginpackage.EntityLogicalName);
+                    query.ColumnSet = new ColumnSet(true);
+                    query.Criteria.Conditions.Add(new ConditionExpression("name", ConditionOperator.Equal, packageUniqueName));
+                    currentPackages = _utils.Service.RetrieveMultiple(query);
+                    if (currentPackages.Entities.Count > 0)
+                    {
+                        packageId = currentPackages.Entities[0].Id;
+                        Logger.LogError($"The package '{packageUniqueName}' found with GUID: {packageId}.");
+
+                        //get assembly ID
+                        Guid assemblyId = Guid.Empty;
+                        QueryExpression queryPackageAssembly = new QueryExpression(PluginAssembly.EntityLogicalName);
+                        queryPackageAssembly.ColumnSet = new ColumnSet(true);
+                        queryPackageAssembly.Criteria.Conditions.Add(new ConditionExpression("packageid", ConditionOperator.Equal, packageId.Value));
+                        EntityCollection currentAssemblies = _utils.Service.RetrieveMultiple(queryPackageAssembly);
+                        if (currentAssemblies.Entities.Count > 0)
+                        {
+                            Logger.LogError($"Assemblies with the PackageID {packageId} found. Count: {currentAssemblies.Entities.Count}");
+
+                            //preload plugin details
+                            GetPluginDetails(currentAssemblies.Entities[0].Id);
+
+                            //set assembly ID
+                            assemblyId = currentAssemblies.Entities[0].Id;
+                            PluginAssembly assembly = currentAssemblies.Entities[0].ToEntity<PluginAssembly>();
+
+                            Logger.LogError($"AssemblyId: {assemblyId}");
+                            Logger.LogError($"Assembly Name: {assembly.Name}");
+
+                            XmlNodeList typeNodes = assemblyNode.SelectNodes(ConfigXml.Namespace.NS_PREFIX + ":" + ELEMENT_TYPE, nsmgr);
+                            if (typeNodes.Count == 0)
+                                Logger.LogInfo(@"No plugin type found.");
+
+                            foreach (XmlNode typeNode in typeNodes)
+                            {
+                                RegisterPluginType(assemblyId, typeNode, nsmgr);
+                            }
+                        }
+                        else
+                        {
+                            Logger.LogError($"The package with the name '{packageUniqueName}' ({packageId}) does not contain any assembly.");
+                        }
+                    }
+                    else
+                    {
+                        //package not found
+                        Logger.LogError($"The package with the name '{packageUniqueName}' is not found.");
+                    }
+                }
+            }
+        }
+
+        private static string GetVersion(string nupkgFilename)
+        {
+            string pattern = @"(?<versionNum>\d\.(?:\d?\.?)*)(?=[-\w]*.nupkg)";
+            Match match = Regex.Match(nupkgFilename.ToLower(), pattern);
+            if (match.Success)
+                return match.Value;
+            else
+                return null;
+        }
+
+        private static bool CreateNupkg(string pkgUniqueName, string srcNupkg, string solutionName)
+        {
+            FileInfo info = new FileInfo(srcNupkg);
+
+            pluginpackage pack = new pluginpackage()
+            {
+                name = pkgUniqueName,
+                UniqueName = pkgUniqueName,
+                Version = GetVersion(info.Name),
+            };
+
+            byte[] buffer = new byte[info.Length];
+            int num = ((int)Math.Ceiling((double)(((double)info.Length) / 3.0))) * 4;
+            char[] outArray = new char[num];
+            using (FileStream stream = File.OpenRead(srcNupkg))
+            {
+                stream.Read(buffer, 0, (int)info.Length);
+                Convert.ToBase64CharArray(buffer, 0, buffer.Length, outArray, 0);
+            }
+            pack.Content = new string(outArray);
+
+            CreateRequest ur = new CreateRequest()
+            {
+                Target = pack
+            };
+            if (!string.IsNullOrEmpty(solutionName))
+            {
+                ur.Parameters.Add("SolutionUniqueName", solutionName);
+            }
+
+            _utils.Service.Execute(ur);
+            return true;
+        }
+
+        private static bool UpdateNupkg(pluginpackage package, string srcNupkg)
+        {
+            //update package only with the nupkg
+            FileInfo info = new FileInfo(srcNupkg);
+            byte[] buffer = new byte[info.Length];
+            int num = ((int)Math.Ceiling((double)(((double)info.Length) / 3.0))) * 4;
+            char[] outArray = new char[num];
+            using (FileStream stream = File.OpenRead(srcNupkg))
+            {
+                stream.Read(buffer, 0, (int)info.Length);
+                Convert.ToBase64CharArray(buffer, 0, buffer.Length, outArray, 0);
+            }
+            package.Content = new string(outArray);
+
+            _utils.Service.Update(package);
+            return true;
         }
 
         /// <summary>
@@ -796,6 +967,7 @@ namespace ZD365DT.DeploymentTool.Utils.Plugin
 
                 if (!PluginTypesMatch(plugin, _pluginTypeData[matchCode]))
                 {
+                    //Logger.LogInfo("  Updating PluginType: " + plugin.Name);
                     _utils.Service.Update(plugin);
                     Console.ForegroundColor = ConsoleColor.White;
                     Logger.LogInfo("  Updated PluginType: " + plugin.Name);
@@ -809,6 +981,7 @@ namespace ZD365DT.DeploymentTool.Utils.Plugin
             else
             {
                 //create new pluginType
+                //Logger.LogInfo("  Creating PluginType: " + plugin.Name);
                 pluginTypeId = _utils.Service.Create(plugin);
                 Logger.LogInfo("  Created PluginType: " + plugin.Name);
             }
@@ -1152,7 +1325,7 @@ namespace ZD365DT.DeploymentTool.Utils.Plugin
         {
             return !(a.PluginAssemblyId.Id != b.PluginAssemblyId.Id ||
                 a.TypeName != b.TypeName ||
-                a.Description != b.Description ||
+                (a.Description != b.Description && !string.IsNullOrEmpty(b.Description)) ||
                 a.Name != b.Name);
         }
 
