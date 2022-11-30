@@ -22,6 +22,7 @@
     <entity>userquery</entity>
     <entity>savedquery</entity>
     <entity>workflow</entity>
+		<entity>pluginpackage</entity>
     <entity>pluginassembly</entity>
     <entity>plugintype</entity>
     <entity>sdkmessageprocessingstep</entity>

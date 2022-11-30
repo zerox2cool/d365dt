@@ -3145,6 +3145,25 @@ public partial class AsyncOperation : Microsoft.Xrm.Sdk.Entity, System.Component
 	}
 	
 	/// <summary>
+	/// N:1 pluginpackage_AsyncOperations
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("pluginpackage_AsyncOperations")]
+	public pluginpackage pluginpackage_AsyncOperations
+	{
+		get
+		{
+			return this.GetRelatedEntity<pluginpackage>("pluginpackage_AsyncOperations", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("pluginpackage_AsyncOperations");
+			this.SetRelatedEntity<pluginpackage>("pluginpackage_AsyncOperations", null, value);
+			this.OnPropertyChanged("pluginpackage_AsyncOperations");
+		}
+	}
+	
+	/// <summary>
 	/// N:1 Queue_AsyncOperations
 	/// </summary>
 	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("regardingobjectid")]
@@ -21171,6 +21190,24 @@ public partial class Organization : Microsoft.Xrm.Sdk.Entity, System.ComponentMo
 	}
 	
 	/// <summary>
+	/// 1:N organization_pluginpackage
+	/// </summary>
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("organization_pluginpackage")]
+	public System.Collections.Generic.IEnumerable<pluginpackage> organization_pluginpackage
+	{
+		get
+		{
+			return this.GetRelatedEntities<pluginpackage>("organization_pluginpackage", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("organization_pluginpackage");
+			this.SetRelatedEntities<pluginpackage>("organization_pluginpackage", null, value);
+			this.OnPropertyChanged("organization_pluginpackage");
+		}
+	}
+	
+	/// <summary>
 	/// 1:N organization_plugintype
 	/// </summary>
 	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("organization_plugintype")]
@@ -23859,6 +23896,606 @@ public partial class PluginAssembly : Microsoft.Xrm.Sdk.Entity, System.Component
 		get
 		{
 			return this.GetRelatedEntity<Organization>("organization_pluginassembly", null);
+		}
+	}
+	
+	/// <summary>
+	/// N:1 pluginpackage_pluginassembly
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("packageid")]
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("pluginpackage_pluginassembly")]
+	public pluginpackage pluginpackage_pluginassembly
+	{
+		get
+		{
+			return this.GetRelatedEntity<pluginpackage>("pluginpackage_pluginassembly", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("pluginpackage_pluginassembly");
+			this.SetRelatedEntity<pluginpackage>("pluginpackage_pluginassembly", null, value);
+			this.OnPropertyChanged("pluginpackage_pluginassembly");
+		}
+	}
+}
+
+[System.Runtime.Serialization.DataContractAttribute()]
+[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.45")]
+public enum pluginpackageState
+{
+	
+	[System.Runtime.Serialization.EnumMemberAttribute()]
+	Active = 0,
+	
+	[System.Runtime.Serialization.EnumMemberAttribute()]
+	Inactive = 1,
+}
+
+/// <summary>
+/// 
+/// </summary>
+[System.Runtime.Serialization.DataContractAttribute()]
+[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("pluginpackage")]
+[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.45")]
+public partial class pluginpackage : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+{
+	
+	/// <summary>
+	/// Default Constructor.
+	/// </summary>
+	public pluginpackage() : 
+			base(EntityLogicalName)
+	{
+	}
+	
+	public const string EntityLogicalName = "pluginpackage";
+	
+	public const int EntityTypeCode = 10365;
+	
+	public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+	
+	public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+	
+	private void OnPropertyChanged(string propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+		}
+	}
+	
+	private void OnPropertyChanging(string propertyName)
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("componentidunique")]
+	public System.Nullable<System.Guid> ComponentIdUnique
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.Guid>>("componentidunique");
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("componentstate")]
+	public Microsoft.Xrm.Sdk.OptionSetValue ComponentState
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("componentstate");
+		}
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("content")]
+	public string Content
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("content");
+		}
+		set
+		{
+			this.OnPropertyChanging("Content");
+			this.SetAttributeValue("content", value);
+			this.OnPropertyChanged("Content");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier of the user who created the record.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+	public Microsoft.Xrm.Sdk.EntityReference CreatedBy
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdby");
+		}
+	}
+	
+	/// <summary>
+	/// Date and time when the record was created.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdon")]
+	public System.Nullable<System.DateTime> CreatedOn
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("createdon");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier of the delegate user who created the record.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+	public Microsoft.Xrm.Sdk.EntityReference CreatedOnBehalfBy
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("createdonbehalfby");
+		}
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("encodedcontents")]
+	public string EncodedContents
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("encodedcontents");
+		}
+		set
+		{
+			this.OnPropertyChanging("EncodedContents");
+			this.SetAttributeValue("encodedcontents", value);
+			this.OnPropertyChanged("EncodedContents");
+		}
+	}
+	
+	/// <summary>
+	/// Sequence number of the import that created this record.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("importsequencenumber")]
+	public System.Nullable<int> ImportSequenceNumber
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<int>>("importsequencenumber");
+		}
+		set
+		{
+			this.OnPropertyChanging("ImportSequenceNumber");
+			this.SetAttributeValue("importsequencenumber", value);
+			this.OnPropertyChanged("ImportSequenceNumber");
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("iscustomizable")]
+	public Microsoft.Xrm.Sdk.BooleanManagedProperty IsCustomizable
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.BooleanManagedProperty>("iscustomizable");
+		}
+		set
+		{
+			this.OnPropertyChanging("IsCustomizable");
+			this.SetAttributeValue("iscustomizable", value);
+			this.OnPropertyChanged("IsCustomizable");
+		}
+	}
+	
+	/// <summary>
+	/// Indicates whether the solution component is part of a managed solution.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("ismanaged")]
+	public System.Nullable<bool> IsManaged
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<bool>>("ismanaged");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier of the user who modified the record.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+	public Microsoft.Xrm.Sdk.EntityReference ModifiedBy
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedby");
+		}
+	}
+	
+	/// <summary>
+	/// Date and time when the record was modified.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedon")]
+	public System.Nullable<System.DateTime> ModifiedOn
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("modifiedon");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier of the delegate user who modified the record.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+	public Microsoft.Xrm.Sdk.EntityReference ModifiedOnBehalfBy
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("modifiedonbehalfby");
+		}
+	}
+	
+	/// <summary>
+	/// The name of the plugin package entity.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("name")]
+	public string name
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("name");
+		}
+		set
+		{
+			this.OnPropertyChanging("name");
+			this.SetAttributeValue("name", value);
+			this.OnPropertyChanged("name");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier for the organization
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizationid")]
+	public Microsoft.Xrm.Sdk.EntityReference OrganizationId
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.EntityReference>("organizationid");
+		}
+	}
+	
+	/// <summary>
+	/// Date and time that the record was migrated.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overriddencreatedon")]
+	public System.Nullable<System.DateTime> OverriddenCreatedOn
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("overriddencreatedon");
+		}
+		set
+		{
+			this.OnPropertyChanging("OverriddenCreatedOn");
+			this.SetAttributeValue("overriddencreatedon", value);
+			this.OnPropertyChanged("OverriddenCreatedOn");
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("overwritetime")]
+	public System.Nullable<System.DateTime> OverwriteTime
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.DateTime>>("overwritetime");
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier for entity instances
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("pluginpackageid")]
+	public System.Nullable<System.Guid> pluginpackageId
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.Guid>>("pluginpackageid");
+		}
+		set
+		{
+			this.OnPropertyChanging("pluginpackageId");
+			this.SetAttributeValue("pluginpackageid", value);
+			if (value.HasValue)
+			{
+				base.Id = value.Value;
+			}
+			else
+			{
+				base.Id = System.Guid.Empty;
+			}
+			this.OnPropertyChanged("pluginpackageId");
+		}
+	}
+	
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("pluginpackageid")]
+	public override System.Guid Id
+	{
+		get
+		{
+			return base.Id;
+		}
+		set
+		{
+			this.pluginpackageId = value;
+		}
+	}
+	
+	/// <summary>
+	/// Unique identifier of the associated solution.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("solutionid")]
+	public System.Nullable<System.Guid> SolutionId
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<System.Guid>>("solutionid");
+		}
+	}
+	
+	/// <summary>
+	/// Status of the Plugin Package
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statecode")]
+	public System.Nullable<pluginpackageState> statecode
+	{
+		get
+		{
+			Microsoft.Xrm.Sdk.OptionSetValue optionSet = this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statecode");
+			if ((optionSet != null))
+			{
+				return ((pluginpackageState)(System.Enum.ToObject(typeof(pluginpackageState), optionSet.Value)));
+			}
+			else
+			{
+				return null;
+			}
+		}
+		set
+		{
+			this.OnPropertyChanging("statecode");
+			if ((value == null))
+			{
+				this.SetAttributeValue("statecode", null);
+			}
+			else
+			{
+				this.SetAttributeValue("statecode", new Microsoft.Xrm.Sdk.OptionSetValue(((int)(value))));
+			}
+			this.OnPropertyChanged("statecode");
+		}
+	}
+	
+	/// <summary>
+	/// Reason for the status of the Plugin Package
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("statuscode")]
+	public Microsoft.Xrm.Sdk.OptionSetValue statuscode
+	{
+		get
+		{
+			return this.GetAttributeValue<Microsoft.Xrm.Sdk.OptionSetValue>("statuscode");
+		}
+		set
+		{
+			this.OnPropertyChanging("statuscode");
+			this.SetAttributeValue("statuscode", value);
+			this.OnPropertyChanged("statuscode");
+		}
+	}
+	
+	/// <summary>
+	/// For internal use only.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("timezoneruleversionnumber")]
+	public System.Nullable<int> TimeZoneRuleVersionNumber
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<int>>("timezoneruleversionnumber");
+		}
+		set
+		{
+			this.OnPropertyChanging("TimeZoneRuleVersionNumber");
+			this.SetAttributeValue("timezoneruleversionnumber", value);
+			this.OnPropertyChanged("TimeZoneRuleVersionNumber");
+		}
+	}
+	
+	/// <summary>
+	/// Unique name for the package
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("uniquename")]
+	public string UniqueName
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("uniquename");
+		}
+		set
+		{
+			this.OnPropertyChanging("UniqueName");
+			this.SetAttributeValue("uniquename", value);
+			this.OnPropertyChanged("UniqueName");
+		}
+	}
+	
+	/// <summary>
+	/// Time zone code that was in use when the record was created.
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("utcconversiontimezonecode")]
+	public System.Nullable<int> UTCConversionTimeZoneCode
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<int>>("utcconversiontimezonecode");
+		}
+		set
+		{
+			this.OnPropertyChanging("UTCConversionTimeZoneCode");
+			this.SetAttributeValue("utcconversiontimezonecode", value);
+			this.OnPropertyChanged("UTCConversionTimeZoneCode");
+		}
+	}
+	
+	/// <summary>
+	/// Version of the package
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("version")]
+	public string Version
+	{
+		get
+		{
+			return this.GetAttributeValue<string>("version");
+		}
+		set
+		{
+			this.OnPropertyChanging("Version");
+			this.SetAttributeValue("version", value);
+			this.OnPropertyChanged("Version");
+		}
+	}
+	
+	/// <summary>
+	/// Version Number
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+	public System.Nullable<long> VersionNumber
+	{
+		get
+		{
+			return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+		}
+	}
+	
+	/// <summary>
+	/// 1:N pluginpackage_AsyncOperations
+	/// </summary>
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("pluginpackage_AsyncOperations")]
+	public System.Collections.Generic.IEnumerable<AsyncOperation> pluginpackage_AsyncOperations
+	{
+		get
+		{
+			return this.GetRelatedEntities<AsyncOperation>("pluginpackage_AsyncOperations", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("pluginpackage_AsyncOperations");
+			this.SetRelatedEntities<AsyncOperation>("pluginpackage_AsyncOperations", null, value);
+			this.OnPropertyChanged("pluginpackage_AsyncOperations");
+		}
+	}
+	
+	/// <summary>
+	/// 1:N pluginpackage_pluginassembly
+	/// </summary>
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("pluginpackage_pluginassembly")]
+	public System.Collections.Generic.IEnumerable<PluginAssembly> pluginpackage_pluginassembly
+	{
+		get
+		{
+			return this.GetRelatedEntities<PluginAssembly>("pluginpackage_pluginassembly", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("pluginpackage_pluginassembly");
+			this.SetRelatedEntities<PluginAssembly>("pluginpackage_pluginassembly", null, value);
+			this.OnPropertyChanged("pluginpackage_pluginassembly");
+		}
+	}
+	
+	/// <summary>
+	/// N:1 lk_pluginpackage_createdby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdby")]
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_createdby")]
+	public SystemUser lk_pluginpackage_createdby
+	{
+		get
+		{
+			return this.GetRelatedEntity<SystemUser>("lk_pluginpackage_createdby", null);
+		}
+	}
+	
+	/// <summary>
+	/// N:1 lk_pluginpackage_createdonbehalfby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("createdonbehalfby")]
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_createdonbehalfby")]
+	public SystemUser lk_pluginpackage_createdonbehalfby
+	{
+		get
+		{
+			return this.GetRelatedEntity<SystemUser>("lk_pluginpackage_createdonbehalfby", null);
+		}
+	}
+	
+	/// <summary>
+	/// N:1 lk_pluginpackage_modifiedby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedby")]
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_modifiedby")]
+	public SystemUser lk_pluginpackage_modifiedby
+	{
+		get
+		{
+			return this.GetRelatedEntity<SystemUser>("lk_pluginpackage_modifiedby", null);
+		}
+	}
+	
+	/// <summary>
+	/// N:1 lk_pluginpackage_modifiedonbehalfby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("modifiedonbehalfby")]
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_modifiedonbehalfby")]
+	public SystemUser lk_pluginpackage_modifiedonbehalfby
+	{
+		get
+		{
+			return this.GetRelatedEntity<SystemUser>("lk_pluginpackage_modifiedonbehalfby", null);
+		}
+	}
+	
+	/// <summary>
+	/// N:1 organization_pluginpackage
+	/// </summary>
+	[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("organizationid")]
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("organization_pluginpackage")]
+	public Organization organization_pluginpackage
+	{
+		get
+		{
+			return this.GetRelatedEntity<Organization>("organization_pluginpackage", null);
 		}
 	}
 }
@@ -39850,6 +40487,78 @@ public partial class SystemUser : Microsoft.Xrm.Sdk.Entity, System.ComponentMode
 	}
 	
 	/// <summary>
+	/// 1:N lk_pluginpackage_createdby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_createdby")]
+	public System.Collections.Generic.IEnumerable<pluginpackage> lk_pluginpackage_createdby
+	{
+		get
+		{
+			return this.GetRelatedEntities<pluginpackage>("lk_pluginpackage_createdby", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("lk_pluginpackage_createdby");
+			this.SetRelatedEntities<pluginpackage>("lk_pluginpackage_createdby", null, value);
+			this.OnPropertyChanged("lk_pluginpackage_createdby");
+		}
+	}
+	
+	/// <summary>
+	/// 1:N lk_pluginpackage_createdonbehalfby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_createdonbehalfby")]
+	public System.Collections.Generic.IEnumerable<pluginpackage> lk_pluginpackage_createdonbehalfby
+	{
+		get
+		{
+			return this.GetRelatedEntities<pluginpackage>("lk_pluginpackage_createdonbehalfby", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("lk_pluginpackage_createdonbehalfby");
+			this.SetRelatedEntities<pluginpackage>("lk_pluginpackage_createdonbehalfby", null, value);
+			this.OnPropertyChanged("lk_pluginpackage_createdonbehalfby");
+		}
+	}
+	
+	/// <summary>
+	/// 1:N lk_pluginpackage_modifiedby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_modifiedby")]
+	public System.Collections.Generic.IEnumerable<pluginpackage> lk_pluginpackage_modifiedby
+	{
+		get
+		{
+			return this.GetRelatedEntities<pluginpackage>("lk_pluginpackage_modifiedby", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("lk_pluginpackage_modifiedby");
+			this.SetRelatedEntities<pluginpackage>("lk_pluginpackage_modifiedby", null, value);
+			this.OnPropertyChanged("lk_pluginpackage_modifiedby");
+		}
+	}
+	
+	/// <summary>
+	/// 1:N lk_pluginpackage_modifiedonbehalfby
+	/// </summary>
+	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_pluginpackage_modifiedonbehalfby")]
+	public System.Collections.Generic.IEnumerable<pluginpackage> lk_pluginpackage_modifiedonbehalfby
+	{
+		get
+		{
+			return this.GetRelatedEntities<pluginpackage>("lk_pluginpackage_modifiedonbehalfby", null);
+		}
+		set
+		{
+			this.OnPropertyChanging("lk_pluginpackage_modifiedonbehalfby");
+			this.SetRelatedEntities<pluginpackage>("lk_pluginpackage_modifiedonbehalfby", null, value);
+			this.OnPropertyChanged("lk_pluginpackage_modifiedonbehalfby");
+		}
+	}
+	
+	/// <summary>
 	/// 1:N lk_plugintype_createdonbehalfby
 	/// </summary>
 	[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("lk_plugintype_createdonbehalfby")]
@@ -49847,6 +50556,17 @@ public partial class ServiceContext : Microsoft.Xrm.Sdk.Client.OrganizationServi
 		get
 		{
 			return this.CreateQuery<PluginAssembly>();
+		}
+	}
+	
+	/// <summary>
+	/// Gets a binding to the set of all <see cref="pluginpackage"/> entities.
+	/// </summary>
+	public System.Linq.IQueryable<pluginpackage> pluginpackageSet
+	{
+		get
+		{
+			return this.CreateQuery<pluginpackage>();
 		}
 	}
 	
