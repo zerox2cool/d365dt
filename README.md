@@ -11,7 +11,8 @@ The packages are publish to nuget.org via Azure DevOps Build.
 # Release Notes
 ## v1.1.0.14
 ### 01-Dec-2022
-- Added support for registering plugin/workflow assembly as a package (nupkg). This is using the new [dependent assembly plugin](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/dependent-assembly-plugins) (preview).
+- Added support for registering plugin assembly as a package (nupkg). This is using the new [dependent assembly plugin](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/dependent-assembly-plugins) (preview).
+- Workflow assembly is not supported by D365 dependent assembly at the moment.
 - A new attribute 'packageuniquename' will be required on the plugin step XML configuration file when the source is a nupkg file.
 
 ## v1.1.0.13
