@@ -130,7 +130,7 @@ namespace ZD365DT.DeploymentTool.Utils.CrmMetadata
         public void MergeWith(OptionSetMetadata opt)
         {
             //check if any value has change
-            if (opt.DisplayName.UserLocalizedLabel.Label != DisplayName || opt.Description.UserLocalizedLabel.Label != Description)
+            if (opt?.DisplayName?.UserLocalizedLabel?.Label != DisplayName || opt?.Description?.UserLocalizedLabel?.Label != Description)
             {
                 Action = InstallationAction.Update;
                 LogMessage = string.Format("Update: {0}: {1} to {2} (description might have changed)", Name, opt.DisplayName.UserLocalizedLabel.Label, DisplayName);

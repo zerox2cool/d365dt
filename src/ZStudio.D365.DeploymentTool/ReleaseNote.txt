@@ -1,4 +1,7 @@
-﻿v1.1.0.14 - 01-Dec-2022
+﻿v1.1.0.15 - 03-Feb-2023
+- Fix a NULL exception bug when updating global choices that are created manually.
+
+v1.1.0.14 - 01-Dec-2022
 - Added support for registering plugin assembly as a package (nupkg). This is using the new dependent assembly plugin preview (https://learn.microsoft.com/en-us/power-apps/developer/data-platform/dependent-assembly-plugins).
 - Workflow assembly is not supported by D365 dependent assembly at the moment.
 - A new attribute 'packageuniquename' will be required on the plugin step XML configuration file when the source is a nupkg file.

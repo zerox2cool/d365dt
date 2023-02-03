@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Zero.Studio")]
 [assembly: AssemblyProduct("ZStudio.D365.DeploymentTool")]
-[assembly: AssemblyCopyright("Copyright © Zero.Studio 2022")]
+[assembly: AssemblyCopyright("Copyright © Zero.Studio 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,8 +32,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.1.0.14")]
-[assembly: AssemblyFileVersion("1.1.0.14")]
+[assembly: AssemblyVersion("1.1.0.15")]
+[assembly: AssemblyFileVersion("1.1.0.15")]
 
 //to use XRM early-bound
 [assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
