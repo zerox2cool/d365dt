@@ -9,6 +9,10 @@ The packages are publish to nuget.org via Azure DevOps Build.
 [ZD365.DeploymentTool.Icons](https://www.nuget.org/packages/ZD365.DeploymentTool.Icons)
 
 # Release Notes
+## v1.1.0.15
+### 03-Feb-2023
+- Fix a NULL exception bug when updating global choices that are created manually.
+
 ## v1.1.0.14
 ### 01-Dec-2022
 - Added support for registering plugin assembly as a package (nupkg). This is using the new [dependent assembly plugin](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/dependent-assembly-plugins) (preview).
