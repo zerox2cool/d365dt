@@ -1,0 +1,19 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>ZD365.DeploymentHelper</id>
+		<title>ZD365.DeploymentHelper</title>
+		<version>$version$</version>
+		<authors>Winson C</authors>
+		<license type="expression">MIT</license>
+		<!--<licenseUrl>https://github.com/zerox2cool/d365dt/blob/main/LICENSE</licenseUrl>-->
+		<projectUrl>https://github.com/zerox2cool/d365dt</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>D365 CE Deployment Helper - v0.1 - the tools will be install to ZD365DTHelper folder of the .NET Framework project when the NuGet is install. NOTE: NuGet content files copy is not supported on a .NET Core project.</description>
+	</metadata>
+	<files>
+		<!--<file src="bin\$configuration$\netcoreapp3.1\ZStudio.D365.DTPkg.*" target="lib\netcoreapp3.1" />-->
+		<file src="ReleaseNote.txt" target="content\ZD365DTHelper" />
+		<file src="ZD365DTHelper\*.*" target="content\ZD365DTHelper" />
+	</files>
+</package>
