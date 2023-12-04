@@ -99,6 +99,7 @@ namespace ZStudio.D365.DeploymentHelper.CmdLineTools
             catch (Exception ex)
             {
                 ConsoleLog.Error("Error: {0}; Trace: {1}", ex.Message, ex.StackTrace);
+                throw;
             }
             finally
             {
