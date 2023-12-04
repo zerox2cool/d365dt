@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZStudio.D365.Shared.Framework.Util;
 using static ZStudio.D365.Shared.Framework.Util.CrmConnector;
+using ZStudio.D365.DeploymentHelper.CmdLineTools;
 
 namespace ZStudio.D365.DeploymentHelper
 {
@@ -21,7 +22,7 @@ namespace ZStudio.D365.DeploymentHelper
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-                string sourceCrmConnectionString = CmdArgsHelper.ReadArgument(args, "connectionString", true, @"Source CRM simplified connection string. e.g. Url=https://d365source.crm6.dynamics.com/; AuthType=OAuth; Username=crmscript@zerostudio.onmicrosoft.com; LoginPrompt=Auto;");
+                string crmConnectionString = CmdArgsHelper.ReadArgument(args, "connectionString", true, @"Source CRM simplified connection string. e.g. Url=https://d365source.crm6.dynamics.com/; AuthType=OAuth; Username=crmscript@zerostudio.onmicrosoft.com; LoginPrompt=Auto;");
                 string helper = CmdArgsHelper.ReadArgument(args, "helper", true, @"Helper to Run, must specify the helper program to run.");
                 string configFile = CmdArgsHelper.ReadArgument(args, "config", false, @"The optional config JSON file to be used by the helper program to run. Pass in NULL when there is no config.");
                 string debug = CmdArgsHelper.ReadArgument(args, "debug", false, "Debug Mode, default to false. e.g. true or false");
@@ -32,37 +33,26 @@ namespace ZStudio.D365.DeploymentHelper
 
                 if (!string.IsNullOrEmpty(configFile) && helper.Equals("null", StringComparison.CurrentCultureIgnoreCase))
                     configFile = string.Empty;
-                string sourceCrmUrl = CmdArgsHelper.GetCrmUrlFromConnectionString(sourceCrmConnectionString);
+                string sourceCrmUrl = CmdArgsHelper.GetCrmUrlFromConnectionString(crmConnectionString);
                 
                 ConsoleLog.Info($"Connection String: {sourceCrmUrl}");
-                ConsoleLog.Info($"Loader: {helper}");
+                ConsoleLog.Info($"Helper: {helper}");
                 ConsoleLog.Info($"Config File: {configFile}");
-
                 ConsoleLog.Info($"Working Folder Path: {Environment.CurrentDirectory}");
 
-                CrmConnector crmConn = new CrmConnector(sourceCrmConnectionString);
-                CrmConnectionWhoAmIUser whoAmI = crmConn.WhoAmI;
-                if (whoAmI != null)
+                switch (helper.ToUpper())
                 {
-                    ConsoleLog.Info($"WhoAmI: {whoAmI.UserId}");
-                    ConsoleLog.Info($"FullName: {whoAmI.FullName}");
-                }
-                if (crmConn != null)
-                {
-                    ConsoleLog.Info($"OrganizationDataServiceUrl: {crmConn.OrganizationDataServiceUrl}");
-                    ConsoleLog.Info($"OrganizationFriendlyName: {crmConn.OrganizationFriendlyName}");
-                    ConsoleLog.Info($"OrganizationId: {crmConn.OrganizationId}");
-                    ConsoleLog.Info($"OrganizationServiceUrl: {crmConn.OrganizationServiceUrl}");
-                    ConsoleLog.Info($"OrganizationUniqueName: {crmConn.OrganizationUniqueName}");
-                    ConsoleLog.Info($"TenantId: {crmConn.TenantId}");
-                    ConsoleLog.Info($"WebApplicationUrl: {crmConn.WebApplicationUrl}");
-                }
+                    case "TESTCONNECTION":
+                        TestConnection tc = new TestConnection(crmConnectionString, debugMode);
+                        tc.Run();
+                        result = ExecutionReturnCode.Success;
+                        break;
 
-                //SyncAppDataExecutor exec = new SyncAppDataExecutor(sourceCrmConnectionString, sourceEnv, targetCrmConnectionString, targetEnv, loader, 1, debugMode, isImpersonateUser, impersonateUser);
-                //exec.Run();
-
-                result = ExecutionReturnCode.Success;
-                
+                    default:
+                        ConsoleLog.Error($"Helper '{helper}' is NOT SUPPORTED.");
+                        result = ExecutionReturnCode.Failed;
+                        break;
+                }
             }
             catch (InvalidProgramException ipex)
             {

@@ -26,7 +26,7 @@ goto :end
 
 
 :failed
-echo CRM DEEPLOYMENT HELPER FAILED
+echo CRM DEPLOYMENT HELPER FAILED
 goto :end
 
 
@@ -34,4 +34,4 @@ goto :end
 echo SCRIPT END...
 if %devmode%==1 cd..
 if %devmode%==1 cd..
-if %devmode%==0 pause
+if %devmode%==1 pause
