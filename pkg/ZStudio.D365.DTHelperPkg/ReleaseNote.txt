@@ -1,3 +1,7 @@
-﻿v0.0.0.2 - 04-Dec-2023
+﻿v0.0.0.3 - 05-Dec-2023
+- Added increment solution version helper (IncrementSolutionVersion)
+- Added calculate incremented solution version to an output file helper (CalculateSolutionVersion)
+
+v0.0.0.2 - 04-Dec-2023
 - Draft Deployment Helper CmdLine tool
-- Support Test Connection
+- Support D365 Test Connection (TestConnection)

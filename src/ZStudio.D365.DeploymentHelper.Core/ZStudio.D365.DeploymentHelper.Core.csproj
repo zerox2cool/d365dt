@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4F95F890-3FE0-49D1-BA1E-DF3FD5AD9FE4}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ZStudio.D365.DeploymentHelper</RootNamespace>
-    <AssemblyName>ZStudio.D365.DeploymentHelper</AssemblyName>
+    <ProjectGuid>{716046C7-B872-4F72-BDB9-1C7F8F1731A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZStudio.D365.DeploymentHelper.Core</RootNamespace>
+    <AssemblyName>ZStudio.D365.DeploymentHelper.Core</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,13 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>program48x48.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>ZStudio.D365.DeploymentHelper.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\ZStudio.D365.DeploymentHelper\ZStudio.D365.DeploymentHelper.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -144,50 +139,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="CmdLineTools\CalculateSolutionVersion.cs" />
+    <Compile Include="CmdLineTools\IncrementSolutionVersion.cs" />
+    <Compile Include="CmdLineTools\TestConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="..\ZStudio.D365.DeploymentHelper\ZStudio.D365.DeploymentHelper.snk">
+      <Link>ZStudio.D365.DeploymentHelper.snk</Link>
+    </None>
+    <None Include="app.config" />
     <None Include="packages.config" />
-    <Content Include="Run.bat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SampleConfig\IncrementSolutionVersion.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SampleConfig\CalculateSolutionVersion.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="SetNupkgVersion.ps1" />
-    <None Include="ZStudio.D365.DeploymentHelper.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="program16x16.ico" />
-    <Content Include="program48x48.ico" />
-    <Content Include="ReleaseNote.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ZStudio.D365.DeploymentHelper.Core\ZStudio.D365.DeploymentHelper.Core.csproj">
-      <Project>{716046c7-b872-4f72-bdb9-1c7f8f1731a2}</Project>
-      <Name>ZStudio.D365.DeploymentHelper.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PostBuildEvent>echo Copy DLL and PDB to test project for debugging and testing
-REM copy "$(TargetPath)" "$(SolutionDir)Test\D365DT.Test.Demo.Deployment\Build\Executables\"
-REM copy "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)Test\D365DT.Test.Demo.Deployment\Build\"
-
-REM NugetPkg project
-IF "$(ConfigurationName)"=="Release" echo Calling Post-Build script to copy output into NugetPkg project for Release config only to NugetPkg project
-IF "$(ConfigurationName)"=="Release" copy "$(TargetPath)" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\"
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.dll" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\"
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.config" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\"
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.bat" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\"
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)SampleConfig\*.json" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\SampleConfig\"
-
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.txt" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)SetNupkgVersion.ps1" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"</PostBuildEvent>
-  </PropertyGroup>
 </Project>

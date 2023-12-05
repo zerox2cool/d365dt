@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ZD365DTHelper\" />
+    <Folder Include="ZD365DTHelper\SampleConfig\" />
   </ItemGroup>
 
 </Project>
