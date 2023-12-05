@@ -12,7 +12,7 @@ using ZStudio.D365.Shared.Framework.Util;
 using System.Diagnostics;
 using static ZStudio.D365.Shared.Framework.Util.CrmConnector;
 
-namespace ZStudio.D365.DeploymentHelper.CmdLineTools
+namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 {
     public class TestConnection
     {
@@ -21,14 +21,17 @@ namespace ZStudio.D365.DeploymentHelper.CmdLineTools
         public bool DebugMode { get; private set; }
 
         public string CrmConnectionString { get; private set; }
-        
+
+        public Dictionary<string, object> Config { get; private set; }
+
         public CrmConnector CrmConn { get; private set; }
 
-        public TestConnection(string crmConnectionString, bool debugMode)
+        public TestConnection(string crmConnectionString, Dictionary<string, object> config, bool debugMode)
         {
             DebugMode = debugMode;
 
             CrmConnectionString = crmConnectionString;
+            Config = config;
         }
 
         #region Run
@@ -42,10 +45,10 @@ namespace ZStudio.D365.DeploymentHelper.CmdLineTools
         protected void OnStarted()
         {
             WatchTimer.Start();
-            ConsoleLog.Info("{0} Starting...", Assembly.GetEntryAssembly().FullName);
-            //hide the password
-            ConsoleLog.Info("CRM Connection String: {0}", CrmConnectionString);
-            ConsoleLog.Info("Debug: {0}", DebugMode);
+            ConsoleLog.Info($"{Assembly.GetEntryAssembly().FullName} Starting...");
+            ConsoleLog.Info($"Helper: {nameof(TestConnection)}");
+            ConsoleLog.Info($"CRM Connection String: {CrmConnectionString}");
+            ConsoleLog.Info($"Debug: {DebugMode}");
             ConsoleLog.Info(string.Empty);
 
             if (DebugMode)
@@ -59,7 +62,7 @@ namespace ZStudio.D365.DeploymentHelper.CmdLineTools
         protected void OnStopped()
         {
             WatchTimer.Stop();
-            ConsoleLog.Info("Total Time: {0} second(s)", WatchTimer.ElapsedMilliseconds / 1000);
+            ConsoleLog.Info($"Total Time: {WatchTimer.ElapsedMilliseconds / 1000} second(s)");
 
             //pause to display result for debugging
             if (DebugMode)
@@ -98,7 +101,7 @@ namespace ZStudio.D365.DeploymentHelper.CmdLineTools
             }
             catch (Exception ex)
             {
-                ConsoleLog.Error("Error: {0}; Trace: {1}", ex.Message, ex.StackTrace);
+                ConsoleLog.Error($"Error: {ex.Message}; Trace: {ex.StackTrace}");
                 throw;
             }
             finally

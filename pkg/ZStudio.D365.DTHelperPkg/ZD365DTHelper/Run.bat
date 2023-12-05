@@ -7,7 +7,7 @@ set /p connectionString=
 echo Helper to Run (must specify the helper program to run):
 set /p helper=
 
-echo Config File (optional, pass in NULL when no value):
+echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
 set /p config=
 
 set devmode=0
@@ -34,4 +34,4 @@ goto :end
 echo SCRIPT END...
 if %devmode%==1 cd..
 if %devmode%==1 cd..
-if %devmode%==1 pause
+REM if %devmode%==1 pause

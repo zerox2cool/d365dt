@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ZStudio.D365.DeploymentHelper")]
-[assembly: AssemblyDescription("Dynamics 365 CE Deployment Helper")]
+[assembly: AssemblyTitle("ZStudio.D365.DeploymentHelper.Core")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Zero.Studio")]
-[assembly: AssemblyProduct("ZStudio.D365.DeploymentHelper")]
-[assembly: AssemblyCopyright("Copyright © Zero.Studio 2023")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ZStudio.D365.DeploymentHelper.Core")]
+[assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4f95f890-3fe0-49d1-ba1e-df3fd5ad9fe4")]
+[assembly: Guid("716046c7-b872-4f72-bdb9-1c7f8f1731a2")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -32,8 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.0.3")]
-[assembly: AssemblyFileVersion("0.0.0.3")]
-
-//to use XRM early-bound
-[assembly: Microsoft.Xrm.Sdk.Client.ProxyTypesAssemblyAttribute()]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
