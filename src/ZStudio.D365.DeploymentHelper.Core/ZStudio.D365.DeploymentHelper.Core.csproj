@@ -145,7 +145,7 @@
     <Compile Include="CmdLineTools\DeleteTablePermission.cs" />
     <Compile Include="CmdLineTools\CalculateSolutionVersion.cs" />
     <Compile Include="CmdLineTools\IncrementSolutionVersion.cs" />
-    <Compile Include="CmdLineTools\UpdateLegacyPortalSiteSetting.cs" />
+    <Compile Include="CmdLineTools\UpdatePortalSiteSetting.cs" />
     <Compile Include="CmdLineTools\TestConnection.cs" />
     <Compile Include="Models\AdxSiteSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

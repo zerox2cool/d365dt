@@ -1,14 +1,14 @@
-﻿REM START UpdateLegacyPortalSiteSetting
+﻿REM START UpdatePortalSiteSetting
 echo off
 
 echo Source CRM Connection String (can be with password/client secret or login prompted - NOTE: password is visible):
 set /p connectionString=
 
 echo Helper to Run (must specify the helper program to run):
-set helper=UpdateLegacyPortalSiteSetting
+set helper=UpdatePortalSiteSetting
 
 echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
-set config=SampleConfig\UpdateLegacyPortalSiteSetting.json
+set config=SampleConfig\UpdatePortalSiteSetting.json
 
 echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
 set key=websiteid;;b2cclientid;;b2credirecturi
