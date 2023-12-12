@@ -4,9 +4,12 @@ using System;
 using System.Activities.Statements;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json.Nodes;
+using ZStudio.D365.DeploymentHelper.Core.Base;
 using ZStudio.D365.DeploymentHelper.Core.CmdLineTools;
 using ZStudio.D365.DeploymentHelper.Core.Util;
 using ZStudio.D365.Shared.Data.Framework.Cmd;
@@ -16,6 +19,11 @@ namespace ZStudio.D365.DeploymentHelper
 {
     internal class Program
     {
+        /// <summary>
+        /// Stores all the Helper Tool Type Handlers, only loaded once
+        /// </summary>
+        internal static Dictionary<string, Type> HelperTypeHandlers = null;
+
         private const string DELIMITER = ";;";
 
         static int Main(string[] args)
@@ -47,12 +55,13 @@ namespace ZStudio.D365.DeploymentHelper
                 ConsoleLog.Info($"Connection String: {ArgsHelper.MaskCrmConnectionString(crmConnectionString)}");
                 ConsoleLog.Info($"Helper: {helper}");
                 ConsoleLog.Info($"Working Folder Path: {Environment.CurrentDirectory}");
-                ConsoleLog.Info(string.Empty);
+                ConsoleLog.Info(HelperToolBase.LOG_LINE);
                 ConsoleLog.Info($"Read Config File ('{configFile}') if available.");
                 ConsoleLog.Info($"Token Key Length: {tokenKey.Length}");
                 ConsoleLog.Info($"Token Data Length: {tokenData.Length}");
-                ConsoleLog.Info(string.Empty);
+                ConsoleLog.Info(HelperToolBase.LOG_LINE);
 
+                #region SystemTokens
                 //always add system tokens from the connected D365 connection string
                 Dictionary<string, string> tokens = null;
                 CrmConnector conn = new CrmConnector(crmConnectionString);
@@ -80,7 +89,9 @@ namespace ZStudio.D365.DeploymentHelper
                 }
                 else
                     throw new ArgumentException($"Unable to connect to the environment using the connection string provided ({crmConnectionString}).");
+                #endregion SystemTokens
 
+                #region UserTokens
                 //read token data into Dictionary if provided
                 if (!string.IsNullOrEmpty(tokenKey) && !string.IsNullOrEmpty(tokenData))
                 {
@@ -95,6 +106,7 @@ namespace ZStudio.D365.DeploymentHelper
                     else
                         throw new ArgumentException($"The number of token item in Token Key ({keySplit.Length}) and Token Data ({dataSplit.Length}) is different.");
                 }
+                #endregion UserTokens
 
                 //get token count and value
                 ConsoleLog.Info($"Token Count (including system): {tokens.Count}");
@@ -104,6 +116,7 @@ namespace ZStudio.D365.DeploymentHelper
                         ConsoleLog.Info($"{token.Key}: {token.Value}");
                 }
 
+                #region Config
                 //read config JSON that is in
                 Dictionary<string, object> config = null;
                 if (!string.IsNullOrEmpty(configFile))
@@ -142,36 +155,61 @@ namespace ZStudio.D365.DeploymentHelper
                         {
                             ConsoleLog.Info($"{kvp.Key} = {kvp.Value}");
                         }
+                        ConsoleLog.Info(HelperToolBase.LOG_LINE);
                     }
                 }
-                ConsoleLog.Info(string.Empty);
-                ConsoleLog.Info($"Start Helper...");
-                ConsoleLog.Info(string.Empty);
+                #endregion Config
 
-                switch (helper.ToUpper())
+                #region LoadHelperTypes
+                //load all helper type from Core DLL
+                string coreDLL = Path.Combine(Environment.CurrentDirectory, "ZStudio.D365.DeploymentHelper.Core.dll");
+                if (debugMode)
                 {
-                    case "TESTCONNECTION":
-                        TestConnection tc = new TestConnection(crmConnectionString, config, debugMode);
-                        tc.Run();
-                        result = ExecutionReturnCode.Success;
-                        break;
+                    ConsoleLog.Info($"Core DLL: {coreDLL}");
+                    ConsoleLog.Info($"Core DLL Type Count: {Assembly.LoadFile(coreDLL).GetTypes().Length}");
+                }
 
-                    case "CALCULATESOLUTIONVERSION":
-                        CalculateSolutionVersion csv = new CalculateSolutionVersion(crmConnectionString, config, debugMode);
-                        csv.Run();
-                        result = ExecutionReturnCode.Success;
+                Type coreDLLType = null;
+                foreach (var t in Assembly.LoadFile(coreDLL).GetTypes())
+                {
+                    if (t.FullName.StartsWith("ZStudio.D365.DeploymentHelper.Core"))
+                    {
+                        coreDLLType = t;
                         break;
+                    }
+                }
+                LoadHelperTypes(coreDLLType);
+                
+                //log available helper types
+                if (debugMode)
+                {
+                    ConsoleLog.Info($"{GetHelperToolTypeList()}");
+                    ConsoleLog.Info(HelperToolBase.LOG_LINE);
+                }
+                #endregion LoadHelperTypes
 
-                    case "INCREMENTSOLUTIONVERSION":
-                        IncrementSolutionVersion isv = new IncrementSolutionVersion(crmConnectionString, config, debugMode);
-                        isv.Run();
-                        result = ExecutionReturnCode.Success;
-                        break;
+                //find helper to instantiate and execute it
+                if (HelperTypeHandlers.ContainsKey(helper.ToUpper()))
+                {
+                    ConsoleLog.Info($"The helper for '{helper}' has been found, instantiate the helper and run.");
+                    IHelperToolLogic logic = Activator.CreateInstance(HelperTypeHandlers[helper.ToUpper()], new object[] { crmConnectionString, config, tokens, debugMode }) as IHelperToolLogic;
+                    if (logic != null)
+                    {
+                        logic.HelperName = HelperTypeHandlers[helper.ToUpper()].Name;
+                        ConsoleLog.Info($"Executing Helper '{HelperTypeHandlers[helper.ToUpper()].Name}'...");
+                        ConsoleLog.Info(string.Empty);
 
-                    default:
-                        ConsoleLog.Error($"Helper '{helper}' is NOT SUPPORTED.");
-                        result = ExecutionReturnCode.Failed;
-                        break;
+                        //execute
+                        bool runResult = logic.Run();
+                        result = ExecutionReturnCode.Success;
+
+                        ConsoleLog.Info($"Helper Run Completed...");
+                    }
+                }
+                else
+                {
+                    ConsoleLog.Error($"Helper '{helper}' is NOT SUPPORTED.");
+                    result = ExecutionReturnCode.Failed;
                 }
             }
             catch (InvalidProgramException ipex)
@@ -195,6 +233,7 @@ namespace ZStudio.D365.DeploymentHelper
             return (int)result;
         }
 
+        #region Tokens
         /// <summary>
         /// Replace values in JSON string with token variable values. The token key is case-sensitive.
         /// </summary>
@@ -232,12 +271,87 @@ namespace ZStudio.D365.DeploymentHelper
 
             return result;
         }
+        #endregion Tokens
 
+        #region LoadHelperTypes
+        /// <summary>
+        /// Load the collection of Helper Type handlers in the assembly.
+        /// </summary>
+        private static void LoadHelperTypes(Type typeContainingTheHelpers)
+        {
+            //load the collection of action extensions if it has not been loaded
+            if (HelperTypeHandlers == null || HelperTypeHandlers.Count > 0)
+            {
+                ConsoleLog.Info($"Loading HelperTypeHandlers.");
+
+                Type[] declaredExtensionInWorkflow = Type.EmptyTypes;
+                try
+                {
+                    ConsoleLog.Info($"Loading Assembly.");
+
+                    declaredExtensionInWorkflow = Assembly.GetAssembly(typeContainingTheHelpers).GetTypes();
+                }
+                catch (ReflectionTypeLoadException ex)
+                {
+                    declaredExtensionInWorkflow = ex.Types;
+                }
+                catch
+                {
+                    //do nothing
+                }
+
+                //add applicable handler into a dictionary
+                try
+                {
+                    HelperTypeHandlers = declaredExtensionInWorkflow.Where(handler => handler.GetCustomAttribute<HelperTypeAttribute>() != null).ToDictionary(key => key.GetCustomAttribute<HelperTypeAttribute>().HelperType);
+                }
+                catch (ArgumentException aex)
+                {
+                    throw new ArgumentException(string.Format("There are duplicate helper types defined. Exception: {0}", aex.Message));
+                }
+
+                //construct assembly info
+                StringBuilder sb = new StringBuilder();
+                if (HelperTypeHandlers == null || HelperTypeHandlers.Count == 0)
+                {
+                    sb.AppendLine(string.Format("PassInAssembly CodeBase: {0}", Assembly.GetAssembly(typeContainingTheHelpers).CodeBase));
+                    sb.AppendLine(string.Format("PassInAssembly FullName: {0}", Assembly.GetAssembly(typeContainingTheHelpers).FullName));
+                    sb.AppendLine(string.Format("CallingAssembly CodeBase: {0}", Assembly.GetCallingAssembly().CodeBase));
+                    sb.AppendLine(string.Format("CallingAssembly FullName: {0}", Assembly.GetCallingAssembly().FullName));
+                }
+
+                //if no handler, throw exception
+                if (HelperTypeHandlers == null || HelperTypeHandlers.Count == 0)
+                    throw new Exception(string.Format("No Helper Type Extensions found. AssemblyInfo: {0}", sb.ToString()));
+            }
+            else
+            {
+                ConsoleLog.Info($"HelperTypeHandlers already loaded. Count: {HelperTypeHandlers.Count}");
+            }
+        }
+
+        private static string GetHelperToolTypeList()
+        {
+            //log all the loaded handler
+            StringBuilder sb = new StringBuilder();
+            if (HelperTypeHandlers != null)
+            {
+                foreach (KeyValuePair<string, Type> h in HelperTypeHandlers)
+                {
+                    sb.AppendLine(string.Format("Key: {0}; Type: {1};", h.Key, h.Value.FullName));
+                }
+            }
+            return sb.ToString();
+        }
+        #endregion LoadHelperTypes
+
+        #region ExecutionReturnCode
         [Flags]
         public enum ExecutionReturnCode : int
         {
             Success = 0,
             Failed = 1,
         }
+        #endregion ExecutionReturnCode
     }
 }

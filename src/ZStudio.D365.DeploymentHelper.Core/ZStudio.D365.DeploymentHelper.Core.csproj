@@ -139,6 +139,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\HelperToolBase.cs" />
+    <Compile Include="Base\HelperType.cs" />
+    <Compile Include="Base\IHelperToolLogic.cs" />
     <Compile Include="CmdLineTools\CalculateSolutionVersion.cs" />
     <Compile Include="CmdLineTools\IncrementSolutionVersion.cs" />
     <Compile Include="CmdLineTools\TestConnection.cs" />
