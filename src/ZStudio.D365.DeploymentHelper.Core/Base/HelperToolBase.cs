@@ -15,13 +15,15 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
     {
         private const int CRM_TEXT_MAX_LENGTH = 1048576;
         public const string LOG_LINE = "----------------------------------------------------------------------------------";
+        public const string LOG_SEGMENT = "------";
 
         #region Variables
         private Stopwatch _watchTimer = new Stopwatch();
         private string _crmConnString = null;
-        private Dictionary<string, object> _config = null;
+        private string _configJson = null;
         private CrmConnector _crmConn = null;
         private Dictionary<string, string> _tokens = null;
+        private bool _isSuccess = false;
         #endregion Variables
 
         #region Properties
@@ -47,13 +49,13 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         }
 
         /// <summary>
-        /// Deserialized JSON configuration.
+        /// Configuration in serialized JSON.
         /// </summary>
-        public Dictionary<string, object> Config
+        public string ConfigJson
         {
             get
             {
-                return _config;
+                return _configJson;
             }
         }
 
@@ -78,6 +80,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
                 return CrmConn?.OrgService;
             }
         }
+
+        /// <summary>
+        /// The Fetch Helper.
+        /// </summary>
+        public FetchHelper Fetch { get; set; }
 
         /// <summary>
         /// The logger storage.
@@ -109,6 +116,17 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
                 return log;
             }
         }
+
+        /// <summary>
+        /// The result.
+        /// </summary>
+        public bool? IsSuccess
+        {
+            get
+            {
+                return _isSuccess;
+            }
+        }
         #endregion Properties
 
         #region Consstructor
@@ -118,7 +136,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// <param name="crmConnectionString"></param>
         /// <param name="config"></param>
         /// <param name="debugMode"></param>
-        public HelperToolBase(string crmConnectionString, Dictionary<string, object> config, Dictionary<string, string> tokens, bool debugMode = false)
+        public HelperToolBase(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode = false)
         {
             if (string.IsNullOrEmpty(crmConnectionString))
                 throw new ArgumentNullException("CRM connection string is required.");
@@ -126,12 +144,13 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
             DebugMode = debugMode;
 
             _crmConnString = crmConnectionString;
-            _config = config;
+            _configJson = configJson;
             _tokens = tokens;
 
             _crmConn = new CrmConnector(CrmConnectionString);
 
             Logger = new StringBuilder();
+            Fetch = new FetchHelper(OrgService);
         }
         #endregion Consstructor
 
@@ -176,6 +195,15 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         #endregion Tokens
 
         #region Run
+        /// <summary>
+        /// Set the Success result.
+        /// </summary>
+        /// <param name="result"></param>
+        private void SetIsSuccess(bool result)
+        {
+            _isSuccess = result;
+        }
+
         /// <summary>
         /// This main method to execute the helper operation to be implemented by the base class.
         /// </summary>
@@ -245,6 +273,9 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
                 }
                 ConsoleLog.Info(LOG_LINE);
 
+                //pre-execution
+                PreExecute_HandlerImplementation();
+
                 //run logic
                 ConsoleLog.Info(string.Empty);
                 ConsoleLog.Info($"Execute OnRun_Implementation...");
@@ -253,9 +284,22 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
                 bool result = OnRun_Implementation(out string exceptionMessage);
                 ConsoleLog.Info($"OnRun_Implementation Result: {result}");
 
+                //set the result
+                SetIsSuccess(result);
+
                 if (!result)
                     ConsoleLog.Info($"OnRun_Implementation Exception: {exceptionMessage}");
 
+                //run post execution process for success/failure
+                if (result)
+                    OnSuccess_HandlerImplementation();
+                else
+                    OnFailure_HandlerImplementation();
+
+                //post-execution
+                PostExecute_HandlerImplementation();
+
+                //display log
                 ConsoleLog.Info($"Logs:");
                 ConsoleLog.Info($"{GetLog()}");
                 ConsoleLog.Info(LOG_LINE);
@@ -267,6 +311,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
                 ConsoleLog.Info(LOG_LINE);
                 ConsoleLog.Error($"Error: {ex.Message}; Trace: {ex.StackTrace}");
                 ConsoleLog.Info(LOG_LINE);
+
+                //handle exception and the result will be failure, the on-failure handler will not run, only the exception handler is executed
+                SetIsSuccess(false);
+                OnException_HandlerImplementation(ex);
+
                 throw;
             }
             finally
@@ -361,6 +410,16 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         public void Log(string format, params object[] p)
         {
             Logger.AppendLine(string.Format(format, p));
+        }
+
+        /// <summary>
+        /// Log a debug text to the Logger storage.
+        /// </summary>
+        /// <param name="text"></param>
+        public void Debug(string text)
+        {
+            if (DebugMode)
+                Logger.AppendLine(text);
         }
         #endregion Logs
 

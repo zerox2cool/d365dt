@@ -1,20 +1,20 @@
-﻿REM START CalculateSolutionVersion
+﻿REM START UpdateLegacyPortalSiteSetting
 echo off
 
 echo Source CRM Connection String (can be with password/client secret or login prompted - NOTE: password is visible):
 set /p connectionString=
 
 echo Helper to Run (must specify the helper program to run):
-set helper=CalculateSolutionVersion
+set helper=UpdateLegacyPortalSiteSetting
 
 echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
-set config=SampleConfig\CalculateSolutionVersion.json
+set config=SampleConfig\UpdateLegacyPortalSiteSetting.json
 
 echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set key=solutionname;;incmajor;;incminor;;incbuild;;increv
+set key=websiteid;;b2cclientid;;b2credirecturi
 
 echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set data=cms010fullsolution;;false;;true;;false;;false
+set data=b5dc8e6b-6625-ee11-9965-000d3a6ad5b3;;581e6241-68c8-47e4-acd2-2e4c947edb24;;https://hccc-build-site.powerappsportals.com/signin-aad-b2c_1
 
 set devmode=0
 if exist "bin/Debug" set devmode=1
@@ -23,7 +23,7 @@ set debug=false
 if %devmode%==1 cd bin/Debug/
 if %devmode%==1 set debug=true
 
-ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:false
+ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug%
 set status=%errorlevel%
 
 

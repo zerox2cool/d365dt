@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using ZStudio.D365.DeploymentHelper.Core.Base;
@@ -10,6 +11,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
     [HelperType(nameof(IncrementSolutionVersion))]
     public class IncrementSolutionVersion : HelperToolBase
     {
+        private Dictionary<string, object> config = null;
+
         public string SolutionName { get; private set; }
 
         public bool IncrementRevision { get; private set; }
@@ -17,17 +20,28 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         public bool IncrementMinor { get; private set; }
         public bool IncrementMajor { get; private set; }
 
-        public IncrementSolutionVersion(string crmConnectionString, Dictionary<string, object> config, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, config, tokens, debugMode)
+        public IncrementSolutionVersion(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
         {
-            SolutionName = Convert.ToString(config["SolutionName"]);
-            IncrementRevision = Convert.ToBoolean(config["IncrementRevision"]);
-            IncrementBuild = Convert.ToBoolean(config["IncrementBuild"]);
-            IncrementMinor = Convert.ToBoolean(config["IncrementMinor"]);
-            IncrementMajor = Convert.ToBoolean(config["IncrementMajor"]);
         }
 
         public override void PreExecute_HandlerImplementation()
         {
+            try
+            {
+                //load config JSON
+                config = JsonConvert.DeserializeObject<Dictionary<string, object>>(ConfigJson);
+
+                SolutionName = Convert.ToString(config["SolutionName"]);
+                IncrementRevision = Convert.ToBoolean(config["IncrementRevision"]);
+                IncrementBuild = Convert.ToBoolean(config["IncrementBuild"]);
+                IncrementMinor = Convert.ToBoolean(config["IncrementMinor"]);
+                IncrementMajor = Convert.ToBoolean(config["IncrementMajor"]);
+            }
+            catch (Exception dex)
+            {
+                throw new ArgumentException($"The Config JSON is invalid and cannot be deserialise to Dictionary<string, object>. Exception: {dex.Message}");
+            }
+
             Log(LOG_LINE);
             Log($"Config Parameters:");
             Log(LOG_LINE);
@@ -36,7 +50,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             Log($"Increment Build: {IncrementBuild}");
             Log($"Increment Minor: {IncrementMinor}");
             Log($"Increment Major: {IncrementMajor}");
-            Log(string.Empty);
+            Log(LOG_LINE);
         }
 
         protected override bool OnRun_Implementation(out string exceptionMessage)

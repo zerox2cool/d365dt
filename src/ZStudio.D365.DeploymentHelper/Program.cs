@@ -114,11 +114,12 @@ namespace ZStudio.D365.DeploymentHelper
                 {
                     foreach (var token in tokens)
                         ConsoleLog.Info($"{token.Key}: {token.Value}");
+                    ConsoleLog.Info(HelperToolBase.LOG_LINE);
                 }
 
                 #region Config
-                //read config JSON that is in
-                Dictionary<string, object> config = null;
+                //read config JSON that is in the file
+                string configJson = string.Empty;
                 if (!string.IsNullOrEmpty(configFile))
                 {
                     if (!File.Exists(configFile))
@@ -131,31 +132,17 @@ namespace ZStudio.D365.DeploymentHelper
                         }
                     }
                     ConsoleLog.Info($"Config File: {configFile}");
+                    ConsoleLog.Info(HelperToolBase.LOG_LINE);
 
                     try
                     {
-                        string configJson = File.ReadAllText(configFile);
+                        configJson = File.ReadAllText(configFile);
                         //replace with token data
                         configJson = ReplaceTokens(configJson, tokens);
-
-                        config = JsonConvert.DeserializeObject<Dictionary<string, object>>(configJson);
                     }
                     catch (Exception dex)
                     {
-                        throw new ArgumentException($"The JSON in '{configFile}' is invalid and cannot be deserialise to Dictionary<string, object>. Exception: {dex.Message}");
-                    }
-
-                    if (config == null)
-                        throw new ArgumentException($"The JSON in '{configFile}' is invalid and cannot be deserialise to Dictionary<string, object>.");
-                    else
-                    {
-                        //log all config value
-                        ConsoleLog.Info($"Config Count: {config.Count}");
-                        foreach (var kvp in config)
-                        {
-                            ConsoleLog.Info($"{kvp.Key} = {kvp.Value}");
-                        }
-                        ConsoleLog.Info(HelperToolBase.LOG_LINE);
+                        throw new ArgumentException($"The JSON in '{configFile}' is invalid and cannot be de-tokenized. Exception: {dex.Message}");
                     }
                 }
                 #endregion Config
@@ -192,7 +179,7 @@ namespace ZStudio.D365.DeploymentHelper
                 if (HelperTypeHandlers.ContainsKey(helper.ToUpper()))
                 {
                     ConsoleLog.Info($"The helper for '{helper}' has been found, instantiate the helper and run.");
-                    IHelperToolLogic logic = Activator.CreateInstance(HelperTypeHandlers[helper.ToUpper()], new object[] { crmConnectionString, config, tokens, debugMode }) as IHelperToolLogic;
+                    IHelperToolLogic logic = Activator.CreateInstance(HelperTypeHandlers[helper.ToUpper()], new object[] { crmConnectionString, configJson, tokens, debugMode }) as IHelperToolLogic;
                     if (logic != null)
                     {
                         logic.HelperName = HelperTypeHandlers[helper.ToUpper()].Name;
@@ -203,7 +190,7 @@ namespace ZStudio.D365.DeploymentHelper
                         bool runResult = logic.Run();
                         result = ExecutionReturnCode.Success;
 
-                        ConsoleLog.Info($"Helper Run Completed...");
+                        ConsoleLog.Info($"Helper '{HelperTypeHandlers[helper.ToUpper()].Name}' Run Completed...");
                     }
                 }
                 else

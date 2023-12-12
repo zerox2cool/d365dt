@@ -29,9 +29,9 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         string CrmConnectionString { get; }
 
         /// <summary>
-        /// Deserialized JSON configuration.
+        /// Configuration in serialized JSON.
         /// </summary>
-        Dictionary<string, object> Config { get; }
+        string ConfigJson { get; }
 
         /// <summary>
         /// CRM Connector
@@ -59,6 +59,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         string Logs { get; }
 
         /// <summary>
+        /// The result.
+        /// </summary>
+        bool? IsSuccess { get; }
+
+        /// <summary>
         /// This main method to execute the helper operation to be implemented by the base class.
         /// </summary>
         /// <returns>Returns the execution result</returns>
@@ -82,5 +87,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// <param name="format"></param>
         /// <param name="p"></param>
         void Log(string format, params object[] p);
+
+        /// <summary>
+        /// Log a debug text to the Logger storage.
+        /// </summary>
+        /// <param name="text"></param>
+        void Debug(string text);
     }
 }

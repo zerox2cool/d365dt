@@ -148,6 +148,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="SampleConfig\UpdateLegacyPortalSiteSetting.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <None Include="packages.config" />
     <Content Include="Run.bat">
@@ -159,6 +162,7 @@
     <Content Include="SampleConfig\CalculateSolutionVersion.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Test_UpdateLegacyPortalSiteSetting.bat" />
     <None Include="Test_TestConnection.bat" />
     <None Include="Test_CalculateSolutionVersion.bat" />
     <None Include="SetNupkgVersion.ps1" />

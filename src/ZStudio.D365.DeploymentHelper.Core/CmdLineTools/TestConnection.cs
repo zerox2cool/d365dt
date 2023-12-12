@@ -7,7 +7,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
     [HelperType(nameof(TestConnection))]
     public class TestConnection : HelperToolBase
     {
-        public TestConnection(string crmConnectionString, Dictionary<string, object> config, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, config, tokens, debugMode)
+        public TestConnection(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
         {
         }
 
@@ -16,6 +16,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             exceptionMessage = string.Empty;
 
             Log($"{HelperName} on run implementation.");
+            Log(LOG_SEGMENT);
+            Log($"CRM Connection String is valid.");
 
             return true;
         }
