@@ -10,6 +10,12 @@ set /p helper=
 echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
 set /p config=
 
+echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
+set /p key=
+
+echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
+set /p data=
+
 set devmode=0
 if exist "bin/Debug" set devmode=1
 
@@ -17,7 +23,7 @@ set debug=false
 if %devmode%==1 cd bin/Debug/
 if %devmode%==1 set debug=true
 
-ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /debug:%debug%
+ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug%
 set status=%errorlevel%
 
 

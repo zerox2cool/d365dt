@@ -1,31 +1,19 @@
-﻿using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using ZStudio.D365.Shared.Data.Framework.Cmd;
-using ZStudio.D365.Shared.Framework.Util;
-using System.Diagnostics;
-using static ZStudio.D365.Shared.Framework.Util.CrmConnector;
-using System.Activities.Statements;
-using ZStudio.D365.Shared.Framework.Core.Query;
 using System.IO;
+using System.Security.Cryptography;
+using ZStudio.D365.DeploymentHelper.Core.Base;
+using ZStudio.D365.Shared.Framework.Core.Query;
 
 namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 {
-    public class CalculateSolutionVersion
+    [HelperType(nameof(CalculateSolutionVersion))]
+    public class CalculateSolutionVersion : HelperToolBase
     {
-        private Stopwatch WatchTimer = new Stopwatch();
-
-        public bool DebugMode { get; private set; }
-
-        public string CrmConnectionString { get; private set; }
-
-        public Dictionary<string, object> Config { get; private set; }
+        private Dictionary<string, object> config = null;
 
         public string SolutionName { get; private set; }
 
@@ -36,152 +24,129 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         public bool IncrementMinor { get; private set; }
         public bool IncrementMajor { get; private set; }
 
-        public CrmConnector CrmConn { get; private set; }
-
-        public CalculateSolutionVersion(string crmConnectionString, Dictionary<string, object> config, bool debugMode = false)
+        public CalculateSolutionVersion(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
         {
-            DebugMode = debugMode;
-
-            CrmConnectionString = crmConnectionString;
-            Config = config;
-            SolutionName = Convert.ToString(config["SolutionName"]);
-            OutputTextFile = Convert.ToString(config["OutputTextFile"]);
-            IncrementRevision = Convert.ToBoolean(config["IncrementRevision"]);
-            IncrementBuild = Convert.ToBoolean(config["IncrementBuild"]);
-            IncrementMinor = Convert.ToBoolean(config["IncrementMinor"]);
-            IncrementMajor = Convert.ToBoolean(config["IncrementMajor"]);
         }
 
-        #region Run
-        public void Run()
-        {
-            OnStarted();
-            OnRun();
-            OnStopped();
-        }
-
-        protected void OnStarted()
-        {
-            WatchTimer.Start();
-            ConsoleLog.Info($"{Assembly.GetEntryAssembly().FullName} Starting...");
-            ConsoleLog.Info($"Helper: {nameof(CalculateSolutionVersion)}");
-            ConsoleLog.Info($"CRM Connection String: {CrmConnectionString}");
-            ConsoleLog.Info($"Solution Name: {SolutionName}");
-            ConsoleLog.Info($"Output Text File: {OutputTextFile}");
-            ConsoleLog.Info($"Increment Revision: {IncrementRevision}");
-            ConsoleLog.Info($"Increment Build: {IncrementBuild}");
-            ConsoleLog.Info($"Increment Minor: {IncrementMinor}");
-            ConsoleLog.Info($"Increment Major: {IncrementMajor}");
-            ConsoleLog.Info($"Debug: {DebugMode}");
-            ConsoleLog.Info(string.Empty);
-
-            if (DebugMode)
-            {
-                int sleepTime = 15;
-                ConsoleLog.Info($"Running on Debug Mode, you have {sleepTime} seconds to attached the process now for debugging: {Assembly.GetExecutingAssembly()}.");
-                Thread.Sleep(sleepTime * 1000);
-            }
-        }
-
-        protected void OnStopped()
-        {
-            WatchTimer.Stop();
-            ConsoleLog.Info($"Total Time: {WatchTimer.ElapsedMilliseconds / 1000} second(s)");
-
-            //pause to display result for debugging
-            if (DebugMode)
-                ConsoleLog.Pause();
-        }
-
-        private void Log(string log)
-        {
-            ConsoleLog.Info(log);
-            ConsoleLog.Info(string.Empty);
-        }
-
-        protected void OnRun()
+        public override void PreExecute_HandlerImplementation()
         {
             try
             {
-                CrmConn = new CrmConnector(CrmConnectionString);
+                //load config JSON
+                config = JsonConvert.DeserializeObject<Dictionary<string, object>>(ConfigJson);
 
-                //get solution
-                XrmQueryExpression query = new XrmQueryExpression("solution")
-                    .Condition("uniquename", ConditionOperator.Equal, SolutionName);
-                EntityCollection coll = CrmConn.OrgService.RetrieveMultiple(query.ToQueryExpression());
-                if (coll?.Entities?.Count > 0)
+                SolutionName = Convert.ToString(config["SolutionName"]);
+                OutputTextFile = Convert.ToString(config["OutputTextFile"]);
+                IncrementRevision = Convert.ToBoolean(config["IncrementRevision"]);
+                IncrementBuild = Convert.ToBoolean(config["IncrementBuild"]);
+                IncrementMinor = Convert.ToBoolean(config["IncrementMinor"]);
+                IncrementMajor = Convert.ToBoolean(config["IncrementMajor"]);
+            }
+            catch (Exception dex)
+            {
+                throw new ArgumentException($"The Config JSON is invalid and cannot be deserialise to Dictionary<string, object>. Exception: {dex.Message}");
+            }
+
+            Log(LOG_LINE);
+            Log($"Config Parameters:");
+            Log(LOG_LINE);
+            Log($"Solution Name: {SolutionName}");
+            Log($"Output Text File: {OutputTextFile}");
+            Log($"Increment Revision: {IncrementRevision}");
+            Log($"Increment Build: {IncrementBuild}");
+            Log($"Increment Minor: {IncrementMinor}");
+            Log($"Increment Major: {IncrementMajor}");
+            Log(LOG_LINE);
+        }
+
+        protected override bool OnRun_Implementation(out string exceptionMessage)
+        {
+            exceptionMessage = string.Empty;
+            bool result = false;
+
+            //get solution
+            XrmQueryExpression query = new XrmQueryExpression("solution")
+                .Condition("uniquename", ConditionOperator.Equal, SolutionName);
+            EntityCollection coll = CrmConn.OrgService.RetrieveMultiple(query.ToQueryExpression());
+            if (coll?.Entities?.Count > 0)
+            {
+                Entity sol = coll.Entities[0];
+                string newVersion = string.Empty;
+
+                //get version
+                string oldVersion = Convert.ToString(sol["version"]);
+                Log($"Current Version: {oldVersion}");
+
+                //calculate new version
+                string[] versionSplit = oldVersion.Split(new string[] { "." }, StringSplitOptions.None);
+                if (versionSplit?.Length == 4)
                 {
-                    Entity sol = coll.Entities[0];
-                    string newVersion = string.Empty;
+                    int major = int.Parse(versionSplit[0]);
+                    int minor = int.Parse(versionSplit[1]);
+                    int build = int.Parse(versionSplit[2]);
+                    int revision = int.Parse(versionSplit[3]);
 
-                    //get version
-                    string oldVersion = Convert.ToString(sol["version"]);
-                    ConsoleLog.Info($"Current Version: {oldVersion}");
-
-                    //calculate new version
-                    string[] versionSplit = oldVersion.Split(new string[] { "." }, StringSplitOptions.None);
-                    if (versionSplit?.Length == 4)
+                    if (IncrementMajor)
                     {
-                        int major = int.Parse(versionSplit[0]);
-                        int minor = int.Parse(versionSplit[1]);
-                        int build = int.Parse(versionSplit[2]);
-                        int revision = int.Parse(versionSplit[3]);
+                        major++;
+                        minor = 0;
+                        build = 0;
+                        revision = 0;
+                    }
+                    if (IncrementMinor)
+                    {
+                        minor++;
+                        build = 0;
+                        revision = 0;
+                    }
+                    if (IncrementBuild)
+                    {
+                        build++;
+                        revision = 0;
+                    }
+                    if (IncrementRevision)
+                    {
+                        revision++;
+                    }
 
-                        if (IncrementMajor)
-                            major++;
-                        if (IncrementMinor)
-                            minor++;
-                        if (IncrementBuild)
-                            build++;
-                        if (IncrementRevision)
-                            revision++;
+                    newVersion = $"{major}.{minor}.{build}.{revision}";
+                    Log($"New Version: {newVersion}");
 
-                        newVersion = $"{major}.{minor}.{build}.{revision}";
-                        ConsoleLog.Info($"New Version: {newVersion}");
-
-                        //write to output
-                        if (!string.IsNullOrEmpty(OutputTextFile))
+                    //write to output
+                    if (!string.IsNullOrEmpty(OutputTextFile))
+                    {
+                        if (File.Exists(OutputTextFile))
                         {
+                            File.Delete(OutputTextFile);
+                        }
+                        else
+                        {
+                            //try to combine with current working folder path
+                            OutputTextFile = Path.Combine(Environment.CurrentDirectory, OutputTextFile);
                             if (File.Exists(OutputTextFile))
                             {
                                 File.Delete(OutputTextFile);
                             }
-                            else
-                            {
-                                //try to combine with current working folder path
-                                OutputTextFile = Path.Combine(Environment.CurrentDirectory, OutputTextFile);
-                                if (File.Exists(OutputTextFile))
-                                {
-                                    File.Delete(OutputTextFile);
-                                }
-                            }
-
-                            //write to output file
-                            ConsoleLog.Info($"New Version output to '{OutputTextFile}'.");
-                            File.WriteAllText(OutputTextFile, newVersion);
                         }
+
+                        //write to output file
+                        Log($"New Version output to '{OutputTextFile}'.");
+                        File.WriteAllText(OutputTextFile, newVersion);
                     }
-                    else
-                    {
-                        throw new ArgumentException($"The solution '{SolutionName}' version of '{oldVersion}' is invalid.");
-                    }
+
+                    result = true;
                 }
                 else
                 {
-                    throw new ArgumentException($"The solution name '{SolutionName}' is not found.");
+                    throw new ArgumentException($"The solution '{SolutionName}' version of '{oldVersion}' is invalid.");
                 }
             }
-            catch (Exception ex)
+            else
             {
-                ConsoleLog.Error($"Error: {ex.Message}; Trace: {ex.StackTrace}");
-                throw;
+                throw new ArgumentException($"The solution name '{SolutionName}' is not found.");
             }
-            finally
-            {
-                ConsoleLog.Info($"Run Completed...");
-                ConsoleLog.Info($"CRM Connection String: {CrmConnectionString}");
-            }
+
+            return result;
         }
-        #endregion Run
     }
 }

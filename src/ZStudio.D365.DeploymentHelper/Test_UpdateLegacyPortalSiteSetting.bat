@@ -1,20 +1,20 @@
-﻿REM START
+﻿REM START UpdateLegacyPortalSiteSetting
 echo off
 
 echo Source CRM Connection String (can be with password/client secret or login prompted - NOTE: password is visible):
 set /p connectionString=
 
 echo Helper to Run (must specify the helper program to run):
-set /p helper=
+set helper=UpdateLegacyPortalSiteSetting
 
 echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
-set /p config=
+set config=SampleConfig\UpdateLegacyPortalSiteSetting.json
 
 echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set /p key=
+set key=websiteid;;b2cclientid;;b2credirecturi
 
 echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set /p data=
+set data=b5dc8e6b-6625-ee11-9965-000d3a6ad5b3;;581e6241-68c8-47e4-acd2-2e4c947edb24;;https://hccc-build-site.powerappsportals.com/signin-aad-b2c_1
 
 set devmode=0
 if exist "bin/Debug" set devmode=1

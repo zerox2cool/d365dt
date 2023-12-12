@@ -139,10 +139,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\HelperToolBase.cs" />
+    <Compile Include="Base\HelperType.cs" />
+    <Compile Include="Base\IHelperToolLogic.cs" />
+    <Compile Include="CmdLineTools\DeleteTablePermission.cs" />
     <Compile Include="CmdLineTools\CalculateSolutionVersion.cs" />
     <Compile Include="CmdLineTools\IncrementSolutionVersion.cs" />
+    <Compile Include="CmdLineTools\UpdateLegacyPortalSiteSetting.cs" />
     <Compile Include="CmdLineTools\TestConnection.cs" />
+    <Compile Include="Models\AdxSiteSetting.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ArgsHelper.cs" />
+    <Compile Include="Util\CasualStringComparerObject.cs" />
+    <Compile Include="Util\FetchHelper.cs" />
+    <Compile Include="Util\HelperTokenKey.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\ZStudio.D365.DeploymentHelper\ZStudio.D365.DeploymentHelper.snk">
