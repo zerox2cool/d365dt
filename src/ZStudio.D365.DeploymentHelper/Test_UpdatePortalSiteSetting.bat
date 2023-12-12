@@ -33,6 +33,8 @@ goto :end
 
 :failed
 echo CRM DEPLOYMENT HELPER FAILED
+REM THROW ERROR by CAUSING ERROR
+Error.exe
 goto :end
 
 

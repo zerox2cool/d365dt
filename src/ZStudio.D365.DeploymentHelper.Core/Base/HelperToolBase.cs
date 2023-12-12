@@ -208,10 +208,10 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// This main method to execute the helper operation to be implemented by the base class.
         /// </summary>
         /// <returns>Returns the execution result</returns>
-        public bool Run()
+        public bool Run(out string exceptionMessage)
         {
             OnStarted();
-            bool result = OnRun();
+            bool result = OnRun(out exceptionMessage);
             OnStopped();
 
             return result;
@@ -249,7 +249,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
             }
         }
 
-        protected bool OnRun()
+        protected bool OnRun(out string exceptionMessage)
         {
             try
             {
@@ -281,7 +281,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
                 ConsoleLog.Info($"Execute OnRun_Implementation...");
                 ConsoleLog.Info(LOG_LINE);
 
-                bool result = OnRun_Implementation(out string exceptionMessage);
+                bool result = OnRun_Implementation(out exceptionMessage);
                 ConsoleLog.Info($"OnRun_Implementation Result: {result}");
 
                 //set the result

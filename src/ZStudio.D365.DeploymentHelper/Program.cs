@@ -187,10 +187,13 @@ namespace ZStudio.D365.DeploymentHelper
                         ConsoleLog.Info(string.Empty);
 
                         //execute
-                        bool runResult = logic.Run();
-                        result = ExecutionReturnCode.Success;
+                        bool runResult = logic.Run(out string exceptionMessage);
+                        if (runResult)
+                            result = ExecutionReturnCode.Success;
+                        else
+                            throw new Exception(exceptionMessage);
 
-                        ConsoleLog.Info($"Helper '{HelperTypeHandlers[helper.ToUpper()].Name}' Run Completed...");
+                        ConsoleLog.Info($"Helper '{HelperTypeHandlers[helper.ToUpper()].Name}' Run Completed with Success Result...");
                     }
                 }
                 else
@@ -201,6 +204,7 @@ namespace ZStudio.D365.DeploymentHelper
             }
             catch (InvalidProgramException ipex)
             {
+                ConsoleLog.Info($"Helper Run with Error...");
                 ConsoleLog.Error(ipex);
                 if (debugMode)
                     ConsoleLog.Pause();
@@ -209,11 +213,13 @@ namespace ZStudio.D365.DeploymentHelper
             }
             catch (Exception ex)
             {
+                ConsoleLog.Info($"Helper Run with Error...");
                 ConsoleLog.Error(ex);
                 result = ExecutionReturnCode.Failed;
             }
             finally
             {
+                ConsoleLog.Info($"Helper Run Completed...");
                 Environment.Exit((int)result);
             }
 

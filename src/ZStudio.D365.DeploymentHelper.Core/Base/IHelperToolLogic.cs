@@ -67,7 +67,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// This main method to execute the helper operation to be implemented by the base class.
         /// </summary>
         /// <returns>Returns the execution result</returns>
-        bool Run();
+        bool Run(out string exceptionMessage);
 
         /// <summary>
         /// Get the Logs from the Logger storage.

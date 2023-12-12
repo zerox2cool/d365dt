@@ -81,6 +81,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             }
             else
                 Log($"Nothing in adx_entitypermission to delete.");
+            result = true;
 
             return result;
         }
