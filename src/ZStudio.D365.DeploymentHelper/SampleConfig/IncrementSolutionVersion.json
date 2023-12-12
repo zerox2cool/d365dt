@@ -1,7 +1,7 @@
 {
   "SolutionName": "@solutionname@",
-  "IncrementRevision": @increv@,
-  "IncrementBuild": @incbuild@,
-  "IncrementMinor": @incminor@,
-  "IncrementMajor": @incmajor@
+  "IncrementRevision": "@increv@",
+  "IncrementBuild": "@incbuild@",
+  "IncrementMinor": "@incminor@",
+  "IncrementMajor": "@incmajor@"
 }

@@ -15,7 +15,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
     public class UpdateLegacyPortalSiteSetting : HelperToolBase
     {
         private AdxSiteSetting[] config = null;
-        private Entity[] ServerData = null;
+        private Entity[] serverData = null;
 
         public UpdateLegacyPortalSiteSetting(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
         {
@@ -24,18 +24,18 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private int GetServerData()
         {
             XrmQueryExpression query = new XrmQueryExpression("adx_sitesetting");
-            ServerData = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
-            if (ServerData?.Length > 0)
-                return ServerData.Length;
+            serverData = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
+            if (serverData?.Length > 0)
+                return serverData.Length;
             else
                 return 0;
         }
 
         private Entity IsExist(Guid websiteId, string name)
         {
-            if (ServerData?.Length > 0)
+            if (serverData?.Length > 0)
             {
-                var coll = from rec in ServerData where rec["adx_websiteid"] != null && ((EntityReference)rec["adx_websiteid"]).Id.Equals(websiteId) && Convert.ToString(rec["adx_name"]).Equals(name, StringComparison.CurrentCultureIgnoreCase) select rec;
+                var coll = from rec in serverData where rec["adx_websiteid"] != null && ((EntityReference)rec["adx_websiteid"]).Id.Equals(websiteId) && Convert.ToString(rec["adx_name"]).Equals(name, StringComparison.CurrentCultureIgnoreCase) select rec;
                 if (coll?.ToArray().Length > 0)
                     return coll?.ToArray()[0];
                 else
@@ -71,47 +71,47 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             exceptionMessage = string.Empty;
 
             //load server data
-            GetServerData();
-            Log($"Site Setting (adx_sitesetting) count on server: {ServerData?.Length}");
+            int totalServerCount = GetServerData();
+            Log($"Site Setting (adx_sitesetting) count on server: {totalServerCount}");
             Log($"Perform Site Settings Create/Update.");
             Log(LOG_SEGMENT);
 
-            int update = 0;
-            int create = 0;
-            foreach (var ss in config)
+            int updateCount = 0;
+            int createCount = 0;
+            foreach (var d in config)
             {
-                Log($"Updating Setting Key {ss.Name} for WebsiteID '{ss.WebsiteId}'.");
+                Log($"Updating Setting Key {d.Name} for WebsiteID '{d.WebsiteId}'.");
 
-                Entity record = IsExist(Guid.Parse(ss.WebsiteId), ss.Name);
+                Entity record = IsExist(Guid.Parse(d.WebsiteId), d.Name);
                 if (record != null)
                 {
                     //data found to update
                     Entity upd = new Entity("adx_sitesetting", record.Id);
-                    upd["adx_value"] = ss.Value;
+                    upd["adx_value"] = d.Value;
                     OrgService.Update(upd);
                     Log($"Updated adx_sitesetting: {record.Id}");
-                    update++;
+                    updateCount++;
 
-                    Debug($"Setting '{ss.Name}' for WebsiteID '{ss.WebsiteId}' updated to the value '{ss.Value}'.");
+                    Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' updated to the value '{d.Value}'.");
                 }
                 else
                 {
                     //insert
-                    Log($"adx_sitesetting with name '{ss.Name}' not found.");
+                    Log($"adx_sitesetting with name '{d.Name}' not found.");
                     Entity cre = new Entity("adx_sitesetting");
-                    cre["adx_websiteid"] = new EntityReference("adx_website", Guid.Parse(ss.WebsiteId));
-                    cre["adx_name"] = ss.Name;
-                    cre["adx_value"] = ss.Value;
+                    cre["adx_websiteid"] = new EntityReference("adx_website", Guid.Parse(d.WebsiteId));
+                    cre["adx_name"] = d.Name;
+                    cre["adx_value"] = d.Value;
                     Guid id = OrgService.Create(cre);
                     Log($"Created adx_sitesetting: {id}");
-                    create++;
+                    createCount++;
 
-                    Debug($"Setting '{ss.Name}' for WebsiteID '{ss.WebsiteId}' with the value '{ss.Value}' has been created.");
+                    Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' with the value '{d.Value}' has been created.");
                 }
 
                 Log(LOG_SEGMENT);
             }
-            Log($"Site Setting Success Count - Updated: {update}; Created: {create};");
+            Log($"Site Setting Success Count - Updated: {updateCount}; Created: {createCount};");
 
             return true;
         }

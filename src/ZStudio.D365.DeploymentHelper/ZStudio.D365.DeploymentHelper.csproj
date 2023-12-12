@@ -162,6 +162,10 @@
     <Content Include="SampleConfig\CalculateSolutionVersion.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SampleConfig\DeleteTablePermission.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Test_DeleteTablePermission.bat" />
     <None Include="Test_UpdateLegacyPortalSiteSetting.bat" />
     <None Include="Test_TestConnection.bat" />
     <None Include="Test_CalculateSolutionVersion.bat" />
