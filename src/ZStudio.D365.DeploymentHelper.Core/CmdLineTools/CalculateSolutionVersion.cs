@@ -14,6 +14,7 @@ using static ZStudio.D365.Shared.Framework.Util.CrmConnector;
 using System.Activities.Statements;
 using ZStudio.D365.Shared.Framework.Core.Query;
 using System.IO;
+using ZStudio.D365.DeploymentHelper.Core.Util;
 
 namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 {
@@ -65,7 +66,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             WatchTimer.Start();
             ConsoleLog.Info($"{Assembly.GetEntryAssembly().FullName} Starting...");
             ConsoleLog.Info($"Helper: {nameof(CalculateSolutionVersion)}");
-            ConsoleLog.Info($"CRM Connection String: {CrmConnectionString}");
+            ConsoleLog.Info($"CRM Connection String: {ArgsHelper.MaskCrmConnectionString(CrmConnectionString)}");
             ConsoleLog.Info($"Solution Name: {SolutionName}");
             ConsoleLog.Info($"Output Text File: {OutputTextFile}");
             ConsoleLog.Info($"Increment Revision: {IncrementRevision}");
@@ -128,13 +129,27 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                         int revision = int.Parse(versionSplit[3]);
 
                         if (IncrementMajor)
+                        {
                             major++;
+                            minor = 0;
+                            build = 0;
+                            revision = 0;
+                        }
                         if (IncrementMinor)
+                        {
                             minor++;
+                            build = 0;
+                            revision = 0;
+                        }
                         if (IncrementBuild)
+                        {
                             build++;
+                            revision = 0;
+                        }
                         if (IncrementRevision)
+                        {
                             revision++;
+                        }
 
                         newVersion = $"{major}.{minor}.{build}.{revision}";
                         ConsoleLog.Info($"New Version: {newVersion}");
@@ -179,7 +194,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             finally
             {
                 ConsoleLog.Info($"Run Completed...");
-                ConsoleLog.Info($"CRM Connection String: {CrmConnectionString}");
+                ConsoleLog.Info($"CRM Connection String: {ArgsHelper.MaskCrmConnectionString(CrmConnectionString)}");
             }
         }
         #endregion Run

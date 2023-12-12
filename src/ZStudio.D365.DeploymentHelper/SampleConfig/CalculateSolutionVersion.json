@@ -1,8 +1,8 @@
 {
-  "SolutionName": "demo01fullsolution",
+  "SolutionName": "@solutionname@",
   "OutputTextFile": "CalculateSolutionVersion.txt",
-  "IncrementRevision": true,
-  "IncrementBuild": false,
-  "IncrementMinor": false,
-  "IncrementMajor": false
+  "IncrementRevision": @increv@,
+  "IncrementBuild": @incbuild@,
+  "IncrementMinor": @incminor@,
+  "IncrementMajor": @incmajor@
 }

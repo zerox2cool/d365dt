@@ -1,7 +1,7 @@
 {
-  "SolutionName": "demo01fullsolution",
-  "IncrementRevision": true,
-  "IncrementBuild": false,
-  "IncrementMinor": false,
-  "IncrementMajor": false
+  "SolutionName": "@solutionname@",
+  "IncrementRevision": @increv@,
+  "IncrementBuild": @incbuild@,
+  "IncrementMinor": @incminor@,
+  "IncrementMajor": @incmajor@
 }

@@ -159,6 +159,8 @@
     <Content Include="SampleConfig\CalculateSolutionVersion.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Test_TestConnection.bat" />
+    <None Include="Test_CalculateSolutionVersion.bat" />
     <None Include="SetNupkgVersion.ps1" />
     <None Include="ZStudio.D365.DeploymentHelper.snk" />
   </ItemGroup>

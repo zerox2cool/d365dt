@@ -11,6 +11,7 @@ using ZStudio.D365.Shared.Data.Framework.Cmd;
 using ZStudio.D365.Shared.Framework.Util;
 using System.Diagnostics;
 using static ZStudio.D365.Shared.Framework.Util.CrmConnector;
+using ZStudio.D365.DeploymentHelper.Core.Util;
 
 namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 {
@@ -47,7 +48,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             WatchTimer.Start();
             ConsoleLog.Info($"{Assembly.GetEntryAssembly().FullName} Starting...");
             ConsoleLog.Info($"Helper: {nameof(TestConnection)}");
-            ConsoleLog.Info($"CRM Connection String: {CrmConnectionString}");
+            ConsoleLog.Info($"CRM Connection String: {ArgsHelper.MaskCrmConnectionString(CrmConnectionString)}");
             ConsoleLog.Info($"Debug: {DebugMode}");
             ConsoleLog.Info(string.Empty);
 
@@ -107,7 +108,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             finally
             {
                 ConsoleLog.Info($"Run Completed...");
-                ConsoleLog.Info($"CRM Connection String: {CrmConnectionString}");
+                ConsoleLog.Info($"CRM Connection String: {ArgsHelper.MaskCrmConnectionString(CrmConnectionString)}");
             }
         }
         #endregion Run

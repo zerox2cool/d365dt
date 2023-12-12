@@ -1,20 +1,20 @@
-﻿REM START
+﻿REM START CalculateSolutionVersion
 echo off
 
 echo Source CRM Connection String (can be with password/client secret or login prompted - NOTE: password is visible):
 set /p connectionString=
 
 echo Helper to Run (must specify the helper program to run):
-set /p helper=
+set helper=CalculateSolutionVersion
 
 echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
-set /p config=
+set config=SampleConfig\CalculateSolutionVersion.json
 
 echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set /p key=
+set key=solutionname;;incmajor;;incminor;;incbuild;;increv
 
 echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set /p data=
+set data=cms010fullsolution;;false;;false;;true;;false
 
 set devmode=0
 if exist "bin/Debug" set devmode=1
