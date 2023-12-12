@@ -11,13 +11,13 @@ using ZStudio.D365.Shared.Framework.Core.Query;
 
 namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 {
-    [HelperType(nameof(UpdateLegacyPortalSiteSetting))]
-    public class UpdateLegacyPortalSiteSetting : HelperToolBase
+    [HelperType(nameof(UpdatePortalSiteSetting))]
+    public class UpdatePortalSiteSetting : HelperToolBase
     {
         private AdxSiteSetting[] config = null;
         private Entity[] serverData = null;
 
-        public UpdateLegacyPortalSiteSetting(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
+        public UpdatePortalSiteSetting(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
         {
         }
 

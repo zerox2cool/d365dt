@@ -148,7 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SampleConfig\UpdateLegacyPortalSiteSetting.json">
+    <Content Include="SampleConfig\UpdatePortalSiteSetting.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
@@ -166,7 +166,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Test_DeleteTablePermission.bat" />
-    <None Include="Test_UpdateLegacyPortalSiteSetting.bat" />
+    <None Include="Test_UpdatePortalSiteSetting.bat" />
     <None Include="Test_TestConnection.bat" />
     <None Include="Test_CalculateSolutionVersion.bat" />
     <None Include="SetNupkgVersion.ps1" />
