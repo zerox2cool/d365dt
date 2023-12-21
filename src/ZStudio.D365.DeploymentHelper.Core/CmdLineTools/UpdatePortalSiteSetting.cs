@@ -17,7 +17,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private AdxSiteSetting[] config = null;
         private Entity[] serverData = null;
 
-        public UpdatePortalSiteSetting(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
+        public UpdatePortalSiteSetting(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
         {
         }
 

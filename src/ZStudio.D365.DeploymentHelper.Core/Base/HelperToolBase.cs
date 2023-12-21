@@ -38,6 +38,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         public bool DebugMode { get; set; }
 
         /// <summary>
+        /// Indicate the program pause time in second when it start up to enable attachment to process.
+        /// </summary>
+        public int DebugSleepInSeconds { get; set; }
+
+        /// <summary>
         /// CRM connection string
         /// </summary>
         public string CrmConnectionString
@@ -134,14 +139,19 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// Initialize the Helper Tool
         /// </summary>
         /// <param name="crmConnectionString"></param>
-        /// <param name="config"></param>
+        /// <param name="configJson"></param>
+        /// <param name="tokens"></param>
         /// <param name="debugMode"></param>
-        public HelperToolBase(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode = false)
+        /// <param name="debugSleepInSecs"></param>
+        public HelperToolBase(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode = false, int debugSleepInSecs = 15)
         {
             if (string.IsNullOrEmpty(crmConnectionString))
                 throw new ArgumentNullException("CRM connection string is required.");
 
             DebugMode = debugMode;
+            DebugSleepInSeconds = debugSleepInSecs;
+            if (DebugSleepInSeconds < 0)
+                DebugSleepInSeconds = 0;
 
             _crmConnString = crmConnectionString;
             _configJson = configJson;
@@ -224,14 +234,14 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
             ConsoleLog.Info($"Helper: {HelperName}");
             ConsoleLog.Info($"CRM Connection String: {ArgsHelper.MaskCrmConnectionString(CrmConnectionString)}");
             ConsoleLog.Info($"Debug: {DebugMode}");
+            ConsoleLog.Info($"Debug Sleep (seconds): {DebugSleepInSeconds}");
             ConsoleLog.Info(LOG_LINE);
 
-            if (DebugMode)
+            if (DebugMode && DebugSleepInSeconds > 0)
             {
-                int sleepTime = 15;
-                ConsoleLog.Info($"Running on Debug Mode, you have {sleepTime} seconds to attached the process now for debugging: {Assembly.GetExecutingAssembly()}.");
+                ConsoleLog.Info($"Running on Debug Mode, you have {DebugSleepInSeconds} seconds to attached the process now for debugging: {Assembly.GetExecutingAssembly()}.");
                 ConsoleLog.Info(LOG_LINE);
-                Thread.Sleep(sleepTime * 1000);
+                Thread.Sleep(DebugSleepInSeconds * 1000);
             }
         }
 

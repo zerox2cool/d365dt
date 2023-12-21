@@ -7,7 +7,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
     [HelperType(nameof(TestConnection))]
     public class TestConnection : HelperToolBase
     {
-        public TestConnection(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
+        public TestConnection(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
         {
         }
 

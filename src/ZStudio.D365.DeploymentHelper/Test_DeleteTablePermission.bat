@@ -23,7 +23,7 @@ set debug=false
 if %devmode%==1 cd bin/Debug/
 if %devmode%==1 set debug=true
 
-ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug%
+ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug% /sleep:0
 set status=%errorlevel%
 
 

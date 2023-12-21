@@ -18,7 +18,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public Guid WebsiteId { get; private set; }
 
-        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
+        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
         {
         }
 

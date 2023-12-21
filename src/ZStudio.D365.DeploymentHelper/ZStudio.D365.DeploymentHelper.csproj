@@ -165,6 +165,10 @@
     <Content Include="SampleConfig\DeleteTablePermission.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SampleConfig\SetAutoRecordRulesStatus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Test_SetAutoRecordRulesStatus.bat" />
     <None Include="Test_DeleteTablePermission.bat" />
     <None Include="Test_UpdatePortalSiteSetting.bat" />
     <None Include="Test_TestConnection.bat" />
