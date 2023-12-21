@@ -18,7 +18,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public Guid WebsiteId { get; private set; }
 
-        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode) : base(crmConnectionString, configJson, tokens, debugMode)
+        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
         {
         }
 
@@ -56,7 +56,6 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         protected override bool OnRun_Implementation(out string exceptionMessage)
         {
             exceptionMessage = string.Empty;
-            bool result = false;
 
             //load server data
             int totalServerCount = GetServerData();
@@ -66,23 +65,32 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
             //delete data for a website and parent is null
             int deleteCount = 0;
+            int failedCount = 0;
             if (totalServerCount > 0)
             {
                 foreach (var d in serverData)
                 {
                     if (d["adx_websiteid"] != null && ((EntityReference)d["adx_websiteid"]).Id.Equals(WebsiteId) && (!d.Contains("adx_parententitypermission") || d["adx_parententitypermission"] == null))
                     {
-                        OrgService.Delete(d.LogicalName, d.Id);
-                        Log($"Deleted adx_entitypermission: {d.Id}");
-                        deleteCount++;
+                        try
+                        {
+                            OrgService.Delete(d.LogicalName, d.Id);
+                            Log($"Deleted adx_entitypermission: {d.Id}");
+                            deleteCount++;
+                        }
+                        catch (Exception ex)
+                        {
+                            Log($"FAILED to delete adx_entitypermission: {d.Id}. Exception: {ex.Message}");
+                            failedCount++;
+                        }
                     }
                 }
                 Log($"Deleted {deleteCount} row(s) of adx_entitypermission for the website ID {WebsiteId} that are parent permission.");
             }
             else
                 Log($"Nothing in adx_entitypermission to delete.");
-
-            return result;
+            
+            return (failedCount == 0);
         }
     }
 }

@@ -1,22 +1,30 @@
-﻿v1.1.0.15 - 03-Feb-2023
+﻿# ZD365.DeploymentTool - Legacy
+# Release Notes
+## v1.1.0.15
+### 03-Feb-2023
 - Fix a NULL exception bug when updating global choices that are created manually.
 
-v1.1.0.14 - 01-Dec-2022
-- Added support for registering plugin assembly as a package (nupkg). This is using the new dependent assembly plugin preview (https://learn.microsoft.com/en-us/power-apps/developer/data-platform/dependent-assembly-plugins).
+## v1.1.0.14
+### 01-Dec-2022
+- Added support for registering plugin assembly as a package (nupkg). This is using the new [dependent assembly plugin](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/dependent-assembly-plugins) (preview).
 - Workflow assembly is not supported by D365 dependent assembly at the moment.
 - A new attribute 'packageuniquename' will be required on the plugin step XML configuration file when the source is a nupkg file.
 
-v1.1.0.13 - 11-Nov-2022
+## v1.1.0.13
+### 11-Nov-2022
 - Fix backup and logging folder and filename issue, additional space was created in the folder name which result in folder not found error.
 - Updated to latest CRM SDK v9.0.2.46
 
-v1.1.0.12 - 28-Sep-2022
+## v1.1.0.12
+### 28-Sep-2022
 - Fix the name of the primary field schema name for an entity that will be created as a custom activity.
 
-v1.1.0.10 - 22-Sep-2022
+## v1.1.0.10
+### 22-Sep-2022
 - Updated to latest CRM SDK v9.0.2.45
 
-v1.1.0.9 - 21-Mar-2022
+## v1.1.0.9
+### 21-Mar-2022
 - Updated to .NET Framework 4.6.2.
 - Updated CRM SDK to v9.0.2.3
 - Updated connection string to use OAuth and deprecate Office365 when connecting to D365 CDS.

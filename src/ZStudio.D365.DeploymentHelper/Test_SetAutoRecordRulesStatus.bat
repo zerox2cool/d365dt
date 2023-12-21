@@ -1,20 +1,20 @@
-﻿REM START CalculateSolutionVersion
+﻿REM START SetAutoRecordRulesStatus
 echo off
 
 echo Source CRM Connection String (can be with password/client secret or login prompted - NOTE: password is visible):
 set /p connectionString=
 
 echo Helper to Run (must specify the helper program to run):
-set helper=CalculateSolutionVersion
+set helper=SetAutoRecordRulesStatus
 
 echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
-set config=SampleConfig\CalculateSolutionVersion.json
+set config=SampleConfig\SetAutoRecordRulesStatus.json
 
 echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set key=solutionname;;incmajor;;incminor;;incbuild;;increv
+set key=solutionname;;allrules;;status
 
 echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-set data=cms010fullsolution;;false;;true;;false;;false
+set data=cms010fullsolution;;false;;1
 
 set devmode=0
 if exist "bin/Debug" set devmode=1

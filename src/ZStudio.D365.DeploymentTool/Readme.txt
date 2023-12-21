@@ -30,5 +30,5 @@ IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)..\sdkbin\SolutionPackag
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ConfigSample\*.*" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ConfigSample\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ConfigSchema\*.*" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ConfigSchema\"
 
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.txt" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.md" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)SetNupkgVersion.ps1" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"

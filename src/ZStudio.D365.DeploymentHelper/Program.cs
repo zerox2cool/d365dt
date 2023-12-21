@@ -30,6 +30,7 @@ namespace ZStudio.D365.DeploymentHelper
         {
             ExecutionReturnCode result = ExecutionReturnCode.Success;
             bool debugMode = true;
+            int debugSleep = 15;
             try
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -40,10 +41,15 @@ namespace ZStudio.D365.DeploymentHelper
                 string tokenKey = CmdArgsHelper.ReadArgument(args, "key", false, $"(Optional) Variable Token replacement key separated by double-semicolon ({DELIMITER}), the token data must be provided in the same order as the key. Pass in NULL or do not include this argument when there is no token. e.g. token1{DELIMITER}token2");
                 string tokenData = CmdArgsHelper.ReadArgument(args, "data", false, $"(Optional) Variable Token replacement data separated by double-semicolon ({DELIMITER}). Pass in NULL or do not include this argument when there is no token. e.g. data1{DELIMITER}replacethis2");
                 string debug = CmdArgsHelper.ReadArgument(args, "debug", false, "Debug Mode, default to false. e.g. true or false");
+                string debugSleepInSec = CmdArgsHelper.ReadArgument(args, "sleep", false, "Debug Sleep in seconds, default to 15 seconds.");
                 if (string.IsNullOrEmpty(debug))
                     debugMode = false;
                 else
                     debugMode = bool.Parse(debug);
+                if (string.IsNullOrEmpty(debugSleepInSec))
+                    debugSleep = 15;
+                else
+                    debugSleep = int.Parse(debugSleepInSec);
 
                 if (string.IsNullOrEmpty(configFile) || configFile.Equals("null", StringComparison.CurrentCultureIgnoreCase))
                     configFile = string.Empty;
@@ -179,7 +185,7 @@ namespace ZStudio.D365.DeploymentHelper
                 if (HelperTypeHandlers.ContainsKey(helper.ToUpper()))
                 {
                     ConsoleLog.Info($"The helper for '{helper}' has been found, instantiate the helper and run.");
-                    IHelperToolLogic logic = Activator.CreateInstance(HelperTypeHandlers[helper.ToUpper()], new object[] { crmConnectionString, configJson, tokens, debugMode }) as IHelperToolLogic;
+                    IHelperToolLogic logic = Activator.CreateInstance(HelperTypeHandlers[helper.ToUpper()], new object[] { crmConnectionString, configJson, tokens, debugMode, debugSleep }) as IHelperToolLogic;
                     if (logic != null)
                     {
                         logic.HelperName = HelperTypeHandlers[helper.ToUpper()].Name;
@@ -187,10 +193,13 @@ namespace ZStudio.D365.DeploymentHelper
                         ConsoleLog.Info(string.Empty);
 
                         //execute
-                        bool runResult = logic.Run();
-                        result = ExecutionReturnCode.Success;
+                        bool runResult = logic.Run(out string exceptionMessage);
+                        if (runResult)
+                            result = ExecutionReturnCode.Success;
+                        else
+                            throw new Exception(exceptionMessage);
 
-                        ConsoleLog.Info($"Helper '{HelperTypeHandlers[helper.ToUpper()].Name}' Run Completed...");
+                        ConsoleLog.Info($"Helper '{HelperTypeHandlers[helper.ToUpper()].Name}' Run Completed with Success Result...");
                     }
                 }
                 else
@@ -201,6 +210,7 @@ namespace ZStudio.D365.DeploymentHelper
             }
             catch (InvalidProgramException ipex)
             {
+                ConsoleLog.Info($"Helper Run with Error...");
                 ConsoleLog.Error(ipex);
                 if (debugMode)
                     ConsoleLog.Pause();
@@ -209,11 +219,13 @@ namespace ZStudio.D365.DeploymentHelper
             }
             catch (Exception ex)
             {
+                ConsoleLog.Info($"Helper Run with Error...");
                 ConsoleLog.Error(ex);
                 result = ExecutionReturnCode.Failed;
             }
             finally
             {
+                ConsoleLog.Info($"Helper Run Completed...");
                 Environment.Exit((int)result);
             }
 

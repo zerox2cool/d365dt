@@ -485,6 +485,110 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
             else
                 return null;
         }
+
+        /// <summary>
+        /// Get list of records from CRM by GUIDs.
+        /// </summary>
+        /// <param name="entityLogicalName">The table name</param>
+        /// <param name="ids">The list of CRM GUIDs</param>
+        /// <returns>Returns the entities as an array of Xrm object</returns>
+        public Entity[] RetrieveAllEntityByCrmIds(string entityLogicalName, Guid[] ids, string[] columns = null, int blockCount = 100)
+        {
+            List<Entity> result = new List<Entity>();
+
+            bool isMore = true;
+            int addedCount = 0;
+            while (isMore)
+            {
+                FilterExpression idFilter = new FilterExpression(LogicalOperator.Or);
+                int processCount = 0;
+                for (int i = addedCount; i < ids.Length; i++)
+                {
+                    if (processCount < blockCount)
+                    {
+                        idFilter.AddCondition($"{entityLogicalName}id", ConditionOperator.Equal, ids[i]);
+                        addedCount++;
+                        processCount++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                isMore = (addedCount < ids.Length);
+
+                QueryExpression query = new QueryExpression(entityLogicalName);
+                query.NoLock = true;
+
+                //column set
+                if (columns == null)
+                    query.ColumnSet = new ColumnSet(true);
+                else
+                    query.ColumnSet = new ColumnSet(columns);
+                query.Criteria.AddFilter(idFilter);
+                EntityCollection coll = svc.RetrieveMultiple(query);
+                if (coll?.Entities?.Count > 0)
+                    result.AddRange(coll.Entities);
+            }
+
+            if (result?.Count > 0)
+                return result.ToArray();
+            return null;
+        }
+
+        /// <summary>
+        /// Get list of records from CRM by GUIDs.
+        /// </summary>
+        /// <typeparam name="T">Xrm Object</typeparam>
+        /// <param name="entityLogicalName">The table name</param>
+        /// <param name="ids">The list of CRM GUIDs</param>
+        /// <returns>Returns the entities as an array of Xrm object</returns>
+        public T[] RetrieveAllEntityByCrmIds<T>(string entityLogicalName, Guid[] ids, string[] columns = null, int blockCount = 100) where T : class
+        {
+            List<T> result = new List<T>();
+
+            bool isMore = true;
+            int addedCount = 0;
+            while (isMore)
+            {
+                FilterExpression idFilter = new FilterExpression(LogicalOperator.Or);
+                int processCount = 0;
+                for (int i = addedCount; i < ids.Length; i++)
+                {
+                    if (processCount < blockCount)
+                    {
+                        idFilter.AddCondition($"{entityLogicalName}id", ConditionOperator.Equal, ids[i]);
+                        addedCount++;
+                        processCount++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                isMore = (addedCount < ids.Length);
+
+                QueryExpression query = new QueryExpression(entityLogicalName);
+                query.NoLock = true;
+
+                //column set
+                if (columns == null)
+                    query.ColumnSet = new ColumnSet(true);
+                else
+                    query.ColumnSet = new ColumnSet(columns);
+                query.Criteria.AddFilter(idFilter);
+                EntityCollection coll = svc.RetrieveMultiple(query);
+                if (coll?.Entities?.Count > 0)
+                {
+                    for (int i = 0; i < coll.Entities.Count; i++)
+                        result.Add(coll.Entities[i] as T);
+                }
+            }
+
+            if (result?.Count > 0)
+                return result.ToArray();
+            return null;
+        }
         #endregion Retrieve
 
         #region Get

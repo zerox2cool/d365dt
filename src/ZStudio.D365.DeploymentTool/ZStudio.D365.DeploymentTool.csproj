@@ -261,7 +261,7 @@
     <None Include="Readme.txt" />
     <Content Include="program16x16.ico" />
     <Content Include="program48x48.ico" />
-    <Content Include="ReleaseNote.txt" />
+    <None Include="ReleaseNote.md" />
     <Content Include="workflow_lists.txt" />
     <Content Include="XRMSvcGen\XrmEntityList.xml" />
     <None Include="App.config" />
@@ -362,7 +362,7 @@ IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)..\sdkbin\SolutionPackag
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ConfigSample\*.*" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ConfigSample\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ConfigSchema\*.*" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\ZD365DT\ConfigSchema\"
 
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.txt" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.md" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)SetNupkgVersion.ps1" "$(SolutionDir)..\pkg\ZStudio.D365.DTPkg\"</PostBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

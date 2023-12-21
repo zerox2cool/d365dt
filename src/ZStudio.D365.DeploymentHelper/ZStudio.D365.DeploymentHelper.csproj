@@ -148,6 +148,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Readme.txt" />
     <Content Include="SampleConfig\UpdatePortalSiteSetting.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -165,6 +166,14 @@
     <Content Include="SampleConfig\DeleteTablePermission.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SampleConfig\SetAutoRecordRulesStatus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleConfig\SetSLAStatus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Test_SetSLAStatus.bat" />
+    <None Include="Test_SetAutoRecordRulesStatus.bat" />
     <None Include="Test_DeleteTablePermission.bat" />
     <None Include="Test_UpdatePortalSiteSetting.bat" />
     <None Include="Test_TestConnection.bat" />
@@ -175,7 +184,7 @@
   <ItemGroup>
     <Content Include="program16x16.ico" />
     <Content Include="program48x48.ico" />
-    <Content Include="ReleaseNote.txt" />
+    <None Include="ReleaseNote.md" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZStudio.D365.DeploymentHelper.Core\ZStudio.D365.DeploymentHelper.Core.csproj">
@@ -197,7 +206,7 @@ IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.config" "$(So
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.bat" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)SampleConfig\*.json" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\SampleConfig\"
 
-IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.txt" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.md" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)SetNupkgVersion.ps1" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"</PostBuildEvent>
   </PropertyGroup>
 </Project>
