@@ -4,11 +4,13 @@ D365 CE Deployment Tool, up to date for D365 v9.2. This version uses XML for con
 # Packages
 The packages are publish to nuget.org via Azure DevOps Build.
 
-## Icon Library for D365 (Legacy)
+## Deployment Tool Helper - DTHelper (New Deployment Tool v2)
 
-**ZD365.DeploymentTool.Icons**
-- A library of icons for D365.
-- [NuGet](https://www.nuget.org/packages/ZD365.DeploymentTool.Icons)
+**ZD365.DeploymentHelper**
+- A tool to be used as command line helper with the Power Platform Build Tools.
+- Useful helper will be ported or added to this new DTHelper.
+- [Release Notes](pkg/ZStudio.D365.DTHelperPkg/ReleaseNote.md)
+- [NuGet](https://www.nuget.org/packages/ZD365.DeploymentHelper/)
 
 ## Deployment Tool for D365 (Legacy Tool)
 
@@ -17,10 +19,8 @@ The packages are publish to nuget.org via Azure DevOps Build.
 - [Release Notes](pkg/ZStudio.D365.DTPkg/ReleaseNote.md)
 - [NuGet](https://www.nuget.org/packages/ZD365.DeploymentTool)
 
-## Deployment Tool Helper - DTHelper (New Deployment Tool v2)
+## Icon Library for D365 (Legacy)
 
-**ZD365.DeploymentHelper**
-- A tool to be used as command line helper with the Power Platform Build Tools.
-- Useful helper will be ported or added to this new DTHelper.
-- [Release Notes](pkg/ZStudio.D365.DTHelperPkg/ReleaseNote.md)
-- [NuGet](https://www.nuget.org/packages/ZD365.DeploymentHelper/)
+**ZD365.DeploymentTool.Icons**
+- A library of icons for D365.
+- [NuGet](https://www.nuget.org/packages/ZD365.DeploymentTool.Icons)
