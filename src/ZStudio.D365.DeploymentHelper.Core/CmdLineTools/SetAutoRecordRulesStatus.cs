@@ -170,7 +170,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
                                 sb.Append($"{action} '{component["name"]}'. ");
                                 OrgService.Execute(req);
-                                sb.Append($"{actioned}");
+                                sb.Append($"{actioned} SUCCESS");
                                 updateCount++;
                             }
                             catch (Exception ex)
