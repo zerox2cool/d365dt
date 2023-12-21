@@ -10,10 +10,10 @@ The packages are publish to nuget.org via Azure DevOps Build.
 **Deployment Tool for D365 (Legacy Tool)**
 [ZD365.DeploymentTool](https://www.nuget.org/packages/ZD365.DeploymentTool)
 - The legacy Deployment Tool that contain table/column schema generation, global choice generation.
-- [Release Notes](ZD365DTool-ReleaseNotes.md)
+- [Release Notes](pkg/ZStudio.D365.DTPkg/ReleaseNote.md)
 
 **Deployment Tool Helper - DTHelper (New Deployment Tool v2)**
 [ZD365.DeploymentHelper](https://www.nuget.org/packages/ZD365.DeploymentHelper/)
 - A tool to be used as command line helper with the Power Platform Build Tools.
 - Useful helper will be ported or added to this new DTHelper.
-- [Release Notes](ZD365DTHelper-ReleaseNotes.md)
+- [Release Notes](pkg/ZStudio.D365.DTHelperPkg/ReleaseNote.md)
