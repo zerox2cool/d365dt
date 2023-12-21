@@ -1,11 +1,15 @@
 ﻿# DTHelper - ZD365.DeploymentHelper
 # Release Notes
+## v0.0.0.7
+### 22-Dec-2023
+- Added activate/deactivate of Cloud Flows components when there are option to select all (custom only) or those within a solution (SetCloudFlowStatus).
+
 ## v0.0.0.6
 ### 21-Dec-2023
 - Fix error handling on helper base class.
 - Fix output result on DeleteTablePermission.
-- Added activate/deactivate of automatic record rules action for all rules or rules in a solution (SetAutoRecordRulesStatus)
-- Added activate/deactivate of SLA action for all SLA or SLA in a solution (SetSLAStatus)
+- Added activate/deactivate of automatic record rules components when there are option to select all or those within a solution (SetAutoRecordRulesStatus)
+- Added activate/deactivate of SLA components when there are option to select all or those within a solution (SetSLAStatus)
 
 ## v0.0.0.5
 ### 13-Dec-2023

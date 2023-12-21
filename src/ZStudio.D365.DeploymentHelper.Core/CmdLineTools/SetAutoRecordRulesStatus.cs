@@ -23,6 +23,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private const string DISPLAYNAME = "Auto Record Rules";
         private const string TABLENAME = "convertrule";
         private const int COMPONENT_TYPEID = (int)SolutionHelper.ComponentType.AutoRecordRules;
+
         private const int DRAFT_STATE = 0;
         private const int ACTIVE_STATE = 1;
         private const int DRAFT_STATUSCODE = 1;
@@ -43,9 +44,9 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private Entity[] GetAllComponents()
         {
             XrmQueryExpression query = new XrmQueryExpression(TABLENAME);
-            Entity[] rules = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
-            if (rules?.Length > 0)
-                return rules;
+            Entity[] components = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
+            if (components?.Length > 0)
+                return components;
             return null;
         }
 
@@ -111,6 +112,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 //uncomment to find component type ID
                 //Entity[] components = SolutionHelper.GetSolutionComponents(OrgService, solutionId.Value);
                 //var lists = (from en in components where Guid.Parse(Convert.ToString(en["objectid"])).Equals(new Guid("c8fb66db-7c25-ee11-9965-000d3a6a9fdb")) select en).ToList();
+                //return false;
+
                 Entity[] solutionComponents = SolutionHelper.GetSolutionComponentsByComponentType(OrgService, solutionId.Value, COMPONENT_TYPEID);
                 if (solutionComponents?.Length > 0)
                 {
@@ -168,7 +171,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
                                 sb.Append($"{action} '{component["name"]}'. ");
                                 OrgService.Execute(req);
-                                sb.Append($"{actioned}");
+                                sb.Append($"{actioned} SUCCESS");
                                 updateCount++;
                             }
                             catch (Exception ex)
@@ -196,7 +199,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
             Log(LOG_SEGMENT);
             Log($"{DISPLAYNAME} Update Count: {updateCount}; Failed Count: {failedCount}");
-            ShowWarning($"{Messages.WarningMessages.COMPONENT_WITH_FLOW}");
+            ShowInfoWarning($"{Messages.WarningMessages.COMPONENT_WITH_FLOW}");
 
             return (failedCount == 0);
         }
