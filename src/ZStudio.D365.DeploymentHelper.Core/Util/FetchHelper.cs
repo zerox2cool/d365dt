@@ -506,7 +506,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
                 {
                     if (processCount < blockCount)
                     {
-                        idFilter.AddCondition("convertruleid", ConditionOperator.Equal, ids[i]);
+                        idFilter.AddCondition($"{entityLogicalName}id", ConditionOperator.Equal, ids[i]);
                         addedCount++;
                         processCount++;
                     }
@@ -517,7 +517,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
                 }
                 isMore = (addedCount < ids.Length);
 
-                QueryExpression query = new QueryExpression("convertrule");
+                QueryExpression query = new QueryExpression(entityLogicalName);
                 query.NoLock = true;
 
                 //column set
@@ -557,7 +557,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
                 {
                     if (processCount < blockCount)
                     {
-                        idFilter.AddCondition("convertruleid", ConditionOperator.Equal, ids[i]);
+                        idFilter.AddCondition($"{entityLogicalName}id", ConditionOperator.Equal, ids[i]);
                         addedCount++;
                         processCount++;
                     }
@@ -568,7 +568,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
                 }
                 isMore = (addedCount < ids.Length);
 
-                QueryExpression query = new QueryExpression("convertrule");
+                QueryExpression query = new QueryExpression(entityLogicalName);
                 query.NoLock = true;
 
                 //column set

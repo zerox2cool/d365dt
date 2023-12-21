@@ -78,42 +78,51 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
             int updateCount = 0;
             int createCount = 0;
+            int failedCount = 0;
             foreach (var d in config)
             {
                 Log($"Updating Setting Key {d.Name} for WebsiteID '{d.WebsiteId}'.");
 
-                Entity record = IsExist(Guid.Parse(d.WebsiteId), d.Name);
-                if (record != null)
+                try
                 {
-                    //data found to update
-                    Entity upd = new Entity("adx_sitesetting", record.Id);
-                    upd["adx_value"] = d.Value;
-                    OrgService.Update(upd);
-                    Log($"Updated adx_sitesetting: {record.Id}");
-                    updateCount++;
+                    Entity record = IsExist(Guid.Parse(d.WebsiteId), d.Name);
+                    if (record != null)
+                    {
+                        //data found to update
+                        Entity upd = new Entity("adx_sitesetting", record.Id);
+                        upd["adx_value"] = d.Value;
+                        OrgService.Update(upd);
+                        Log($"Updated adx_sitesetting: {record.Id}");
+                        updateCount++;
 
-                    Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' updated to the value '{d.Value}'.");
+                        Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' updated to the value '{d.Value}'.");
+                    }
+                    else
+                    {
+                        //insert
+                        Log($"adx_sitesetting with name '{d.Name}' not found.");
+                        Entity cre = new Entity("adx_sitesetting");
+                        cre["adx_websiteid"] = new EntityReference("adx_website", Guid.Parse(d.WebsiteId));
+                        cre["adx_name"] = d.Name;
+                        cre["adx_value"] = d.Value;
+                        Guid id = OrgService.Create(cre);
+                        Log($"Created adx_sitesetting: {id}");
+                        createCount++;
+
+                        Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' with the value '{d.Value}' has been created.");
+                    }
+
+                    Log(LOG_SEGMENT);
                 }
-                else
+                catch (Exception ex)
                 {
-                    //insert
-                    Log($"adx_sitesetting with name '{d.Name}' not found.");
-                    Entity cre = new Entity("adx_sitesetting");
-                    cre["adx_websiteid"] = new EntityReference("adx_website", Guid.Parse(d.WebsiteId));
-                    cre["adx_name"] = d.Name;
-                    cre["adx_value"] = d.Value;
-                    Guid id = OrgService.Create(cre);
-                    Log($"Created adx_sitesetting: {id}");
-                    createCount++;
-
-                    Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' with the value '{d.Value}' has been created.");
+                    Log($"FAILED to update adx_sitesetting: {d.Name}. Exception: {ex.Message}");
+                    failedCount++;
                 }
-
-                Log(LOG_SEGMENT);
             }
             Log($"Site Setting Success Count - Updated: {updateCount}; Created: {createCount};");
 
-            return true;
+            return (failedCount == 0);
         }
     }
 }

@@ -17,12 +17,12 @@ using ZStudio.D365.Shared.Framework.Core.Query;
 
 namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 {
-    [HelperType(nameof(SetAutoRecordRulesStatus))]
-    public class SetAutoRecordRulesStatus : HelperToolBase
+    [HelperType(nameof(SetSLAStatus))]
+    public class SetSLAStatus : HelperToolBase
     {
-        private const string DISPLAYNAME = "Auto Record Rules";
-        private const string TABLENAME = "convertrule";
-        private const int COMPONENT_TYPEID = (int)SolutionHelper.ComponentType.AutoRecordRules;
+        private const string DISPLAYNAME = "SLA";
+        private const string TABLENAME = "sla";
+        private const int COMPONENT_TYPEID = (int)SolutionHelper.ComponentType.SLA;
         private const int DRAFT_STATE = 0;
         private const int ACTIVE_STATE = 1;
         private const int DRAFT_STATUSCODE = 1;
@@ -32,11 +32,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public string SolutionName { get; private set; }
 
-        public bool AllRules { get; private set; }
+        public bool AllSLAs { get; private set; }
 
         public int Status { get; private set; }
 
-        public SetAutoRecordRulesStatus(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
+        public SetSLAStatus(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
         {
         }
 
@@ -62,7 +62,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 config = JsonConvert.DeserializeObject<Dictionary<string, object>>(ConfigJson);
 
                 SolutionName = Convert.ToString(config["SolutionName"]);
-                AllRules = Convert.ToBoolean(config["AllRules"]);
+                AllSLAs = Convert.ToBoolean(config["AllSLAs"]);
                 Status = Convert.ToInt32(config["Status"]);
             }
             catch (Exception dex)
@@ -73,7 +73,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             Log(LOG_LINE);
             Log($"Config Parameters:");
             Log(LOG_LINE);
-            Log($"AllRules: {AllRules}");
+            Log($"AllSLAs: {AllSLAs}");
             Log($"Solution Name: {SolutionName}");
             Log($"Status: {Status}");
             Log(LOG_LINE);
@@ -93,7 +93,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             Log(LOG_SEGMENT);
 
             Entity[] components2Process = null;
-            if (AllRules)
+            if (AllSLAs)
             {
                 //to process all rules
                 components2Process = GetAllComponents();
@@ -110,7 +110,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
                 //uncomment to find component type ID
                 //Entity[] components = SolutionHelper.GetSolutionComponents(OrgService, solutionId.Value);
-                //var lists = (from en in components where Guid.Parse(Convert.ToString(en["objectid"])).Equals(new Guid("c8fb66db-7c25-ee11-9965-000d3a6a9fdb")) select en).ToList();
+                //var lists = (from en in components where Guid.Parse(Convert.ToString(en["objectid"])).Equals(new Guid("5b1730cb-ef47-ee11-be6f-002248973412")) select en).ToList();
                 Entity[] solutionComponents = SolutionHelper.GetSolutionComponentsByComponentType(OrgService, solutionId.Value, COMPONENT_TYPEID);
                 if (solutionComponents?.Length > 0)
                 {
@@ -131,7 +131,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 Log(LOG_SEGMENT);
 
                 string action = "Activating";
-                string actioned = "activated";
+                string actioned = "Activated";
                 OptionSetValue updateState = null;
                 OptionSetValue updateStatusCode = null;
                 if (Status == DRAFT_STATE)

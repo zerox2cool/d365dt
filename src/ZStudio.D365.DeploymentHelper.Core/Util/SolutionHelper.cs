@@ -11,6 +11,14 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
 {
     public static class SolutionHelper
     {
+        #region ComponentType
+        public enum ComponentType
+        {
+            SLA = 152,
+            AutoRecordRules = 154,
+        }
+        #endregion ComponentType
+
         public static Guid? GetSolutionIdByName(IOrganizationService svc, string solutionName)
         {
             FetchHelper fetch = new FetchHelper(svc);

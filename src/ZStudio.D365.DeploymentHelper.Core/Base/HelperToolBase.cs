@@ -423,6 +423,17 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         }
 
         /// <summary>
+        /// Log a WARNING MESSAGE.
+        /// </summary>
+        /// <param name="text"></param>
+        public void ShowWarning(string text)
+        {
+            Logger.AppendLine(LOG_LINE);
+            Logger.AppendLine(text);
+            Logger.AppendLine(LOG_LINE);
+        }
+
+        /// <summary>
         /// Log a debug text to the Logger storage.
         /// </summary>
         /// <param name="text"></param>

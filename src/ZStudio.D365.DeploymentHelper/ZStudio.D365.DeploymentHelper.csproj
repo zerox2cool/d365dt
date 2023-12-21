@@ -168,6 +168,10 @@
     <Content Include="SampleConfig\SetAutoRecordRulesStatus.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SampleConfig\SetSLAStatus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Test_SetSLAStatus.bat" />
     <None Include="Test_SetAutoRecordRulesStatus.bat" />
     <None Include="Test_DeleteTablePermission.bat" />
     <None Include="Test_UpdatePortalSiteSetting.bat" />

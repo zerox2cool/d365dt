@@ -1,4 +1,10 @@
-﻿v0.0.0.5 - 13-Dec-2023
+﻿v0.0.0.6 - 21-Dec-2023
+- Fix error handling on helper base class.
+- Fix output result on DeleteTablePermission.
+- Added activate/deactivate of automatic record rules action for all rules or rules in a solution (SetAutoRecordRulesStatus)
+- Added activate/deactivate of SLA action for all SLA or SLA in a solution (SetSLAStatus)
+
+v0.0.0.5 - 13-Dec-2023
 - Fix naming issue on UpdatePortalSiteSetting.
 
 v0.0.0.4 - 12-Dec-2023
