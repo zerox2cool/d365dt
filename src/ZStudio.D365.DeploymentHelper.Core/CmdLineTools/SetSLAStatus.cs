@@ -43,9 +43,9 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private Entity[] GetAllComponents()
         {
             XrmQueryExpression query = new XrmQueryExpression(TABLENAME);
-            Entity[] rules = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
-            if (rules?.Length > 0)
-                return rules;
+            Entity[] components = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
+            if (components?.Length > 0)
+                return components;
             return null;
         }
 
