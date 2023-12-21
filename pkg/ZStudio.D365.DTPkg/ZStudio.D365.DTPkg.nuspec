@@ -13,7 +13,7 @@
 	</metadata>
 	<files>
 		<!--<file src="bin\$configuration$\netcoreapp3.1\ZStudio.D365.DTPkg.*" target="lib\netcoreapp3.1" />-->
-		<file src="ReleaseNote.txt" target="content\ZD365DT" />
+		<file src="ReleaseNote.md" target="content\ZD365DT" />
 		<file src="ZD365DT\*.*" target="content\ZD365DT" />
 		<file src="ZD365DT\ILMerge\*.*" target="content\ZD365DT\ILMerge" />
 		<file src="ZD365DT\CrmSvcUtil\*.*" target="content\ZD365DT\CrmSvcUtil" />
