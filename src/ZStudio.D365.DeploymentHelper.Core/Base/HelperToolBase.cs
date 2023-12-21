@@ -8,6 +8,7 @@ using System.Threading;
 using ZStudio.D365.DeploymentHelper.Core.Util;
 using ZStudio.D365.Shared.Data.Framework.Cmd;
 using ZStudio.D365.Shared.Framework.Util;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ZStudio.D365.DeploymentHelper.Core.Base
 {
@@ -41,6 +42,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// Indicate the program pause time in second when it start up to enable attachment to process.
         /// </summary>
         public int DebugSleepInSeconds { get; set; }
+
+        /// <summary>
+        /// Indicate the program will write to console in real-time instead of storing it until the end.
+        /// </summary>
+        public bool RealtimeLogging { get; set; }
 
         /// <summary>
         /// CRM connection string
@@ -143,7 +149,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// <param name="tokens"></param>
         /// <param name="debugMode"></param>
         /// <param name="debugSleepInSecs"></param>
-        public HelperToolBase(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode = false, int debugSleepInSecs = 15)
+        public HelperToolBase(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode = false, int debugSleepInSecs = 15, bool realtimeLogging = true)
         {
             if (string.IsNullOrEmpty(crmConnectionString))
                 throw new ArgumentNullException("CRM connection string is required.");
@@ -152,6 +158,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
             DebugSleepInSeconds = debugSleepInSecs;
             if (DebugSleepInSeconds < 0)
                 DebugSleepInSeconds = 0;
+            RealtimeLogging = realtimeLogging;
 
             _crmConnString = crmConnectionString;
             _configJson = configJson;
@@ -310,8 +317,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
                 PostExecute_HandlerImplementation();
 
                 //display log
-                ConsoleLog.Info($"Logs:");
-                ConsoleLog.Info($"{GetLog()}");
+                if (!RealtimeLogging)
+                {
+                    ConsoleLog.Info($"Logs:");
+                    ConsoleLog.Info($"{GetLog()}");
+                }
                 ConsoleLog.Info(LOG_LINE);
 
                 return result;
@@ -409,6 +419,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// <param name="text"></param>
         public void Log(string text)
         {
+            if (RealtimeLogging)
+                ConsoleLog.Info(text);
             Logger.AppendLine(text);
         }
 
@@ -419,6 +431,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// <param name="p"></param>
         public void Log(string format, params object[] p)
         {
+            if (RealtimeLogging)
+                ConsoleLog.Info(string.Format(format, p));
             Logger.AppendLine(string.Format(format, p));
         }
 
@@ -426,8 +440,14 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// Log a WARNING MESSAGE.
         /// </summary>
         /// <param name="text"></param>
-        public void ShowWarning(string text)
+        public void ShowInfoWarning(string text)
         {
+            if (RealtimeLogging)
+            {
+                ConsoleLog.Info(LOG_LINE);
+                ConsoleLog.Info(text);
+                ConsoleLog.Info(LOG_LINE);
+            }
             Logger.AppendLine(LOG_LINE);
             Logger.AppendLine(text);
             Logger.AppendLine(LOG_LINE);
@@ -440,7 +460,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         public void Debug(string text)
         {
             if (DebugMode)
+            {
+                if (RealtimeLogging)
+                    ConsoleLog.Info(text);
                 Logger.AppendLine(text);
+            }
         }
         #endregion Logs
 

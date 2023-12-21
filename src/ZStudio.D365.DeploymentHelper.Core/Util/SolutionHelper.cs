@@ -14,6 +14,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
         #region ComponentType
         public enum ComponentType
         {
+            CloudFlow = 29,
             SLA = 152,
             AutoRecordRules = 154,
         }

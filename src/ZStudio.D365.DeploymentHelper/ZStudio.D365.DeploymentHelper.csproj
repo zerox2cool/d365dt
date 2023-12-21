@@ -172,6 +172,10 @@
     <Content Include="SampleConfig\SetSLAStatus.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SampleConfig\SetCloudFlowStatus.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Test_SetCloudFlowStatus.bat" />
     <None Include="Test_SetSLAStatus.bat" />
     <None Include="Test_SetAutoRecordRulesStatus.bat" />
     <None Include="Test_DeleteTablePermission.bat" />

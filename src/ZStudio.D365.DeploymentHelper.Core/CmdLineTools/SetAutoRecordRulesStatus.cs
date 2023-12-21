@@ -23,6 +23,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private const string DISPLAYNAME = "Auto Record Rules";
         private const string TABLENAME = "convertrule";
         private const int COMPONENT_TYPEID = (int)SolutionHelper.ComponentType.AutoRecordRules;
+
         private const int DRAFT_STATE = 0;
         private const int ACTIVE_STATE = 1;
         private const int DRAFT_STATUSCODE = 1;
@@ -198,7 +199,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
             Log(LOG_SEGMENT);
             Log($"{DISPLAYNAME} Update Count: {updateCount}; Failed Count: {failedCount}");
-            ShowWarning($"{Messages.WarningMessages.COMPONENT_WITH_FLOW}");
+            ShowInfoWarning($"{Messages.WarningMessages.COMPONENT_WITH_FLOW}");
 
             return (failedCount == 0);
         }

@@ -145,6 +145,7 @@
     <Compile Include="CmdLineTools\DeleteTablePermission.cs" />
     <Compile Include="CmdLineTools\CalculateSolutionVersion.cs" />
     <Compile Include="CmdLineTools\IncrementSolutionVersion.cs" />
+    <Compile Include="CmdLineTools\SetCloudFlowStatus.cs" />
     <Compile Include="CmdLineTools\SetSLAStatus.cs" />
     <Compile Include="CmdLineTools\SetAutoRecordRulesStatus.cs" />
     <Compile Include="CmdLineTools\UpdatePortalSiteSetting.cs" />
