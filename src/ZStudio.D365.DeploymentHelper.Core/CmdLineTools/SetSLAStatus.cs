@@ -111,6 +111,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 //uncomment to find component type ID
                 //Entity[] components = SolutionHelper.GetSolutionComponents(OrgService, solutionId.Value);
                 //var lists = (from en in components where Guid.Parse(Convert.ToString(en["objectid"])).Equals(new Guid("5b1730cb-ef47-ee11-be6f-002248973412")) select en).ToList();
+                //return false;
+
                 Entity[] solutionComponents = SolutionHelper.GetSolutionComponentsByComponentType(OrgService, solutionId.Value, COMPONENT_TYPEID);
                 if (solutionComponents?.Length > 0)
                 {
