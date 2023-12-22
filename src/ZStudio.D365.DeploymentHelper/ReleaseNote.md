@@ -1,5 +1,9 @@
 ﻿# DTHelper - ZD365.DeploymentHelper
 # Release Notes
+## v0.0.0.8
+### 23-Dec-2023
+- Optimised and fix bug on delete table permission (adx_entitypermission) data helper (DeleteTablePermission).
+
 ## v0.0.0.7
 ### 22-Dec-2023
 - Added activate/deactivate of Cloud Flows components when there are option to select all (custom only) or those within a solution (SetCloudFlowStatus).

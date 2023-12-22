@@ -14,7 +14,6 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
     public class DeleteTablePermission : HelperToolBase
     {
         private Dictionary<string, object> config = null;
-        private Entity[] serverData = null;
 
         public Guid WebsiteId { get; private set; }
 
@@ -22,14 +21,14 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         {
         }
 
-        private int GetServerData()
+        private Entity[] GetTablePermission(Guid websiteId)
         {
-            XrmQueryExpression query = new XrmQueryExpression("adx_entitypermission");
-            serverData = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
-            if (serverData?.Length > 0)
-                return serverData.Length;
-            else
-                return 0;
+            XrmQueryExpression query = new XrmQueryExpression("adx_entitypermission")
+                .Condition("adx_websiteid", ConditionOperator.Equal, websiteId);
+            Entity[] coll = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
+            if (coll?.Length > 0)
+                return coll;
+            return null;
         }
 
         public override void PreExecute_HandlerImplementation()
@@ -57,20 +56,25 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         {
             exceptionMessage = string.Empty;
 
-            //load server data
-            int totalServerCount = GetServerData();
-            Log($"Table Permission (adx_entitypermission) count on server: {totalServerCount}");
+            //load data
+            Entity[] tablePermissions = GetTablePermission(WebsiteId);
+            int count = 0;
+            if (tablePermissions?.Length > 0)
+                count = tablePermissions.Length;
+
             Log($"Deleting Table Permission (adx_entitypermission) for WebsiteId: {WebsiteId}");
+            Log($"Table Permission (adx_entitypermission) Count: {count}");
             Log(LOG_SEGMENT);
 
             //delete data for a website and parent is null
             int deleteCount = 0;
             int failedCount = 0;
-            if (totalServerCount > 0)
+            if (tablePermissions?.Length > 0)
             {
-                foreach (var d in serverData)
+                foreach (var d in tablePermissions)
                 {
-                    if (d["adx_websiteid"] != null && ((EntityReference)d["adx_websiteid"]).Id.Equals(WebsiteId) && (!d.Contains("adx_parententitypermission") || d["adx_parententitypermission"] == null))
+                    //delete parent permissions
+                    if (!d.Contains("adx_parententitypermission") || d["adx_parententitypermission"] == null)
                     {
                         try
                         {
