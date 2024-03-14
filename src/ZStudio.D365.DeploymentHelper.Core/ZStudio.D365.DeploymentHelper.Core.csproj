@@ -153,6 +153,8 @@
     <Compile Include="CmdLineTools\TestConnection.cs" />
     <Compile Include="Constants\Messages.cs" />
     <Compile Include="Models\AdxSiteSetting.cs" />
+    <Compile Include="Models\XrmEntities\XrmEntities.cs" />
+    <Compile Include="Models\XrmEntities\XrmOptionSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ArgsHelper.cs" />
     <Compile Include="Util\CasualStringComparerObject.cs" />
@@ -189,7 +191,7 @@
     <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Xrm.Tooling.Connector.dll" />
     <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
     <Content Include="Models\XrmEntities\crmsvcutil\ZD365DT.CrmSvcUtilExt.dll" />
-    <Content Include="Models\XrmEntities\XrmEntityList.xml" />
+    <Content Include="Models\XrmEntities\crmsvcutil\XrmEntityList.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
