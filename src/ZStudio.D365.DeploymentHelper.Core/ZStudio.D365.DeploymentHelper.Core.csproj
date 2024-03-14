@@ -152,6 +152,7 @@
     <Compile Include="CmdLineTools\UpdatePortalSiteSetting.cs" />
     <Compile Include="CmdLineTools\TestConnection.cs" />
     <Compile Include="Constants\Messages.cs" />
+    <Compile Include="Models\TeamColumnSecurityProfile.cs" />
     <Compile Include="Models\AdxSiteSetting.cs" />
     <Compile Include="Models\XrmEntities\XrmEntities.cs" />
     <Compile Include="Models\XrmEntities\XrmOptionSets.cs" />

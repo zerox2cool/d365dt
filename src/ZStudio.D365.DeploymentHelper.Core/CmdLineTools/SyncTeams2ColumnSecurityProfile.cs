@@ -14,35 +14,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
     [HelperType(nameof(SyncTeams2ColumnSecurityProfile))]
     public class SyncTeams2ColumnSecurityProfile : HelperToolBase
     {
-        private AdxSiteSetting[] config = null;
+        private TeamColumnSecurityProfile[] config = null;
         private Entity[] serverData = null;
 
         public SyncTeams2ColumnSecurityProfile(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
         {
-        }
-
-        private int GetServerData()
-        {
-            XrmQueryExpression query = new XrmQueryExpression("adx_sitesetting");
-            serverData = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
-            if (serverData?.Length > 0)
-                return serverData.Length;
-            else
-                return 0;
-        }
-
-        private Entity IsExist(Guid websiteId, string name)
-        {
-            if (serverData?.Length > 0)
-            {
-                var coll = from rec in serverData where rec["adx_websiteid"] != null && ((EntityReference)rec["adx_websiteid"]).Id.Equals(websiteId) && Convert.ToString(rec["adx_name"]).Equals(name, StringComparison.CurrentCultureIgnoreCase) select rec;
-                if (coll?.ToArray().Length > 0)
-                    return coll?.ToArray()[0];
-                else
-                    return null;
-            }
-            else
-                return null;
         }
 
         public override void PreExecute_HandlerImplementation()
@@ -50,77 +26,26 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             try
             {
                 //load config JSON
-                config = JsonConvert.DeserializeObject<AdxSiteSetting[]>(ConfigJson);
+                config = JsonConvert.DeserializeObject<TeamColumnSecurityProfile[]>(ConfigJson);
             }
             catch (Exception dex)
             {
-                throw new ArgumentException($"The Config JSON is invalid and cannot be deserialise to AdxSiteSetting[]. Exception: {dex.Message}");
+                throw new ArgumentException($"The Config JSON is invalid and cannot be deserialise to TeamColumnSecurityProfile[]. Exception: {dex.Message}");
             }
 
             Log(LOG_LINE);
-            Log($"Config Parameters (adx_sitesetting to update):");
+            Log($"Config Parameters (teamprofiles to update):");
             Log(LOG_LINE);
-            Log($"Settings Count: {config?.Length}");
-            foreach (var ss in config)
-                Debug($"Settings: WebsiteID: {ss.WebsiteId} - Key: {ss.Name} - Value: {ss.Value}");
+            Log($"Team Profiles Count: {config?.Length}");
+            foreach (var cfg in config)
+                Debug($"Profile: Name: {cfg.ProfileName} - Teams: {cfg.Teams}");
             Log(LOG_LINE);
         }
 
         protected override bool OnRun_Implementation(out string exceptionMessage)
         {
             exceptionMessage = string.Empty;
-
-            //load server data
-            int totalServerCount = GetServerData();
-            Log($"Site Setting (adx_sitesetting) count on server: {totalServerCount}");
-            Log($"Perform Site Settings Create/Update.");
-            Log(LOG_SEGMENT);
-
-            int updateCount = 0;
-            int createCount = 0;
             int failedCount = 0;
-            foreach (var d in config)
-            {
-                Log($"Updating Setting Key {d.Name} for WebsiteID '{d.WebsiteId}'.");
-
-                try
-                {
-                    Entity record = IsExist(Guid.Parse(d.WebsiteId), d.Name);
-                    if (record != null)
-                    {
-                        //data found to update
-                        Entity upd = new Entity("adx_sitesetting", record.Id);
-                        upd["adx_value"] = d.Value;
-                        OrgService.Update(upd);
-                        Log($"Updated adx_sitesetting: {record.Id}");
-                        updateCount++;
-
-                        Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' updated to the value '{d.Value}'.");
-                    }
-                    else
-                    {
-                        //insert
-                        Log($"adx_sitesetting with name '{d.Name}' not found.");
-                        Entity cre = new Entity("adx_sitesetting");
-                        cre["adx_websiteid"] = new EntityReference("adx_website", Guid.Parse(d.WebsiteId));
-                        cre["adx_name"] = d.Name;
-                        cre["adx_value"] = d.Value;
-                        Guid id = OrgService.Create(cre);
-                        Log($"Created adx_sitesetting: {id}");
-                        createCount++;
-
-                        Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' with the value '{d.Value}' has been created.");
-                    }
-
-                    Log(LOG_SEGMENT);
-                }
-                catch (Exception ex)
-                {
-                    Log($"FAILED to update adx_sitesetting: {d.Name}. Exception: {ex.Message}");
-                    failedCount++;
-                }
-            }
-            Log($"Site Setting Success Count - Updated: {updateCount}; Created: {createCount};");
 
             return (failedCount == 0);
         }
