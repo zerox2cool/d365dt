@@ -39,5 +39,7 @@
 		<entity>documenttemplate</entity>
 		<entity>template</entity>
 		<entity>environmentvariabledefinition</entity>
+		<entity>teamprofiles</entity>
+		<entity>systemuserprofiles</entity>
 	</entities>
 </filter>

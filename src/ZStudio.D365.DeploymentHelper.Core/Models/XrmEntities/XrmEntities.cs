@@ -26450,6 +26450,141 @@ namespace ZStudio.D365.DeploymentHelper.Core.Models.Entities
 	/// 
 	/// </summary>
 	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("systemuserprofiles")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.45")]
+	public partial class SystemUserProfiles : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public SystemUserProfiles() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "systemuserprofiles";
+		
+		public const int EntityTypeCode = 1202;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("fieldsecurityprofileid")]
+		public System.Nullable<System.Guid> FieldSecurityProfileId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("fieldsecurityprofileid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("systemuserid")]
+		public System.Nullable<System.Guid> SystemUserId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("systemuserid");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("systemuserprofileid")]
+		public System.Nullable<System.Guid> SystemUserProfileId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("systemuserprofileid");
+			}
+			set
+			{
+				this.OnPropertyChanging("SystemUserProfileId");
+				this.SetAttributeValue("systemuserprofileid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("SystemUserProfileId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("systemuserprofileid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.SystemUserProfileId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:N systemuserprofiles_association
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("systemuserprofiles_association")]
+		public System.Collections.Generic.IEnumerable<ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUser> systemuserprofiles_association
+		{
+			get
+			{
+				return this.GetRelatedEntities<ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUser>("systemuserprofiles_association", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("systemuserprofiles_association");
+				this.SetRelatedEntities<ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUser>("systemuserprofiles_association", null, value);
+				this.OnPropertyChanged("systemuserprofiles_association");
+			}
+		}
+	}
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
 	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("systemuserroles")]
 	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.45")]
 	public partial class SystemUserRoles : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
@@ -28857,6 +28992,141 @@ namespace ZStudio.D365.DeploymentHelper.Core.Models.Entities
 				this.OnPropertyChanging("teammembership_association");
 				this.SetRelatedEntities<ZStudio.D365.DeploymentHelper.Core.Models.Entities.Team>("teammembership_association", null, value);
 				this.OnPropertyChanged("teammembership_association");
+			}
+		}
+	}
+	
+	/// <summary>
+	/// Team Profiles
+	/// </summary>
+	[System.Runtime.Serialization.DataContractAttribute()]
+	[Microsoft.Xrm.Sdk.Client.EntityLogicalNameAttribute("teamprofiles")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("CrmSvcUtil", "9.1.0.45")]
+	public partial class TeamProfiles : Microsoft.Xrm.Sdk.Entity, System.ComponentModel.INotifyPropertyChanging, System.ComponentModel.INotifyPropertyChanged
+	{
+		
+		/// <summary>
+		/// Default Constructor.
+		/// </summary>
+		public TeamProfiles() : 
+				base(EntityLogicalName)
+		{
+		}
+		
+		public const string EntityLogicalName = "teamprofiles";
+		
+		public const int EntityTypeCode = 1203;
+		
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+		
+		public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
+		
+		private void OnPropertyChanged(string propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void OnPropertyChanging(string propertyName)
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, new System.ComponentModel.PropertyChangingEventArgs(propertyName));
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("fieldsecurityprofileid")]
+		public System.Nullable<System.Guid> FieldSecurityProfileId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("fieldsecurityprofileid");
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("teamid")]
+		public System.Nullable<System.Guid> TeamId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("teamid");
+			}
+		}
+		
+		/// <summary>
+		/// For internal use only.
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("teamprofileid")]
+		public System.Nullable<System.Guid> TeamProfileId
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<System.Guid>>("teamprofileid");
+			}
+			set
+			{
+				this.OnPropertyChanging("TeamProfileId");
+				this.SetAttributeValue("teamprofileid", value);
+				if (value.HasValue)
+				{
+					base.Id = value.Value;
+				}
+				else
+				{
+					base.Id = System.Guid.Empty;
+				}
+				this.OnPropertyChanged("TeamProfileId");
+			}
+		}
+		
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("teamprofileid")]
+		public override System.Guid Id
+		{
+			get
+			{
+				return base.Id;
+			}
+			set
+			{
+				this.TeamProfileId = value;
+			}
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		[Microsoft.Xrm.Sdk.AttributeLogicalNameAttribute("versionnumber")]
+		public System.Nullable<long> VersionNumber
+		{
+			get
+			{
+				return this.GetAttributeValue<System.Nullable<long>>("versionnumber");
+			}
+		}
+		
+		/// <summary>
+		/// N:N teamprofiles_association
+		/// </summary>
+		[Microsoft.Xrm.Sdk.RelationshipSchemaNameAttribute("teamprofiles_association")]
+		public System.Collections.Generic.IEnumerable<ZStudio.D365.DeploymentHelper.Core.Models.Entities.Team> teamprofiles_association
+		{
+			get
+			{
+				return this.GetRelatedEntities<ZStudio.D365.DeploymentHelper.Core.Models.Entities.Team>("teamprofiles_association", null);
+			}
+			set
+			{
+				this.OnPropertyChanging("teamprofiles_association");
+				this.SetRelatedEntities<ZStudio.D365.DeploymentHelper.Core.Models.Entities.Team>("teamprofiles_association", null, value);
+				this.OnPropertyChanged("teamprofiles_association");
 			}
 		}
 	}
@@ -34025,6 +34295,17 @@ namespace ZStudio.D365.DeploymentHelper.Core.Models.Entities
 		}
 		
 		/// <summary>
+		/// Gets a binding to the set of all <see cref="ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUserProfiles"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUserProfiles> SystemUserProfilesSet
+		{
+			get
+			{
+				return this.CreateQuery<ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUserProfiles>();
+			}
+		}
+		
+		/// <summary>
 		/// Gets a binding to the set of all <see cref="ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUserRoles"/> entities.
 		/// </summary>
 		public System.Linq.IQueryable<ZStudio.D365.DeploymentHelper.Core.Models.Entities.SystemUserRoles> SystemUserRolesSet
@@ -34065,6 +34346,17 @@ namespace ZStudio.D365.DeploymentHelper.Core.Models.Entities
 			get
 			{
 				return this.CreateQuery<ZStudio.D365.DeploymentHelper.Core.Models.Entities.TeamMembership>();
+			}
+		}
+		
+		/// <summary>
+		/// Gets a binding to the set of all <see cref="ZStudio.D365.DeploymentHelper.Core.Models.Entities.TeamProfiles"/> entities.
+		/// </summary>
+		public System.Linq.IQueryable<ZStudio.D365.DeploymentHelper.Core.Models.Entities.TeamProfiles> TeamProfilesSet
+		{
+			get
+			{
+				return this.CreateQuery<ZStudio.D365.DeploymentHelper.Core.Models.Entities.TeamProfiles>();
 			}
 		}
 		

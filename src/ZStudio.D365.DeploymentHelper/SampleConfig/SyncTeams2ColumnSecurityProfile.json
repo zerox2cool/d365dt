@@ -1,0 +1,10 @@
+﻿[
+	{
+		"ColumnSecurityProfileName": "SecProfile1",
+		"Teams": "TeamA;TeamB"
+	},
+	{
+		"ColumnSecurityProfileName": "SecProfile2",
+		"Teams": "TeamC;TeamD"
+	}
+]
