@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<filter>
+	<entities>
+		<!--System Entities-->
+		<entity>pluginassembly</entity>
+		<entity>plugintype</entity>
+		<entity>sdkmessageprocessingstep</entity>
+		<entity>sdkmessageprocessingstepimage</entity>
+		<entity>sdkmessage</entity>
+		<entity>sdkmessagefilter</entity>
+		<entity>systemuser</entity>
+		<entity>systemuserroles</entity>
+		<entity>team</entity>
+		<entity>teammembership</entity>
+		<entity>teamroles</entity>
+		<entity>queuemembership</entity>
+		<entity>role</entity>
+		<entity>businessunit</entity>
+		<entity>uom</entity>
+		<entity>uomschedule</entity>
+		<entity>pricelevel</entity>
+		<entity>activitypointer</entity>
+		<entity>task</entity>
+		<entity>email</entity>
+		<entity>letter</entity>
+		<entity>phonecall</entity>
+		<entity>sharepointsite</entity>
+		<entity>sharepointdocumentlocation</entity>
+		<entity>annotation</entity>
+		<entity>transactioncurrency</entity>
+		<entity>connection</entity>
+		<entity>connectionrole</entity>
+		<entity>queue</entity>
+		<entity>userquery</entity>
+		<entity>savedquery</entity>
+		<entity>workflow</entity>
+		<entity>processstage</entity>
+		<entity>sla</entity>
+		<entity>documenttemplate</entity>
+		<entity>template</entity>
+		<entity>environmentvariabledefinition</entity>
+	</entities>
+</filter>
