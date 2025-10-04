@@ -1,10 +1,15 @@
-﻿[
-	{
-		"ColumnSecurityProfileName": "SecProfileOfficer",
-		"Teams": "@rootbuname@:TeamA;UnitA:TeamA"
+﻿{
+	"Settings": {
+		"IsSync":  true
 	},
-	{
-		"ColumnSecurityProfileName": "SecProfileManager",
-		"Teams": "@rootbuname@:TeamB;UnitA:TeamB"
-	}
-]
+	"ColumnSecurityProfiles": [
+		{
+			"ColumnSecurityProfileName": "SecProfileOfficer",
+			"Teams": "@rootbuname@:TeamA;UnitA:TeamA"
+		},
+		{
+			"ColumnSecurityProfileName": "SecProfileManager",
+			"Teams": "@rootbuname@:TeamB;UnitA:TeamB"
+		}
+	]
+}

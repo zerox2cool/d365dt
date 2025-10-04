@@ -8,6 +8,23 @@ using System.Threading.Tasks;
 namespace ZStudio.D365.DeploymentHelper.Core.Models
 {
     [DataContract]
+    public class Teams2ColumnSecurityProfile
+    {
+        [DataMember]
+        public Teams2ColumnSecurityProfileSettings Settings { get; set; }
+
+        [DataMember]
+        public TeamColumnSecurityProfile[] ColumnSecurityProfiles { get; set; }
+    }
+
+    [DataContract]
+    public class Teams2ColumnSecurityProfileSettings
+    {
+        [DataMember]
+        public bool IsSync { get; set; }
+    }
+
+    [DataContract]
     public class TeamColumnSecurityProfile
     {
         private string _teams = null;

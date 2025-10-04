@@ -14,7 +14,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
     [HelperType(nameof(SyncTeams2ColumnSecurityProfile))]
     public class SyncTeams2ColumnSecurityProfile : HelperToolBase
     {
-        private TeamColumnSecurityProfile[] config = null;
+        private Teams2ColumnSecurityProfile config = null;
         private Entity[] serverData = null;
 
         public SyncTeams2ColumnSecurityProfile(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
@@ -26,18 +26,19 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             try
             {
                 //load config JSON
-                config = JsonConvert.DeserializeObject<TeamColumnSecurityProfile[]>(ConfigJson);
+                config = JsonConvert.DeserializeObject<Teams2ColumnSecurityProfile>(ConfigJson);
             }
             catch (Exception dex)
             {
-                throw new ArgumentException($"The Config JSON is invalid and cannot be deserialise to TeamColumnSecurityProfile[]. Exception: {dex.Message}");
+                throw new ArgumentException($"The Config JSON is invalid and cannot be deserialise to Teams2ColumnSecurityProfile. Exception: {dex.Message}");
             }
 
             Log(LOG_LINE);
-            Log($"Config Parameters (teamprofiles to update):");
+            Log($"Config Parameters (teamprofiles_association to update):");
+            Log($"IsSync: {config?.Settings?.IsSync}");
             Log(LOG_LINE);
-            Log($"Team Profiles Count: {config?.Length}");
-            foreach (var cfg in config)
+            Log($"Team Profiles Count: {config?.ColumnSecurityProfiles?.Length}");
+            foreach (var cfg in config?.ColumnSecurityProfiles)
                 Debug($"Profile: Name: {cfg.ProfileName} - Teams: {cfg.Teams}");
             Log(LOG_LINE);
         }

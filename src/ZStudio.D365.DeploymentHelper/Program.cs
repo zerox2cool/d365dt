@@ -60,6 +60,8 @@ namespace ZStudio.D365.DeploymentHelper
                 if (string.IsNullOrEmpty(tokenData) || tokenData.Equals("null", StringComparison.CurrentCultureIgnoreCase))
                     tokenData = string.Empty;
 
+                ConsoleLog.Info($"DebugMode: {debugMode}");
+                ConsoleLog.Info($"DebugSleepInSec: {debugSleep}");
                 ConsoleLog.Info($"Connection String: {ArgsHelper.MaskCrmConnectionString(crmConnectionString)}");
                 ConsoleLog.Info($"Helper: {helper}");
                 ConsoleLog.Info($"Working Folder Path: {Environment.CurrentDirectory}");
