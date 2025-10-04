@@ -1,10 +1,10 @@
 ﻿[
 	{
-		"ColumnSecurityProfileName": "SecProfile1",
-		"Teams": "TeamA;TeamB"
+		"ColumnSecurityProfileName": "SecProfileOfficer",
+		"Teams": "@rootbuname@:TeamA;UnitA:TeamA"
 	},
 	{
-		"ColumnSecurityProfileName": "SecProfile2",
-		"Teams": "TeamC;TeamD"
+		"ColumnSecurityProfileName": "SecProfileManager",
+		"Teams": "@rootbuname@:TeamB;UnitA:TeamB"
 	}
 ]

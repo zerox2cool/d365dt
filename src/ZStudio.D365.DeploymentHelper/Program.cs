@@ -11,6 +11,8 @@ using System.Text;
 using System.Text.Json.Nodes;
 using ZStudio.D365.DeploymentHelper.Core.Base;
 using ZStudio.D365.DeploymentHelper.Core.CmdLineTools;
+using ZStudio.D365.DeploymentHelper.Core.DataObjects;
+using ZStudio.D365.DeploymentHelper.Core.Models.Entities;
 using ZStudio.D365.DeploymentHelper.Core.Util;
 using ZStudio.D365.Shared.Data.Framework.Cmd;
 using ZStudio.D365.Shared.Framework.Util;
@@ -91,6 +93,15 @@ namespace ZStudio.D365.DeploymentHelper
                         tokens.Add(HelperTokenKey.LOGONUSERID_TOKEN.Replace("@", ""), conn.WhoAmI.UserId.ToString());
                         tokens.Add(HelperTokenKey.LOGONUSEREMAIL_TOKEN.Replace("@", ""), conn.WhoAmI.Email);
                         tokens.Add(HelperTokenKey.LOGONUSERFULLNAME_TOKEN.Replace("@", ""), conn.WhoAmI.FullName);
+                    }
+
+                    //get root BU to be added into system token
+                    CrmSystemDataObject crmData = new CrmSystemDataObject(conn.OrgService);
+                    BusinessUnit rootBU = crmData.GetRootBusinessUnit();
+                    if (rootBU != null)
+                    {
+                        tokens.Add(HelperTokenKey.ROOTBUNAME_TOKEN.Replace("@", ""), rootBU.Name);
+                        tokens.Add(HelperTokenKey.ROOTBUID_TOKEN.Replace("@", ""), rootBU.Id.ToString());
                     }
                 }
                 else

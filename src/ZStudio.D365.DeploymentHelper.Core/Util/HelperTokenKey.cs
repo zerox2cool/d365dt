@@ -15,6 +15,9 @@ namespace ZStudio.D365.DeploymentHelper.Core.Util
         public const string ORGDATAURL_TOKEN = "@orgdataurl@";
         public const string ORGWEBAPPURL_TOKEN = "@orgweburl@";
 
+        public const string ROOTBUNAME_TOKEN = "@rootbuname@";
+        public const string ROOTBUID_TOKEN = "@rootbuid@";
+
         public const string LOGONUSERID_TOKEN = "@logonuserid@";
         public const string LOGONUSEREMAIL_TOKEN = "@logonuseremail@";
         public const string LOGONUSERFULLNAME_TOKEN = "@logonuserfullname@";

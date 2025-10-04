@@ -139,6 +139,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\CrmDataCache.cs" />
+    <Compile Include="Base\CrmDataCacheBase.cs" />
     <Compile Include="Base\HelperToolBase.cs" />
     <Compile Include="Base\HelperType.cs" />
     <Compile Include="Base\IHelperToolLogic.cs" />
@@ -152,6 +154,7 @@
     <Compile Include="CmdLineTools\UpdatePortalSiteSetting.cs" />
     <Compile Include="CmdLineTools\TestConnection.cs" />
     <Compile Include="Constants\Messages.cs" />
+    <Compile Include="DataObjects\CrmSystemDataObject.cs" />
     <Compile Include="Models\TeamColumnSecurityProfile.cs" />
     <Compile Include="Models\AdxSiteSetting.cs" />
     <Compile Include="Models\XrmEntities\XrmEntities.cs" />
