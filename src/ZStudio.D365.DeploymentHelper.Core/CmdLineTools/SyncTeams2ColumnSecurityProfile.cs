@@ -39,7 +39,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             Log(LOG_LINE);
             Log($"Team Profiles Count: {config?.ColumnSecurityProfiles?.Length}");
             foreach (var cfg in config?.ColumnSecurityProfiles)
-                Debug($"Profile: Name: {cfg.ProfileName} - Teams: {cfg.Teams}");
+            {
+                Debug($"Profile: Name: {cfg.ProfileName} - Team Count: {cfg.BusinessUnitTeams?.Count}");
+                foreach (var t in cfg.BusinessUnitTeams)
+                    Debug($"Team Name: {t.TeamName} ({t.BusinessUnitName})");
+            }
             Log(LOG_LINE);
         }
 
