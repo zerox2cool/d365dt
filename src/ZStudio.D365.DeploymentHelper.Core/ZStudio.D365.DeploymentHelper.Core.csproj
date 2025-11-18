@@ -151,10 +151,12 @@
     <Compile Include="CmdLineTools\SetSLAStatus.cs" />
     <Compile Include="CmdLineTools\SetAutoRecordRulesStatus.cs" />
     <Compile Include="CmdLineTools\SyncTeams2ColumnSecurityProfile.cs" />
+    <Compile Include="CmdLineTools\UpdateWebsite.cs" />
     <Compile Include="CmdLineTools\UpdatePortalSiteSetting.cs" />
     <Compile Include="CmdLineTools\TestConnection.cs" />
     <Compile Include="Constants\Messages.cs" />
     <Compile Include="DataObjects\CrmSystemDataObject.cs" />
+    <Compile Include="Models\AdxWebsite.cs" />
     <Compile Include="Models\TeamColumnSecurityProfile.cs" />
     <Compile Include="Models\AdxSiteSetting.cs" />
     <Compile Include="Models\XrmEntities\XrmEntities.cs" />

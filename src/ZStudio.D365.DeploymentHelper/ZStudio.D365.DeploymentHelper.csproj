@@ -187,6 +187,7 @@
     <None Include="Test_SetAutoRecordRulesStatus.bat" />
     <None Include="Test_DeleteTablePermission.bat" />
     <None Include="Test_SyncTeams2ColumnSecurityProfile.bat" />
+    <None Include="Test_UpdateWebsite.bat" />
     <None Include="Test_UpdatePortalSiteSetting.bat" />
     <None Include="Test_TestConnection.bat" />
     <None Include="Test_CalculateSolutionVersion.bat" />

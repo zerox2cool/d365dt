@@ -6,6 +6,8 @@
 ### 19-Nov-2023
 - Added new optional parameter to support Power Pages Enhanced Data Model, pass in true/false to portalEnhanced parameter to indicate if the website is on Enhanced Data Model or not. Default to false.
 - Added update website record (adx_website/mspp_website) helper to update primary domain name (adx_primarydomainname/mspp_primarydomainname) for different environment during deployment (UpdateWebsite).
+- Updated delete table permission (adx_entitypermission/mspp_entitypermission) data helper to support both classic and enhanced data model website (DeleteTablePermission).
+- Updated update site setting (adx_sitesetting/mspp_sitesetting) value helper to support both classic and enhanced data model website (UpdatePortalSiteSetting).
 
 ## v0.0.0.8
 ### 23-Dec-2023
