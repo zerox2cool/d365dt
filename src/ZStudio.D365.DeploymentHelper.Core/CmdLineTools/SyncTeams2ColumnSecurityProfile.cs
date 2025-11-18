@@ -17,7 +17,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private Teams2ColumnSecurityProfile config = null;
         private Entity[] serverData = null;
 
-        public SyncTeams2ColumnSecurityProfile(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
+        public SyncTeams2ColumnSecurityProfile(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
         {
         }
 

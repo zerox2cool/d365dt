@@ -20,7 +20,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         public bool IncrementMinor { get; private set; }
         public bool IncrementMajor { get; private set; }
 
-        public IncrementSolutionVersion(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
+        public IncrementSolutionVersion(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
         {
         }
 

@@ -4,6 +4,9 @@ echo off
 echo Source CRM Connection String (can be with password/client secret or login prompted - NOTE: password is visible):
 set /p connectionString=
 
+echo Portal Enhanced Data Model, true or false:
+set /p portalEnhanced=
+
 echo Helper to Run (must specify the helper program to run):
 set helper=DeleteTablePermission
 
@@ -23,7 +26,7 @@ set debug=false
 if %devmode%==1 cd bin/Debug/
 if %devmode%==1 set debug=true
 
-ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug% /sleep:0
+ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug% /portalEnhanced:"%portalEnhanced%" /sleep:0
 set status=%errorlevel%
 
 

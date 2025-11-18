@@ -34,6 +34,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         public string HelperName { get; set; }
 
         /// <summary>
+        /// Indicate the program is running for Power Pages enhanced data model mode.
+        /// </summary>
+        public bool PortalEnhancedMode { get; set; }
+
+        /// <summary>
         /// Indicate the program is running in debug mode.
         /// </summary>
         public bool DebugMode { get; set; }
@@ -147,13 +152,16 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         /// <param name="crmConnectionString"></param>
         /// <param name="configJson"></param>
         /// <param name="tokens"></param>
+        /// <param name="portalEnhanceMode"></param>
         /// <param name="debugMode"></param>
         /// <param name="debugSleepInSecs"></param>
-        public HelperToolBase(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode = false, int debugSleepInSecs = 15, bool realtimeLogging = true)
+        /// <param name="realtimeLogging"></param>
+        public HelperToolBase(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhanceMode = false, bool debugMode = false, int debugSleepInSecs = 15, bool realtimeLogging = true)
         {
             if (string.IsNullOrEmpty(crmConnectionString))
                 throw new ArgumentNullException("CRM connection string is required.");
 
+            PortalEnhancedMode = portalEnhanceMode;
             DebugMode = debugMode;
             DebugSleepInSeconds = debugSleepInSecs;
             if (DebugSleepInSeconds < 0)
@@ -240,6 +248,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
             ConsoleLog.Info($"{Assembly.GetEntryAssembly().FullName} Starting...");
             ConsoleLog.Info($"Helper: {HelperName}");
             ConsoleLog.Info($"CRM Connection String: {ArgsHelper.MaskCrmConnectionString(CrmConnectionString)}");
+            ConsoleLog.Info($"Power Pages Enhanced Data Model: {PortalEnhancedMode}");
             ConsoleLog.Info($"Debug: {DebugMode}");
             ConsoleLog.Info($"Debug Sleep (seconds): {DebugSleepInSeconds}");
             ConsoleLog.Info(LOG_LINE);

@@ -17,7 +17,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public Guid WebsiteId { get; private set; }
 
-        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
+        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
         {
         }
 
@@ -33,6 +33,10 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public override void PreExecute_HandlerImplementation()
         {
+            //portal mode check
+            if (PortalEnhancedMode)
+                throw new ArgumentException($"Executing {nameof(DeleteTablePermission)} in enhance data model mode is not supported.");
+
             try
             {
                 //load config JSON

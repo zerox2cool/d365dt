@@ -178,6 +178,9 @@
     <Content Include="SampleConfig\SyncTeams2ColumnSecurityProfile.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SampleConfig\UpdateWebsite.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Test_SetCloudFlowStatus.bat" />
     <None Include="Test_SetSLAStatus.bat" />
     <None Include="Test_SetAutoRecordRulesStatus.bat" />
