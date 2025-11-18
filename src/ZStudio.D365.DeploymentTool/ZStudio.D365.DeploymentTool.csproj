@@ -338,8 +338,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>SET ILMERGE_VERSION=3.0.41
-copy "%25USERPROFILE%25\.nuget\packages\ilmerge\%25ILMERGE_VERSION%25\tools\net452\*.*" "$(ProjectDir)Binaries"</PreBuildEvent>
+    <PreBuildEvent>REM SET ILMERGE_VERSION=3.0.41
+REM copy "%25USERPROFILE%25\.nuget\packages\ilmerge\%25ILMERGE_VERSION%25\tools\net452\*.*" "$(ProjectDir)Binaries"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PostBuildEvent>echo Copy DLL and PDB to test project for debugging and testing
