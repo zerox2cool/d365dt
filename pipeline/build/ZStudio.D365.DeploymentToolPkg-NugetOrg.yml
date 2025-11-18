@@ -64,6 +64,6 @@ steps:
 
 - script: |
    echo Nuget Push
-   dotnet nuget push $(Build.ArtifactStagingDirectory)/*.nupkg --api-key $(NugetOrgApiKey) --source $(NugetOrgSourceFeed)
+   dotnet nuget push $(Build.ArtifactStagingDirectory)\*.nupkg --api-key $(NugetOrgApiKey) --source $(NugetOrgSourceFeed)
   displayName: 'NuGet Push to nuget.org'
   enabled: true
