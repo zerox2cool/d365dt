@@ -1,5 +1,5 @@
 ﻿# DTHelper - ZD365.DeploymentHelper
-[User Guide](pkg/ZStudio.D365.DTHelperPkg/ReadmeGuide.md)
+[User Guide](ReadmeGuide.md)
 
 # Release Notes
 ## v0.0.0.9
