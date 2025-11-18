@@ -1,5 +1,14 @@
 ﻿# DTHelper - ZD365.DeploymentHelper
+[User Guide](pkg/ZStudio.D365.DTHelperPkg/ReadmeGuide.md)
+
 # Release Notes
+## v0.0.0.9
+### 19-Nov-2023
+- Added new optional parameter to support Power Pages Enhanced Data Model, pass in true/false to portalEnhanced parameter to indicate if the website is on Enhanced Data Model or not. Default to false.
+- Added update website record (adx_website/mspp_website) helper to update primary domain name (adx_primarydomainname/mspp_primarydomainname) for different environment during deployment (UpdateWebsite).
+- Updated delete table permission (adx_entitypermission/mspp_entitypermission) data helper to support both classic and enhanced data model website (DeleteTablePermission).
+- Updated update site setting (adx_sitesetting/mspp_sitesetting) value helper to support both classic and enhanced data model website (UpdatePortalSiteSetting).
+
 ## v0.0.0.8
 ### 23-Dec-2023
 - Optimised and fix bug on delete table permission (adx_entitypermission) data helper (DeleteTablePermission).
@@ -27,7 +36,7 @@
 - Introduce token data to be used as replacement value in JSON config file.
 - Introduce interface to implement more helper tool (IHelperToolLogic).
 - Fix IncrementSolutionVersion and CalculateSolutionVersion to reset the lesser version segment to 0 when incrementing higher version segment.
-- Added update site setting (adx_sitesetting) value helper to update site setting for different environment during deployment (UpdatePortalSiteSetting).
+- Added update site setting (adx_sitesetting) value helper to update site setting value (adx_value) for different environment during deployment (UpdatePortalSiteSetting).
 - Added delete table permission (adx_entitypermission) data helper to delete all permission for a website (DeleteTablePermission).
 
 ## v0.0.0.3

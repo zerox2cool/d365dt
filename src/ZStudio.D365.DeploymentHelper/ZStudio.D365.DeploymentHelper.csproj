@@ -175,10 +175,19 @@
     <Content Include="SampleConfig\SetCloudFlowStatus.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="SampleConfig\SyncTeams2ColumnSecurityProfile.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SampleConfig\UpdateWebsite.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="ReadmeGuide.md" />
     <None Include="Test_SetCloudFlowStatus.bat" />
     <None Include="Test_SetSLAStatus.bat" />
     <None Include="Test_SetAutoRecordRulesStatus.bat" />
     <None Include="Test_DeleteTablePermission.bat" />
+    <None Include="Test_SyncTeams2ColumnSecurityProfile.bat" />
+    <None Include="Test_UpdateWebsite.bat" />
     <None Include="Test_UpdatePortalSiteSetting.bat" />
     <None Include="Test_TestConnection.bat" />
     <None Include="Test_CalculateSolutionVersion.bat" />
@@ -210,6 +219,7 @@ IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.config" "$(So
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.bat" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)SampleConfig\*.json" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\SampleConfig\"
 
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReadmeGuide.md" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.md" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)SetNupkgVersion.ps1" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"</PostBuildEvent>
   </PropertyGroup>

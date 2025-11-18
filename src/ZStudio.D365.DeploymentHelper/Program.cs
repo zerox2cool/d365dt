@@ -11,6 +11,8 @@ using System.Text;
 using System.Text.Json.Nodes;
 using ZStudio.D365.DeploymentHelper.Core.Base;
 using ZStudio.D365.DeploymentHelper.Core.CmdLineTools;
+using ZStudio.D365.DeploymentHelper.Core.DataObjects;
+using ZStudio.D365.DeploymentHelper.Core.Models.Entities;
 using ZStudio.D365.DeploymentHelper.Core.Util;
 using ZStudio.D365.Shared.Data.Framework.Cmd;
 using ZStudio.D365.Shared.Framework.Util;
@@ -31,6 +33,7 @@ namespace ZStudio.D365.DeploymentHelper
             ExecutionReturnCode result = ExecutionReturnCode.Success;
             bool debugMode = true;
             int debugSleep = 15;
+            bool portalEnhancedMode = false;
             try
             {
                 Environment.CurrentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
@@ -42,6 +45,7 @@ namespace ZStudio.D365.DeploymentHelper
                 string tokenData = CmdArgsHelper.ReadArgument(args, "data", false, $"(Optional) Variable Token replacement data separated by double-semicolon ({DELIMITER}). Pass in NULL or do not include this argument when there is no token. e.g. data1{DELIMITER}replacethis2");
                 string debug = CmdArgsHelper.ReadArgument(args, "debug", false, "Debug Mode, default to false. e.g. true or false");
                 string debugSleepInSec = CmdArgsHelper.ReadArgument(args, "sleep", false, "Debug Sleep in seconds, default to 15 seconds.");
+                string portalEnhanced = CmdArgsHelper.ReadArgument(args, "portalEnhanced", false, "Portal Enhanced Data Model, default to false. e.g. true or false.");
                 if (string.IsNullOrEmpty(debug))
                     debugMode = false;
                 else
@@ -50,6 +54,10 @@ namespace ZStudio.D365.DeploymentHelper
                     debugSleep = 15;
                 else
                     debugSleep = int.Parse(debugSleepInSec);
+                if (string.IsNullOrEmpty(portalEnhanced))
+                    portalEnhancedMode = false;
+                else
+                    portalEnhancedMode = bool.Parse(portalEnhanced);
 
                 if (string.IsNullOrEmpty(configFile) || configFile.Equals("null", StringComparison.CurrentCultureIgnoreCase))
                     configFile = string.Empty;
@@ -58,6 +66,9 @@ namespace ZStudio.D365.DeploymentHelper
                 if (string.IsNullOrEmpty(tokenData) || tokenData.Equals("null", StringComparison.CurrentCultureIgnoreCase))
                     tokenData = string.Empty;
 
+                ConsoleLog.Info($"DebugMode: {debugMode}");
+                ConsoleLog.Info($"DebugSleepInSec: {debugSleep}");
+                ConsoleLog.Info($"PortalEnhancedMode: {portalEnhancedMode}");
                 ConsoleLog.Info($"Connection String: {ArgsHelper.MaskCrmConnectionString(crmConnectionString)}");
                 ConsoleLog.Info($"Helper: {helper}");
                 ConsoleLog.Info($"Working Folder Path: {Environment.CurrentDirectory}");
@@ -91,6 +102,15 @@ namespace ZStudio.D365.DeploymentHelper
                         tokens.Add(HelperTokenKey.LOGONUSERID_TOKEN.Replace("@", ""), conn.WhoAmI.UserId.ToString());
                         tokens.Add(HelperTokenKey.LOGONUSEREMAIL_TOKEN.Replace("@", ""), conn.WhoAmI.Email);
                         tokens.Add(HelperTokenKey.LOGONUSERFULLNAME_TOKEN.Replace("@", ""), conn.WhoAmI.FullName);
+                    }
+
+                    //get root BU to be added into system token
+                    CrmSystemDataObject crmData = new CrmSystemDataObject(conn.OrgService);
+                    BusinessUnit rootBU = crmData.GetRootBusinessUnit();
+                    if (rootBU != null)
+                    {
+                        tokens.Add(HelperTokenKey.ROOTBUNAME_TOKEN.Replace("@", ""), rootBU.Name);
+                        tokens.Add(HelperTokenKey.ROOTBUID_TOKEN.Replace("@", ""), rootBU.Id.ToString());
                     }
                 }
                 else
@@ -185,7 +205,7 @@ namespace ZStudio.D365.DeploymentHelper
                 if (HelperTypeHandlers.ContainsKey(helper.ToUpper()))
                 {
                     ConsoleLog.Info($"The helper for '{helper}' has been found, instantiate the helper and run.");
-                    IHelperToolLogic logic = Activator.CreateInstance(HelperTypeHandlers[helper.ToUpper()], new object[] { crmConnectionString, configJson, tokens, debugMode, debugSleep }) as IHelperToolLogic;
+                    IHelperToolLogic logic = Activator.CreateInstance(HelperTypeHandlers[helper.ToUpper()], new object[] { crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep }) as IHelperToolLogic;
                     if (logic != null)
                     {
                         logic.HelperName = HelperTypeHandlers[helper.ToUpper()].Name;

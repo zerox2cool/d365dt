@@ -7,14 +7,14 @@ set /p connectionString=
 echo Helper to Run (must specify the helper program to run):
 set helper=TestConnection
 
-REM echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
-REM set config=
+echo Config File, serialised Dictionary string,object JSON (optional, pass in NULL when no value):
+set config=NULL
 
-REM echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-REM set key=
+echo Token Key, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
+set key=NULL
 
-REM echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
-REM set data=
+echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
+set data=NULL
 
 set devmode=0
 if exist "bin/Debug" set devmode=1

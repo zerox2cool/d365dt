@@ -39,7 +39,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public int Status { get; private set; }
 
-        public SetCloudFlowStatus(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
+        public SetCloudFlowStatus(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
         {
         }
 

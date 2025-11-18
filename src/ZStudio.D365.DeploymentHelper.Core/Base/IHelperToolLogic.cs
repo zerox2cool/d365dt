@@ -19,6 +19,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.Base
         string HelperName { get; set; }
 
         /// <summary>
+        /// Indicate the program is running for Power Pages enhanced data model mode.
+        /// </summary>
+        bool PortalEnhancedMode { get; set; }
+
+        /// <summary>
         /// Indicate the program is running in debug mode.
         /// </summary>
         bool DebugMode { get; set; }

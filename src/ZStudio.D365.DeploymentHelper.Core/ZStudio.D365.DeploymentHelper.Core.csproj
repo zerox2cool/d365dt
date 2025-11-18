@@ -139,6 +139,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\CrmDataCache.cs" />
+    <Compile Include="Base\CrmDataCacheBase.cs" />
     <Compile Include="Base\HelperToolBase.cs" />
     <Compile Include="Base\HelperType.cs" />
     <Compile Include="Base\IHelperToolLogic.cs" />
@@ -148,10 +150,17 @@
     <Compile Include="CmdLineTools\SetCloudFlowStatus.cs" />
     <Compile Include="CmdLineTools\SetSLAStatus.cs" />
     <Compile Include="CmdLineTools\SetAutoRecordRulesStatus.cs" />
+    <Compile Include="CmdLineTools\SyncTeams2ColumnSecurityProfile.cs" />
+    <Compile Include="CmdLineTools\UpdateWebsite.cs" />
     <Compile Include="CmdLineTools\UpdatePortalSiteSetting.cs" />
     <Compile Include="CmdLineTools\TestConnection.cs" />
     <Compile Include="Constants\Messages.cs" />
+    <Compile Include="DataObjects\CrmSystemDataObject.cs" />
+    <Compile Include="Models\AdxWebsite.cs" />
+    <Compile Include="Models\TeamColumnSecurityProfile.cs" />
     <Compile Include="Models\AdxSiteSetting.cs" />
+    <Compile Include="Models\XrmEntities\XrmEntities.cs" />
+    <Compile Include="Models\XrmEntities\XrmOptionSets.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\ArgsHelper.cs" />
     <Compile Include="Util\CasualStringComparerObject.cs" />
@@ -164,7 +173,31 @@
       <Link>ZStudio.D365.DeploymentHelper.snk</Link>
     </None>
     <None Include="app.config" />
+    <None Include="Models\XrmEntities\crmsvcutil\CrmSvcUtil.exe.config" />
+    <None Include="Models\XrmEntities\RunCrmSvcUtil.bat" />
+    <None Include="Models\XrmEntities\RunCrmSvcUtil.ps1" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Models\XrmEntities\crmsvcutil\CrmSvcUtil.exe" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.ApplicationInsights.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Bcl.AsyncInterfaces.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\microsoft.crm.sdk.proxy.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.IdentityModel.Clients.ActiveDirectory.WindowsForms.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.IdentityModel.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.PowerApps.AppInsights.BatchedTelemetry.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.PowerApps.AppInsights.BatchedTelemetryChannel.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Rest.ClientRuntime.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Xrm.Sdk.Deployment.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Xrm.Sdk.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Xrm.Sdk.Workflow.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Xrm.Tooling.Connector.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\Microsoft.Xrm.Tooling.CrmConnectControl.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\ZD365DT.CrmSvcUtilExt.dll" />
+    <Content Include="Models\XrmEntities\crmsvcutil\XrmEntityList.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

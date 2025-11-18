@@ -20,5 +20,6 @@ IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.config" "$(So
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)*.bat" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)$(OutDir)SampleConfig\*.json" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\ZD365DTHelper\SampleConfig\"
 
+IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReadmeGuide.md" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)ReleaseNote.md" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"
 IF "$(ConfigurationName)"=="Release" copy "$(ProjectDir)SetNupkgVersion.ps1" "$(SolutionDir)..\pkg\ZStudio.D365.DTHelperPkg\"

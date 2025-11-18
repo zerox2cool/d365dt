@@ -17,13 +17,29 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         private AdxSiteSetting[] config = null;
         private Entity[] serverData = null;
 
-        public UpdatePortalSiteSetting(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
+        private string TableName = "adx_sitesetting";
+        private string TableWebsiteName = "adx_website";
+        private string ColumnName = "adx_name";
+        private string ColumnWebsiteId = "adx_websiteid";
+        private string ColumnValue = "adx_value";
+
+        public UpdatePortalSiteSetting(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
         {
+            //portal mode check
+            if (PortalEnhancedMode)
+            {
+                //update table and column schema for enhanced mode
+                TableName = "mspp_sitesetting";
+                TableWebsiteName = "mspp_website";
+                ColumnName = "mspp_name";
+                ColumnWebsiteId = "mspp_websiteid";
+                ColumnValue = "mspp_value";
+            }
         }
 
         private int GetServerData()
         {
-            XrmQueryExpression query = new XrmQueryExpression("adx_sitesetting");
+            XrmQueryExpression query = new XrmQueryExpression(TableName);
             serverData = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
             if (serverData?.Length > 0)
                 return serverData.Length;
@@ -35,7 +51,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
         {
             if (serverData?.Length > 0)
             {
-                var coll = from rec in serverData where rec["adx_websiteid"] != null && ((EntityReference)rec["adx_websiteid"]).Id.Equals(websiteId) && Convert.ToString(rec["adx_name"]).Equals(name, StringComparison.CurrentCultureIgnoreCase) select rec;
+                var coll = from rec in serverData where rec[ColumnWebsiteId] != null && ((EntityReference)rec[ColumnWebsiteId]).Id.Equals(websiteId) && Convert.ToString(rec[ColumnName]).Equals(name, StringComparison.CurrentCultureIgnoreCase) select rec;
                 if (coll?.ToArray().Length > 0)
                     return coll?.ToArray()[0];
                 else
@@ -58,7 +74,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             }
 
             Log(LOG_LINE);
-            Log($"Config Parameters (adx_sitesetting to update):");
+            Log($"Config Parameters ({TableName} to update):");
             Log(LOG_LINE);
             Log($"Settings Count: {config?.Length}");
             foreach (var ss in config)
@@ -72,7 +88,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
             //load server data
             int totalServerCount = GetServerData();
-            Log($"Site Setting (adx_sitesetting) count on server: {totalServerCount}");
+            Log($"Site Setting ({TableName}) count on server: {totalServerCount}");
             Log($"Perform Site Settings Create/Update.");
             Log(LOG_SEGMENT);
 
@@ -89,10 +105,10 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                     if (record != null)
                     {
                         //data found to update
-                        Entity upd = new Entity("adx_sitesetting", record.Id);
-                        upd["adx_value"] = d.Value;
+                        Entity upd = new Entity(TableName, record.Id);
+                        upd[ColumnValue] = d.Value;
                         OrgService.Update(upd);
-                        Log($"Updated adx_sitesetting: {record.Id}");
+                        Log($"Updated {TableName}: {record.Id}");
                         updateCount++;
 
                         Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' updated to the value '{d.Value}'.");
@@ -100,13 +116,13 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                     else
                     {
                         //insert
-                        Log($"adx_sitesetting with name '{d.Name}' not found.");
-                        Entity cre = new Entity("adx_sitesetting");
-                        cre["adx_websiteid"] = new EntityReference("adx_website", Guid.Parse(d.WebsiteId));
-                        cre["adx_name"] = d.Name;
-                        cre["adx_value"] = d.Value;
+                        Log($"{TableName} with name '{d.Name}' not found.");
+                        Entity cre = new Entity(TableName);
+                        cre[ColumnWebsiteId] = new EntityReference(TableWebsiteName, Guid.Parse(d.WebsiteId));
+                        cre[ColumnName] = d.Name;
+                        cre[ColumnValue] = d.Value;
                         Guid id = OrgService.Create(cre);
-                        Log($"Created adx_sitesetting: {id}");
+                        Log($"Created {TableName}: {id}");
                         createCount++;
 
                         Debug($"Setting '{d.Name}' for WebsiteID '{d.WebsiteId}' with the value '{d.Value}' has been created.");
@@ -116,7 +132,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 }
                 catch (Exception ex)
                 {
-                    Log($"FAILED to update adx_sitesetting: {d.Name}. Exception: {ex.Message}");
+                    Log($"FAILED to update {TableName}: {d.Name}. Exception: {ex.Message}");
                     failedCount++;
                 }
             }

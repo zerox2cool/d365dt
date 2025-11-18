@@ -16,6 +16,9 @@ set /p key=
 echo Token Data, delimited by double-semicolon (;;) (optional, pass in NULL when no value):
 set /p data=
 
+echo Portal Enhanced Data Model, true or false:
+set /p portalEnhanced=
+
 set devmode=0
 if exist "bin/Debug" set devmode=1
 
@@ -23,7 +26,7 @@ set debug=false
 if %devmode%==1 cd bin/Debug/
 if %devmode%==1 set debug=true
 
-ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug%
+ZStudio.D365.DeploymentHelper.exe /connectionString:"%connectionString%" /helper:"%helper%" /config:"%config%" /key:"%key%" /data:"%data%" /debug:%debug% /portalEnhanced:"%portalEnhanced%"
 set status=%errorlevel%
 
 

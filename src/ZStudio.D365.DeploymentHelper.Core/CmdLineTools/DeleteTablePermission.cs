@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography;
 using ZStudio.D365.DeploymentHelper.Core.Base;
 using ZStudio.D365.Shared.Framework.Core.Query;
 
@@ -17,14 +16,26 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public Guid WebsiteId { get; private set; }
 
-        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, debugMode, debugSleep)
+        private string TableName = "adx_entitypermission";
+        private string ColumnWebsiteId = "adx_websiteid";
+        private string ColumnParentPermission = "adx_parententitypermission";
+
+        public DeleteTablePermission(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
         {
+            //portal mode check
+            if (PortalEnhancedMode)
+            {
+                //update table and column schema for enhanced mode
+                TableName = "mspp_entitypermission";
+                ColumnWebsiteId = "mspp_websiteid";
+                ColumnParentPermission = "mspp_parententitypermission";
+            }
         }
 
         private Entity[] GetTablePermission(Guid websiteId)
         {
-            XrmQueryExpression query = new XrmQueryExpression("adx_entitypermission")
-                .Condition("adx_websiteid", ConditionOperator.Equal, websiteId);
+            XrmQueryExpression query = new XrmQueryExpression(TableName)
+                .Condition(ColumnWebsiteId, ConditionOperator.Equal, websiteId);
             Entity[] coll = Fetch.RetrieveAllEntityByQuery(query.ToQueryExpression());
             if (coll?.Length > 0)
                 return coll;
@@ -62,8 +73,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             if (tablePermissions?.Length > 0)
                 count = tablePermissions.Length;
 
-            Log($"Deleting Table Permission (adx_entitypermission) for WebsiteId: {WebsiteId}");
-            Log($"Table Permission (adx_entitypermission) Count: {count}");
+            Log($"Deleting Table Permission ({TableName}) for WebsiteId: {WebsiteId}");
+            Log($"Table Permission ({TableName}) Count: {count}");
             Log(LOG_SEGMENT);
 
             //delete data for a website and parent is null
@@ -74,25 +85,25 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 foreach (var d in tablePermissions)
                 {
                     //delete parent permissions
-                    if (!d.Contains("adx_parententitypermission") || d["adx_parententitypermission"] == null)
+                    if (!d.Contains(ColumnParentPermission) || d[ColumnParentPermission] == null)
                     {
                         try
                         {
                             OrgService.Delete(d.LogicalName, d.Id);
-                            Log($"Deleted adx_entitypermission: {d.Id}");
+                            Log($"Deleted {TableName}: {d.Id}");
                             deleteCount++;
                         }
                         catch (Exception ex)
                         {
-                            Log($"FAILED to delete adx_entitypermission: {d.Id}. Exception: {ex.Message}");
+                            Log($"FAILED to delete {TableName}: {d.Id}. Exception: {ex.Message}");
                             failedCount++;
                         }
                     }
                 }
-                Log($"Deleted {deleteCount} row(s) of adx_entitypermission for the website ID {WebsiteId} that are parent permission.");
+                Log($"Deleted {deleteCount} row(s) of {TableName} for the website ID {WebsiteId} that are parent permission.");
             }
             else
-                Log($"Nothing in adx_entitypermission to delete.");
+                Log($"Nothing in {TableName} to delete.");
             
             return (failedCount == 0);
         }

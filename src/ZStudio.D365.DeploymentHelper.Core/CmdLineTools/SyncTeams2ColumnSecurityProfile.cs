@@ -1,0 +1,58 @@
+﻿using Microsoft.Xrm.Sdk;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Automation.Peers;
+using ZStudio.D365.DeploymentHelper.Core.Base;
+using ZStudio.D365.DeploymentHelper.Core.Models;
+using ZStudio.D365.Shared.Data.Framework.Cmd;
+using ZStudio.D365.Shared.Framework.Core.Query;
+
+namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
+{
+    [HelperType(nameof(SyncTeams2ColumnSecurityProfile))]
+    public class SyncTeams2ColumnSecurityProfile : HelperToolBase
+    {
+        private Teams2ColumnSecurityProfile config = null;
+        private Entity[] serverData = null;
+
+        public SyncTeams2ColumnSecurityProfile(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
+        {
+        }
+
+        public override void PreExecute_HandlerImplementation()
+        {
+            try
+            {
+                //load config JSON
+                config = JsonConvert.DeserializeObject<Teams2ColumnSecurityProfile>(ConfigJson);
+            }
+            catch (Exception dex)
+            {
+                throw new ArgumentException($"The Config JSON is invalid and cannot be deserialise to Teams2ColumnSecurityProfile. Exception: {dex.Message}");
+            }
+
+            Log(LOG_LINE);
+            Log($"Config Parameters (teamprofiles_association to update):");
+            Log($"IsSync: {config?.Settings?.IsSync}");
+            Log(LOG_LINE);
+            Log($"Team Profiles Count: {config?.ColumnSecurityProfiles?.Length}");
+            foreach (var cfg in config?.ColumnSecurityProfiles)
+            {
+                Debug($"Profile: Name: {cfg.ProfileName} - Team Count: {cfg.BusinessUnitTeams?.Count}");
+                foreach (var t in cfg.BusinessUnitTeams)
+                    Debug($"Team Name: {t.TeamName} ({t.BusinessUnitName})");
+            }
+            Log(LOG_LINE);
+        }
+
+        protected override bool OnRun_Implementation(out string exceptionMessage)
+        {
+            exceptionMessage = string.Empty;
+            int failedCount = 0;
+
+            return (failedCount == 0);
+        }
+    }
+}
