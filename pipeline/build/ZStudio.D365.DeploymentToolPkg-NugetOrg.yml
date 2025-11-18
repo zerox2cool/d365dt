@@ -1,5 +1,5 @@
-#pool:
-#  vmImage: 'windows-latest'
+pool:
+  vmImage: 'windows-latest'
 
 variables:
   #ProjectName: 'ZStudio.D365.DTPkg' --to be added to the build pipeline
