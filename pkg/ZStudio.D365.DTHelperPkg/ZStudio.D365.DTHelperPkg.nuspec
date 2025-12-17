@@ -13,6 +13,8 @@
 	</metadata>
 	<files>
 		<!--<file src="bin\$configuration$\netcoreapp3.1\ZStudio.D365.DTPkg.*" target="lib\netcoreapp3.1" />-->
+		<file src="README.md" target="docs\" />
+		<file src="ReadmeGuide.md" target="content\ZD365DTHelper" />
 		<file src="ReleaseNote.md" target="content\ZD365DTHelper" />
 		<file src="ZD365DTHelper\*.*" target="content\ZD365DTHelper" />
 		<file src="ZD365DTHelper\SampleConfig\*.*" target="content\ZD365DTHelper\SampleConfig" />

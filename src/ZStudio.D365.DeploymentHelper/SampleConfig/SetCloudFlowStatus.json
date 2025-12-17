@@ -1,5 +1,7 @@
 {
   "AllCustomFlow": "@allcustomflow@",
   "SolutionName": "@solutionname@",
-  "Status": "@status@"
+  "Status": "@status@",
+  "IgnorePrefix": "ZZDEL",
+  "TurnOffIgnoredFlows": "true"
 }

@@ -2,8 +2,13 @@
 [User Guide](ReadmeGuide.md)
 
 # Release Notes
+## v0.0.0.10
+### 17-Dec-2025
+- Added new optional parameter to enable ignore prefix (IgnorePrefix) to be customised by caller for activate/deactivate of Cloud Flows components (SetCloudFlowStatus).
+- Added new optional parameter to turn off ignore prefix (TurnOffIgnoredFlows) cloud flows found for activate/deactivate of Cloud Flows components (SetCloudFlowStatus).
+
 ## v0.0.0.9
-### 19-Nov-2023
+### 19-Nov-2025
 - Added new optional parameter to support Power Pages Enhanced Data Model, pass in true/false to portalEnhanced parameter to indicate if the website is on Enhanced Data Model or not. Default to false.
 - Added update website record (adx_website/mspp_website) helper to update primary domain name (adx_primarydomainname/mspp_primarydomainname) for different environment during deployment (UpdateWebsite).
 - Updated delete table permission (adx_entitypermission/mspp_entitypermission) data helper to support both classic and enhanced data model website (DeleteTablePermission).
