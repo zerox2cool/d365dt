@@ -39,6 +39,10 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
 
         public int Status { get; private set; }
 
+        public string IgnorePrefix { get; private set; } = "ZZDEL";
+
+        public bool TurnOffIgnoredFlows { get; private set; } = false;
+
         public SetCloudFlowStatus(string crmConnectionString, string configJson, Dictionary<string, string> tokens, bool portalEnhancedMode, bool debugMode, int debugSleep) : base(crmConnectionString, configJson, tokens, portalEnhancedMode, debugMode, debugSleep)
         {
         }
@@ -53,14 +57,18 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             return isSkip;
         }
 
-        private bool IsFiltreredOutCertainPrefixInName(Entity comp)
+        private bool IsFiltreredOutCertainPrefixInName(Entity comp, out bool isSkipByIgnorePrefix)
         {
+            isSkipByIgnorePrefix = false;
             bool isSkip = false;
             if (comp.Contains("name") && comp["name"] != null)
             {
                 string name = Convert.ToString(comp["name"]);
-                if (name.StartsWith("ZZDEL", StringComparison.CurrentCultureIgnoreCase))
+                if (name.StartsWith(IgnorePrefix, StringComparison.CurrentCultureIgnoreCase))
+                {
                     isSkip = true;
+                    isSkipByIgnorePrefix = true;
+                }
                 else if (name.StartsWith("ARC:", StringComparison.CurrentCultureIgnoreCase))
                     isSkip = true;
                 else if (name.StartsWith("ServiceLevelAgreement_ActionFlow", StringComparison.CurrentCultureIgnoreCase))
@@ -69,9 +77,10 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             return isSkip;
         }
 
-        private Entity[] GetAllComponents()
+        private Entity[] GetAllComponents(out Entity[] skipByIgnorePrefix)
         {
             List<Entity> result = new List<Entity>();
+            List<Entity> skipByIgnorePrefixResult = new List<Entity>();
 
             XrmQueryExpression query = new XrmQueryExpression(TABLENAME)
                 .Condition("category", ConditionOperator.Equal, 5);
@@ -81,25 +90,35 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 //filter out system flows and Microsoft flows
                 foreach (var comp in components)
                 {
+                    bool isSkipByIgnorePrefix = false;
                     bool isSkip = IsFiltreredOutSystem(comp);
                     
                     //add logic to skip flow with certain prefix
                     if (!isSkip)
-                        isSkip = IsFiltreredOutCertainPrefixInName(comp);
+                        isSkip = IsFiltreredOutCertainPrefixInName(comp, out isSkipByIgnorePrefix);
 
                     if (!isSkip)
                         result.Add(comp);
+
+                    if (isSkipByIgnorePrefix)
+                        skipByIgnorePrefixResult.Add(comp);
                 }
             }
+
+            if (skipByIgnorePrefixResult?.Count > 0)
+                skipByIgnorePrefix = skipByIgnorePrefixResult.ToArray();
+            else
+                skipByIgnorePrefix = null;
 
             if (result?.Count > 0)
                 return result.ToArray();
             return null;
         }
 
-        private Entity[] GetComponents(Guid[] ids)
+        private Entity[] GetComponents(Guid[] ids, out Entity[] skipByIgnorePrefix)
         {
             List<Entity> result = new List<Entity>();
+            List<Entity> skipByIgnorePrefixResult = new List<Entity>();
 
             Entity[] components = Fetch.RetrieveAllEntityByCrmIds(TABLENAME, ids);
             if (components?.Length > 0)
@@ -107,16 +126,25 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 //filter out system flows and Microsoft flows
                 foreach (var comp in components)
                 {
+                    bool isSkipByIgnorePrefix = false;
                     bool isSkip = IsFiltreredOutSystem(comp);
 
                     //add logic to skip flow with certain prefix
                     if (!isSkip)
-                        isSkip = IsFiltreredOutCertainPrefixInName(comp);
+                        isSkip = IsFiltreredOutCertainPrefixInName(comp, out isSkipByIgnorePrefix);
 
                     if (!isSkip)
                         result.Add(comp);
+
+                    if (isSkipByIgnorePrefix)
+                        skipByIgnorePrefixResult.Add(comp);
                 }
             }
+
+            if (skipByIgnorePrefixResult?.Count > 0)
+                skipByIgnorePrefix = skipByIgnorePrefixResult.ToArray();
+            else
+                skipByIgnorePrefix = null;
 
             if (result?.Count > 0)
                 return result.ToArray();
@@ -133,6 +161,12 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 SolutionName = Convert.ToString(config["SolutionName"]);
                 AllCustomFlow = Convert.ToBoolean(config["AllCustomFlow"]);
                 Status = Convert.ToInt32(config["Status"]);
+
+                if (config.ContainsKey("IgnorePrefix"))
+                    IgnorePrefix = Convert.ToString(config["IgnorePrefix"]);
+
+                if (config.ContainsKey("TurnOffIgnoredFlows"))
+                    TurnOffIgnoredFlows = Convert.ToBoolean(config["TurnOffIgnoredFlows"]);
             }
             catch (Exception dex)
             {
@@ -145,6 +179,8 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             Log($"AllCustomFlow: {AllCustomFlow}");
             Log($"Solution Name: {SolutionName}");
             Log($"Status: {Status}");
+            Log($"IgnorePrefix: {IgnorePrefix}");
+            Log($"TurnOffIgnoredFlows: {TurnOffIgnoredFlows}");
             Log(LOG_LINE);
         }
 
@@ -161,11 +197,12 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 Log($"Trying to Activate all {DISPLAYNAME} found.");
             Log(LOG_SEGMENT);
 
+            Entity[] componentsSkipByIgnorePrefix = null;
             Entity[] components2Process = null;
             if (AllCustomFlow)
             {
                 //to process all rules
-                components2Process = GetAllComponents();
+                components2Process = GetAllComponents(out componentsSkipByIgnorePrefix);
 
                 Log($"Process All {DISPLAYNAME}.");
             }
@@ -186,7 +223,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 if (solutionComponents?.Length > 0)
                 {
                     Guid[] ids = (from sc in solutionComponents select Guid.Parse(Convert.ToString(sc["objectid"]))).ToArray();
-                    components2Process = GetComponents(ids);
+                    components2Process = GetComponents(ids, out componentsSkipByIgnorePrefix);
                 }
 
                 Log($"Process {DISPLAYNAME} in the solution '{SolutionName}' ({solutionId}).");
@@ -344,6 +381,145 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                 //no rules found to process
                 Log($"No {DISPLAYNAME} Found.");
             }
+
+            #region Turn OFF Ignore Prefix Flow
+            int updateOffCount = 0;
+            int failedOffCount = 0;
+            if (TurnOffIgnoredFlows && componentsSkipByIgnorePrefix?.Length > 0)
+            {
+                Log($"Turning OFF all {DISPLAYNAME} with IgnorePrefix of '{IgnorePrefix}'.");
+                Log(LOG_SEGMENT);
+
+                //there are components to process
+                Log($"{DISPLAYNAME} Ignore Count: {componentsSkipByIgnorePrefix?.Length}");
+                Log(LOG_SEGMENT);
+
+                string action = "Deactivating";
+                string actioned = "Deactivated";
+                int status = DRAFT_STATE;
+                OptionSetValue updateState = new OptionSetValue(DRAFT_STATE);
+                OptionSetValue updateStatusCode = new OptionSetValue(DRAFT_STATUSCODE);
+
+                #region InitialRun
+                Dictionary<Guid, Entity> failedComponents2Retry = new Dictionary<Guid, Entity>();
+                foreach (Entity component in componentsSkipByIgnorePrefix)
+                {
+                    if (component.Contains("statecode") && component["statecode"] != null && component["statecode"] is OptionSetValue)
+                    {
+                        if (((OptionSetValue)component["statecode"]).Value != status)
+                        {
+                            StringBuilder sb = new StringBuilder();
+                            try
+                            {
+                                //update the status
+                                SetStateRequest req = new SetStateRequest()
+                                {
+                                    EntityMoniker = component.ToEntityReference(),
+                                    State = updateState,
+                                    Status = updateStatusCode,
+                                };
+
+                                sb.Append($"{action} '{component["name"]}'. ");
+                                OrgService.Execute(req);
+                                sb.Append($"{actioned} SUCCESS");
+                                updateOffCount++;
+                            }
+                            catch (Exception ex)
+                            {
+                                sb.Append($"FAILED. Exception: {ex.Message}");
+                                failedOffCount++;
+
+                                failedComponents2Retry.Add(component.Id, component);
+                            }
+                            finally
+                            {
+                                Log($"{sb.ToString()}");
+                            }
+                        }
+                        else
+                        {
+                            Log($"'{component["name"]}' is already {actioned}.");
+                        }
+                    }
+                }
+                #endregion InitialRun
+
+                #region RetryRun
+                //perform retry until max retry count, as the data retrieve has no relation to parent items not being activated, we will retry up to 7 times until all flows are activated
+                int retryCount = 0;
+                bool isRetryRequired = (failedComponents2Retry.Count > 0);
+                while (isRetryRequired)
+                {
+                    retryCount++;
+                    Log(LOG_SEGMENT);
+                    Log($"Retry Run: {retryCount}; Number of Failed Items: {failedComponents2Retry.Count};");
+                    Log(LOG_SEGMENT);
+
+                    List<Guid> successIds = new List<Guid>();
+                    foreach (var component in failedComponents2Retry)
+                    {
+                        if (component.Value.Contains("statecode") && component.Value["statecode"] != null && component.Value["statecode"] is OptionSetValue)
+                        {
+                            if (((OptionSetValue)component.Value["statecode"]).Value != status)
+                            {
+                                StringBuilder sb = new StringBuilder();
+                                try
+                                {
+                                    //update the status
+                                    SetStateRequest req = new SetStateRequest()
+                                    {
+                                        EntityMoniker = component.Value.ToEntityReference(),
+                                        State = updateState,
+                                        Status = updateStatusCode,
+                                    };
+
+                                    sb.Append($"{action} '{component.Value["name"]}'. ");
+                                    OrgService.Execute(req);
+                                    sb.Append($"{actioned} SUCCESS");
+
+                                    successIds.Add(component.Key);
+                                    updateOffCount++;
+                                }
+                                catch (Exception ex)
+                                {
+                                    sb.Append($"FAILED. Exception: {ex.Message}");
+                                    failedOffCount++;
+                                }
+                                finally
+                                {
+                                    Log($"{sb.ToString()}");
+                                }
+                            }
+                            else
+                            {
+                                Log($"'{component.Value["name"]}' is already {actioned}.");
+                            }
+                        }
+                    }
+
+                    //remove successful object from the fail container
+                    if (successIds.Count > 0)
+                    {
+                        foreach (var id in successIds)
+                        {
+                            if (failedComponents2Retry.ContainsKey(id))
+                                failedComponents2Retry.Remove(id);
+                        }
+                    }
+
+                    //check if we need to retry again
+                    if (failedComponents2Retry.Count == 0 || retryCount >= MAX_RETRY)
+                        isRetryRequired = false;
+                }
+                #endregion RetryRun
+
+                //set fail count to be the remaining component in fail container
+                failedOffCount = failedComponents2Retry.Count;
+
+                Log(LOG_SEGMENT);
+                Log($"Total Retry: {retryCount}");
+            }
+            #endregion Turn OFF Ignore Prefix Flow
 
             Log(LOG_SEGMENT);
             Log($"{DISPLAYNAME} Update Count: {updateCount}; Failed Count: {failedCount}");
