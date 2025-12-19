@@ -2,7 +2,7 @@
 [User Guide](ReadmeGuide.md)
 
 # Release Notes
-## v0.0.0.11
+## v0.0.0.12
 ### 19-Dec-2025
 - Added new helper to sync teams to column security profile (SyncTeamsToColumnSecurityProfile).
 

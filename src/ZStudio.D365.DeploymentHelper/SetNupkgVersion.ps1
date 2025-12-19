@@ -1,3 +1,3 @@
-﻿$v="0.0.0.11"
+﻿$v="0.0.0.12"
 Write-Host "##vso[task.setvariable variable=NupkgVersion]$v"
 Write-Host NupkgVersion Environment Variable set to: $v

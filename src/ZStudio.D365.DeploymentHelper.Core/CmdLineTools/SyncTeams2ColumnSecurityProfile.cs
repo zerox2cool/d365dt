@@ -4,13 +4,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web.Services.Description;
-using System.Windows.Automation.Peers;
 using ZStudio.D365.DeploymentHelper.Core.Base;
 using ZStudio.D365.DeploymentHelper.Core.DataObjects;
 using ZStudio.D365.DeploymentHelper.Core.Models;
 using ZStudio.D365.DeploymentHelper.Core.Models.Entities;
-using ZStudio.D365.Shared.Data.Framework.Cmd;
 using ZStudio.D365.Shared.Framework.Core.Query;
 
 namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
@@ -141,50 +138,59 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
             int failedCount = 0;
             foreach (var cfg in config?.ColumnSecurityProfiles)
             {
-                Log($"Syncing Profile: Name: {cfg.ProfileName} ({cfg.ProfileId}) - Team Count: {cfg.BusinessUnitTeams?.Count}");
+                if (config.Settings.IsSync)
+                    Log($"Syncing (add/remove teams) Profile: Name: {cfg.ProfileName} ({cfg.ProfileId}) - Team Count: {cfg.BusinessUnitTeams?.Count}");
+                else
+                    Log($"Updating (add teams only) Profile: Name: {cfg.ProfileName} ({cfg.ProfileId}) - Team Count: {cfg.BusinessUnitTeams?.Count}");
 
+                #region Scan for Teams to remove from Profile
                 //scan for teams to remove from profile
-                List<TeamProfiles> toDeleteFromTeamProfiles = new List<TeamProfiles>();
-                TeamProfiles[] teamsInProfile = GetTeamsInProfile(cfg.ProfileId.Value);
-                if (teamsInProfile?.Length > 0)
+                if (config.Settings.IsSync)
                 {
-                    foreach (var tip in teamsInProfile)
+                    List<TeamProfiles> toDeleteFromTeamProfiles = new List<TeamProfiles>();
+                    TeamProfiles[] teamsInProfile = GetTeamsInProfile(cfg.ProfileId.Value);
+                    if (teamsInProfile?.Length > 0)
                     {
-                        bool isFound = false;
-                        foreach (var t in cfg.BusinessUnitTeams)
+                        foreach (var tip in teamsInProfile)
                         {
-                            if (tip.TeamId != null && t.TeamId != null && tip.TeamId.Equals(t.TeamId.Value))
+                            bool isFound = false;
+                            foreach (var t in cfg.BusinessUnitTeams)
                             {
-                                //found, no need to delete
-                                isFound = true;
+                                if (tip.TeamId != null && t.TeamId != null && tip.TeamId.Equals(t.TeamId.Value))
+                                {
+                                    //found, no need to delete
+                                    isFound = true;
+                                }
                             }
+
+                            //not found, need to delete
+                            if (!isFound)
+                                toDeleteFromTeamProfiles.Add(tip);
                         }
 
-                        //not found, need to delete
-                        if (!isFound)
-                            toDeleteFromTeamProfiles.Add(tip);
-                    }
-
-                    if (toDeleteFromTeamProfiles?.Count > 0)
-                    {
-                        foreach (var td in toDeleteFromTeamProfiles)
+                        if (toDeleteFromTeamProfiles?.Count > 0)
                         {
-                            //delete association
-                            DisassociateRequest disassociateReq = new DisassociateRequest
+                            foreach (var td in toDeleteFromTeamProfiles)
                             {
-                                Target = new EntityReference("fieldsecurityprofile", cfg.ProfileId.Value),
-                                RelatedEntities = new EntityReferenceCollection() { new EntityReference(Team.EntityLogicalName, td.TeamId.Value) },
-                                Relationship = new Relationship("teamprofiles_association"),
-                            };
-                            OrgService.Execute(disassociateReq);
+                                //delete association
+                                DisassociateRequest disassociateReq = new DisassociateRequest
+                                {
+                                    Target = new EntityReference("fieldsecurityprofile", cfg.ProfileId.Value),
+                                    RelatedEntities = new EntityReferenceCollection() { new EntityReference(Team.EntityLogicalName, td.TeamId.Value) },
+                                    Relationship = new Relationship("teamprofiles_association"),
+                                };
+                                OrgService.Execute(disassociateReq);
 
-                            deleteCount++;
-                            Log($"DELETE: Disassociate team {td.Id} from the profile {cfg.ProfileName}.");
+                                deleteCount++;
+                                Log($"DELETE: Disassociate team {td.Id} from the profile {cfg.ProfileName}.");
 
+                            }
                         }
                     }
                 }
+                #endregion Scan for Teams to remove from Profile
 
+                #region Associate Teams to Profile
                 //associate teams to profile
                 foreach (var t in cfg.BusinessUnitTeams)
                 {
@@ -210,6 +216,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.CmdLineTools
                         Log($"EXIST: Team {t.TeamName} ({t.BusinessUnitName}) is already associated to the profile {cfg.ProfileName}.");
                     }
                 }
+                #endregion Associate Teams to Profile
             }
 
             Log($"Team Profile Success Count - No Change: {existCount}; Created: {createCount}; Deleted: {deleteCount};");
