@@ -2,6 +2,10 @@
 [User Guide](ReadmeGuide.md)
 
 # Release Notes
+## v0.0.0.11
+### 19-Dec-2025
+- Added new helper to sync teams to column security profile (SyncTeamsToColumnSecurityProfile).
+
 ## v0.0.0.10
 ### 17-Dec-2025
 - Added new optional parameter to enable ignore prefix (IgnorePrefix) to be customised by caller for activate/deactivate of Cloud Flows components (SetCloudFlowStatus).

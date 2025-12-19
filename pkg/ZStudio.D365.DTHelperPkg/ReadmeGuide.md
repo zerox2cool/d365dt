@@ -16,6 +16,9 @@ This guide provides an overview of the DTHelper - ZD365.DeploymentHelper, a comm
 - **Set Auto Record Rules Status**: Activate or deactivate automatic record rules.
 - **Set SLA Status**: Activate or deactivate Service Level Agreements (SLAs).
 
+### Security Configurations
+- **Sync Teams to Column Security Profile**: Synchronize teams with the specified column security profile.
+
 ### Power Pages
 - **Update Website**: Update the primary domain name of a Power Pages website during deployment.
 - **Update Portal Site Setting**: Update site settings for Power Pages during deployment.

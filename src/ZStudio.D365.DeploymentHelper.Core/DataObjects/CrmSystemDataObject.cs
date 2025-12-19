@@ -12,6 +12,7 @@ namespace ZStudio.D365.DeploymentHelper.Core.DataObjects
     {
         CrmDataCache<BusinessUnit> _cacheBusinessUnit = new CrmDataCache<BusinessUnit>(BusinessUnit.EntityLogicalName, false);
         CrmDataCache<Team> _cacheTeam = new CrmDataCache<Team>(Team.EntityLogicalName, false);
+        CrmDataCache<Entity> _cacheFSP = new CrmDataCache<Entity>("fieldsecurityprofile", false);
 
         public IOrganizationService OrganizationService { get; set; }
 
@@ -28,6 +29,11 @@ namespace ZStudio.D365.DeploymentHelper.Core.DataObjects
         private void LoadTeamCache()
         {
             _cacheTeam.GetCache(OrganizationService);
+        }
+
+        private void LoadFSPCache()
+        {
+            _cacheFSP.GetCache(OrganizationService);
         }
 
         public BusinessUnit GetBusinessUnitById(Guid id)
@@ -64,9 +70,14 @@ namespace ZStudio.D365.DeploymentHelper.Core.DataObjects
             if (bu != null)
             {
                 LoadTeamCache();
-                return (from t in _cacheTeam.Cache where t.BusinessUnitId != null && t.BusinessUnitId.Id == t.Id && t.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase) select t).First();
+                return (from t in _cacheTeam.Cache where t.BusinessUnitId != null && t.BusinessUnitId.Id == bu.Id && t.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase) select t).First();
             }
             return null;
+        }
+
+        public Entity GetFieldSecurityProfileByName(string name)
+        {
+            return _cacheFSP.GetByStringAttribute(OrganizationService, "name", name);
         }
     }
 }
