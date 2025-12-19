@@ -4,11 +4,11 @@
 	},
 	"ColumnSecurityProfiles": [
 		{
-			"ColumnSecurityProfileName": "SecProfileOfficer",
+			"ProfileName": "SecProfileOfficer",
 			"Teams": "@rootbuname@:TeamA;UnitA:TeamA"
 		},
 		{
-			"ColumnSecurityProfileName": "SecProfileManager",
+			"ProfileName": "SecProfileManager",
 			"Teams": "@rootbuname@:TeamB;UnitA:TeamB"
 		}
 	]
