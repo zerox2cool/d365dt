@@ -1,0 +1,70 @@
+# Author: Winson C
+# Version: 1.0
+# ZD365 Deployment Helper NuGet - https://www.nuget.org/packages/ZD365.DeploymentHelper/ - only works with v0.0.0.9 and above
+
+# Run DeploymentTool.Helper to Update Primary Domain Name (adx_primarydomainname/mspp_primarydomainname) for a Website (adx_website/mspp_website)
+parameters:
+- name: DTHelperFolderPath
+  type: string
+  default: '$(system.defaultworkingdirectory)'
+- name: D365TargetConnectionString
+  type: string
+  default: ''
+- name: DTHelperConfigFile
+  type: string
+  default: ''
+- name: TokenKey
+  type: string
+  default: ''
+- name: TokenData
+  type: string
+  default: ''
+# constant parameters via default
+- name: EnhancedDataModel
+  type: boolean
+  default: false
+- name: IsContinueOnError
+  type: boolean
+  default: false
+- name: HelperName
+  type: string
+  default: 'UpdateWebsite'
+- name: HelperEXE
+  type: string
+  default: 'ZStudio.D365.DeploymentHelper.exe'
+- name: HelperDebug
+  type: boolean
+  default: false
+
+steps:
+- script: |
+   echo Input Parameter
+   echo DTHelperFolderPath: ${{ parameters.DTHelperFolderPath }}
+   echo DTHelper: ${{ parameters.DTHelperFolderPath }}\${{ parameters.HelperEXE }}
+   echo D365TargetConnectionString: ${{ parameters.D365TargetConnectionString }}
+   echo DTHelperConfigFile: ${{ parameters.DTHelperConfigFile }}
+   echo TokenKey: ${{ parameters.TokenKey }}
+   echo TokenData: ${{ parameters.TokenData }}
+   echo EnhancedDataModel: ${{ parameters.EnhancedDataModel }}
+  displayName: '00 DT Helper Input Parameters - ${{ parameters.HelperName }}'
+
+- task: CmdLine@2
+  displayName: '01 DT Helper - ${{ parameters.HelperName }}'
+  inputs:
+    script: |
+      echo Run DT Helper - START...
+      ${{ parameters.DTHelperFolderPath }}\${{ parameters.HelperEXE }} /connectionString:"${{ parameters.D365TargetConnectionString }}" /helper:"${{ parameters.HelperName }}" /config:"${{ parameters.DTHelperConfigFile }}" /key:"${{ parameters.TokenKey }}" /data:"${{ parameters.TokenData }}" /portalEnhanced:${{ parameters.EnhancedDataModel }} /debug:${{ parameters.HelperDebug }}
+      set status=%errorlevel%
+      if %status% gtr 0 goto :failed
+      goto :end
+
+      :failed
+      echo DT Helper FAILED...
+      REM THROW ERROR by CAUSING ERROR
+      ${{ parameters.D365TargetConnectionString }}\Error.exe
+      goto :end
+
+      :end
+      echo Run DT Helper - END...
+  continueOnError: ${{ parameters.IsContinueOnError }}
+  condition: succeeded()

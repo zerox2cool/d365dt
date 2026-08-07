@@ -1,0 +1,78 @@
+# Author: Winson C
+# Version: 1.0
+# Updated to use token to increment solution version.
+# ZD365 Deployment Helper NuGet - https://www.nuget.org/packages/ZD365.DeploymentHelper/
+
+# Run DeploymentTool.Helper to Activate/Deactivate SLAs in a Solution
+parameters:
+- name: DTHelperFolderPath
+  type: string
+  default: '$(system.defaultworkingdirectory)'
+- name: D365TargetConnectionString
+  type: string
+  default: ''
+- name: DTHelperConfigFile
+  type: string
+  default: ''
+- name: TokenKey
+  type: string
+  default: 'solutionname;;status;;allslas'
+- name: SolutionName
+  type: string
+  default: ''
+- name: Status
+  type: number
+  default: 1
+  values:
+  - 0
+  - 1
+- name: AllSLAs
+  type: boolean
+  default: false
+# constant parameters via default
+- name: IsContinueOnError
+  type: boolean
+  default: false
+- name: HelperName
+  type: string
+  default: 'SetSLAStatus'
+- name: HelperEXE
+  type: string
+  default: 'ZStudio.D365.DeploymentHelper.exe'
+- name: HelperDebug
+  type: boolean
+  default: false
+
+steps:
+- script: |
+   echo Input Parameter
+   echo DTHelperFolderPath: ${{ parameters.DTHelperFolderPath }}
+   echo DTHelper: ${{ parameters.DTHelperFolderPath }}\${{ parameters.HelperEXE }}
+   echo D365TargetConnectionString: ${{ parameters.D365TargetConnectionString }}
+   echo DTHelperConfigFile: ${{ parameters.DTHelperConfigFile }}
+   echo TokenKey: ${{ parameters.TokenKey }}
+   echo SolutionName: ${{ parameters.SolutionName }}
+   echo Status: ${{ parameters.Status }}
+   echo AllSLAs: ${{ parameters.AllSLAs }}
+  displayName: '00 DT Helper Input Parameters - ${{ parameters.HelperName }}'
+
+- task: CmdLine@2
+  displayName: '01 DT Helper - ${{ parameters.HelperName }} to ${{ parameters.Status }}'
+  inputs:
+    script: |
+      echo Run DT Helper - START...
+      ${{ parameters.DTHelperFolderPath }}\${{ parameters.HelperEXE }} /connectionString:"${{ parameters.D365TargetConnectionString }}" /helper:"${{ parameters.HelperName }}" /config:"${{ parameters.DTHelperConfigFile }}" /key:"${{ parameters.TokenKey }}" /data:"${{ parameters.SolutionName }};;${{ parameters.Status }};;${{ parameters.AllSLAs }}" /debug:${{ parameters.HelperDebug }}
+      set status=%errorlevel%
+      if %status% gtr 0 goto :failed
+      goto :end
+
+      :failed
+      echo DT Helper FAILED...
+      REM THROW ERROR by CAUSING ERROR
+      ${{ parameters.D365TargetConnectionString }}\Error.exe
+      goto :end
+
+      :end
+      echo Run DT Helper - END...
+  continueOnError: ${{ parameters.IsContinueOnError }}
+  condition: succeeded()
