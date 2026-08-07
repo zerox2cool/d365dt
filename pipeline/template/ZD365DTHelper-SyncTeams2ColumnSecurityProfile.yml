@@ -2,7 +2,7 @@
 # Version: 1.0
 # ZD365 Deployment Helper NuGet - https://www.nuget.org/packages/ZD365.DeploymentHelper/ - only works with v0.0.0.12 and above
 
-# Run DeploymentTool.Helper to Sync Teams assignment to Column Security Profile (CSP)
+# Run DeploymentTool.Helper to Sync Team (team) assignment to Column Security Profile (fieldsecurityprofile) on teamprofiles_association
 parameters:
 - name: DTHelperFolderPath
   type: string
@@ -15,10 +15,10 @@ parameters:
   default: ''
 - name: TokenKey
   type: string
-  default: 'NULL'
+  default: ''
 - name: TokenData
   type: string
-  default: 'NULL'
+  default: ''
 # constant parameters via default
 - name: IsContinueOnError
   type: boolean
@@ -45,7 +45,7 @@ steps:
   displayName: '00 DT Helper Input Parameters - ${{ parameters.HelperName }}'
 
 - task: CmdLine@2
-  displayName: '01 DT Helper - ${{ parameters.HelperName }} to ${{ parameters.Status }}'
+  displayName: '01 DT Helper - ${{ parameters.HelperName }}'
   inputs:
     script: |
       echo Run DT Helper - START...
